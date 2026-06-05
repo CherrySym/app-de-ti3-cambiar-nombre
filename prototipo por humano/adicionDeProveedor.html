@@ -3,16 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Agregar Proveedor</title>
+    <title>Añadir Proveedor</title>
     <link rel="stylesheet" href="./css/global-styles.css"/>
     <style>
+      /* Estilos del Header */
+      header {
+        background-color: #ffffff;
+        padding: 15px 30px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil abajo de la barra */
+        display: flex;
+        justify-content: space-between; /* Título a la izquierda, Menú a la derecha */
+        align-items: center; /* Centra verticalmente los textos */
+      }
 
+      /* Estilos del menu de enlaces */
+      header nav ul {
+        list-style: none; /* Le quita los puntitos negros a la lista */
+        margin: 0;
+        padding: 0;
+        display: flex; /* Hace que los <li> se pongan uno al lado del otro */
+        gap: 20px; /* Separa los enlaces entre sí */
+      }
+      /* Estilos de los enlaces */
+      header nav ul li a {
+        text-decoration: none; /* Le quita el subrayado */
+        color: #333333;
+        font-weight: 500;
+      }
+      /*Estilos adicionales de los enlaces para el estado hover */
+      header nav ul li a:hover {
+        color: #007bff; /* Cambia a azul cuando pasás el mouse por encima */
+      }
     </style>
   </head>
 
   <body>
     <header>
-      <h1>Agregar Proveedor</h1>
+      <h1>Añadir Proveedor</h1>
+      <nav>
+        <ul>
+          <li><a href="landing.html">Inicio</a></li>
+          <li><a href="adicionDeProveedor.html">Añadir Proveedor</a></li>
+          <li><a href="ranking.html">Ranking de Proveedores</a></li>
+        </ul>
+      </nav>
     </header>
     <main>
       <section>
