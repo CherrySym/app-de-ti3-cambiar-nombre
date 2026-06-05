@@ -8,12 +8,12 @@
     <style>
       /* Estilos del Header */
       header {
-        background-color: #ffffff;
+        background-color: #1E3264;
         padding: 15px 30px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil abajo de la barra */
         display: flex;
         justify-content: space-between; /* Título a la izquierda, Menú a la derecha */
         align-items: center; /* Centra verticalmente los textos */
+        color: white;
       }
 
       /* Estilos del menu de enlaces */
@@ -27,17 +27,101 @@
       /* Estilos de los enlaces */
       header nav ul li a {
         text-decoration: none; /* Le quita el subrayado */
-        color: #333333;
+        color: #ffffff;
         font-weight: 500;
       }
       /*Estilos adicionales de los enlaces para el estado hover */
       header nav ul li a:hover {
         color: #007bff; /* Cambia a azul cuando pasás el mouse por encima */
       }
+      .landing-container {
+        flex: 1;
+        max-width: 1000px; /* Centra el contenido en un bloque agradable a la vista */
+        margin: 40px auto; /* Le da aire arriba, abajo y lo centra horizontalmente */
+        padding: 0 20px;
+      }
+      .welcome-block {
+        margin-bottom: 35px;
+      }
+
+      .welcome-block h2 {
+        font-size: 26px;
+        color: #222222;
+        margin-bottom: 8px;
+      }
+
+      .welcome-block p {
+        color: #666666;
+        font-size: 15px;
+      }
+
+      /* Contenedor Flex para poner las tarjetas lado a lado */
+      .dashboard-grid {
+        display: flex;
+        gap: 25px;
+        flex-wrap: wrap; /* Permite que colapsen en celulares */
+      }
+
+      /* Caja de la tarjeta */
+      .menu-card {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        flex: 1;
+        min-width: 280px; /* Evita que se deformen demasiado */
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Clava el botón al fondo de la tarjeta */
+      }
+
+      .menu-card h3 {
+        font-size: 19px;
+        color: #007bff; /* Tu azul característico */
+        margin-bottom: 12px;
+      }
+
+      .menu-card p {
+        color: #555555;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 25px;
+      }
+
+      /* Botón interno de la tarjeta */
+      .btn-dashboard {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        background-color: #007bff;
+        color: white;
+        padding: 12px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: background-color 0.2s;
+      }
+
+      .btn-dashboard:hover {
+        background-color: #0056b3;
+      }
+      .footer-container {
+        background-color: #1E3264; /* Un gris oscuro elegante o el azul oscuro de la UCU */
+        padding: 20px 0; /* Un poquito más de aire arriba y abajo */
+        width: 100%;
+      }
+      .logo-footer {
+        display: block;
+        margin: auto;
+        height: 30px;
+        filter: brightness(0) invert(1); /* TRUCO PRO: Si el logo es negro, esto lo vuelve 100% blanco para que resalte sobre el fondo oscuro */
+      }
     </style>
   </head>
 
   <body>
+
     <header>
       <h1>Landing Page</h1>
       <nav>
@@ -48,18 +132,42 @@
         </ul>
       </nav>
     </header>
-    <main>
-      <section>
-        <div style="text-align: center">
-          <img src="./assets/Jerboa.jpg" height="600px" />
-        </div>
+
+    <main class="landing-container">
+      <section class="welcome-block">
+        <h2>Panel de Gestión de Proveedores</h2>
+        <p>Esta es la herramienta de pruebas para el sistema de compras sostenibles de la UCU.</p>
       </section>
 
-      <section></section>
+      <section class="dashboard-grid">
+        
+        <div class="menu-card">
+          <div class="card-content">
+            <h3>Añadir Proveedor</h3>
+            <p>Registra un nuevo proveedor en el sistema. Vas a poder cargar sus datos, 
+               información de contacto y adjuntar sus certificaciones vigentes para aplicarle un
+               puntaje de sostenibilidad.</p>
+          </div>
+          <a href="adicionDeProveedor.html" class="btn-dashboard">Abrir Formulario</a>
+        </div>
 
-      <section></section>
+        <div class="menu-card">
+          <div class="card-content">
+            <h3>Ranking de Proveedores</h3>
+            <p>Compara el nivel de compromiso con la sostenibilidad de los proveedores registrados. 
+               Revisa sus puntajes para tomar mejores decisiones de compra.</p>
+          </div>
+          <a href="ranking.html" class="btn-dashboard">Ver Listado</a>
+        </div>
+
+      </section>
     </main>
 
-    <footer></footer>
+    <footer>
+      <div class="footer-container">
+        <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo-footer"/>
+      </div>
+    </footer>
+
   </body>
 </html>

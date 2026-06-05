@@ -8,12 +8,12 @@
     <style>
       /* Estilos del Header */
       header {
-        background-color: #ffffff;
+        background-color: #1E3264;
         padding: 15px 30px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil abajo de la barra */
         display: flex;
         justify-content: space-between; /* Título a la izquierda, Menú a la derecha */
         align-items: center; /* Centra verticalmente los textos */
+        color: white;
       }
 
       /* Estilos del menu de enlaces */
@@ -27,12 +27,23 @@
       /* Estilos de los enlaces */
       header nav ul li a {
         text-decoration: none; /* Le quita el subrayado */
-        color: #333333;
+        color: #ffffff;
         font-weight: 500;
       }
       /*Estilos adicionales de los enlaces para el estado hover */
       header nav ul li a:hover {
         color: #007bff; /* Cambia a azul cuando pasás el mouse por encima */
+      }
+      .footer-container {
+        background-color: #1E3264; /* Un gris oscuro elegante o el azul oscuro de la UCU */
+        padding: 20px 0; /* Un poquito más de aire arriba y abajo */
+        width: 100%;
+      }
+      .logo-footer {
+        display: block;
+        margin: auto;
+        height: 30px;
+        filter: brightness(0) invert(1); /* TRUCO PRO: Si el logo es negro, esto lo vuelve 100% blanco para que resalte sobre el fondo oscuro */
       }
     </style>
   </head>
@@ -60,6 +71,10 @@
       <section></section>
     </main>
 
-    <footer></footer>
+    <footer>
+      <div class="footer-container">
+        <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo-footer"/>
+      </div>
+    </footer>
   </body>
 </html>

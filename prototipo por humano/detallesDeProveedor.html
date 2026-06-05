@@ -6,7 +6,17 @@
     <title>Detalles del Proveedor X</title>
     <link rel="stylesheet" href="./css/global-styles.css"/>
     <style>
-
+      .footer-container {
+        background-color: #1E3264; /* Un gris oscuro elegante o el azul oscuro de la UCU */
+        padding: 20px 0; /* Un poquito más de aire arriba y abajo */
+        width: 100%;
+      }
+      .logo-footer {
+        display: block;
+        margin: auto;
+        height: 30px;
+        filter: brightness(0) invert(1); /* TRUCO PRO: Si el logo es negro, esto lo vuelve 100% blanco para que resalte sobre el fondo oscuro */
+      }
     </style>
   </head>
 
@@ -26,6 +36,10 @@
       <section></section>
     </main>
 
-    <footer></footer>
+    <footer>
+      <div class="footer-container">
+        <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo-footer"/>
+      </div>
+    </footer>
   </body>
 </html>
