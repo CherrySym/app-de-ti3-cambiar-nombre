@@ -6,59 +6,144 @@
     <title>Ranking de Proveedores</title>
     <link rel="stylesheet" href="./css/global-styles.css"/>
     <style>
-      /* Estilos para el logo */
+      /* Estilos para el logo del Header */
       .logo {
         display: block;
         height: 40px;
         width: auto;
-        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco sobre fondo oscuro */
+        filter: brightness(0) invert(1);
       }
+      
       /* Estilos del Header */
       header {
         background-color: #1E3264;
         padding: 15px 30px;
         display: flex;
-        justify-content: space-between; /* Título a la izquierda, Menú a la derecha */
-        align-items: center; /* Centra verticalmente los textos */
+        justify-content: space-between;
+        align-items: center;
         color: white;
       }
 
-      /* Estilos del menu de enlaces */
       header nav ul {
-        list-style: none; /* Le quita los puntitos negros a la lista */
+        list-style: none;
         margin: 0;
         padding: 0;
-        display: flex; /* Hace que los <li> se pongan uno al lado del otro */
-        gap: 20px; /* Separa los enlaces entre sí */
+        display: flex;
+        gap: 20px;
       }
-      /* Estilos de los enlaces */
+
       header nav ul li a {
-        text-decoration: none; /* Le quita el subrayado */
+        text-decoration: none;
         color: #ffffff;
         font-weight: 500;
       }
-      /*Estilos adicionales de los enlaces para el estado hover */
+
       header nav ul li a:hover {
-        color: #007bff; /* Cambia a azul cuando pasás el mouse por encima */
+        color: #007bff;
       }
-      .footer-container {
-        background-color: #1E3264; /* Un gris oscuro elegante o el azul oscuro de la UCU */
-        padding: 20px 0; /* Un poquito más de aire arriba y abajo */
+
+      /*  Estilos del contenedor del ranking  */
+      .ranking-container {
+        flex: 1;
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 0 20px;
         width: 100%;
       }
+
+      .ranking-container h2 {
+        font-size: 24px;
+        color: #1E3264;
+        margin-bottom: 8px;
+      }
+
+      .ranking-container p {
+        color: #666666;
+        font-size: 14px;
+        margin-bottom: 25px;
+      }
+
+      /* Contenedor de la tabla para que tenga bordes lindos */
+      .table-responsive {
+        background-color: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        overflow: hidden; /* Corta las esquinas de la tabla para que se adapten al border-radius */
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse; /* Elimina doble espacio entre celdas */
+        text-align: left;
+        font-size: 15px;
+      }
+
+      th {
+        background-color: #1E3264;
+        color: white;
+        padding: 15px;
+        font-weight: 600;
+      }
+
+      td {
+        padding: 15px;
+        border-bottom: 1px solid #eeeeee;
+        color: #333333;
+      }
+
+      /* Efecto cebra: filas alternas con gris muy claro */
+      tr:nth-child(even) td {
+        background-color: #f9f9f9;
+      }
+
+      /* Hover para resaltar la fila donde pasa el mouse */
+      tr:hover td {
+        background-color: #f1f5f9;
+      }
+
+      /* Estilo pro para la insignia del puntaje */
+      .badge-score {
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 13px;
+      }
+      .bg-verde { background-color: #28a745; }
+      .bg-amarillo { background-color: #ffc107; color: #333333; } /* Texto oscuro para que se lea bien */
+      .bg-rojo { background-color: #dc3545; }
+
+      /* Link de Ver Detalle transformado en un botoncito sutil */
+      .btn-detail {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .btn-detail:hover {
+        text-decoration: underline;
+      }
+
+      /* Estilos del Footer */
+      .footer-container {
+        background-color: #1E3264;
+        padding: 20px 0;
+        width: 100%;
+      }
+      
       .logo-footer {
         display: block;
         margin: auto;
         height: 30px;
-        filter: brightness(0) invert(1); /* TRUCO PRO: Si el logo es negro, esto lo vuelve 100% blanco para que resalte sobre el fondo oscuro */
+        filter: brightness(0) invert(1);
       }
     </style>
   </head>
 
   <body>
     <header>
-          <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo"/>
-          <nav>
+      <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo"/>
+      <nav>
         <ul>
           <li><a href="landing.html">Inicio</a></li>
           <li><a href="adicionDeProveedor.html">Añadir Proveedor</a></li>
@@ -66,16 +151,25 @@
         </ul>
       </nav>
     </header>
-    <main>
-      <section>
-        <div style="text-align: center">
-          <img src="./assets/Jerboa.jpg" height="600px" />
-        </div>
-      </section>
 
-      <section></section>
-
-      <section></section>
+    <main class="ranking-container">
+      <h2>Ranking de Sostenibilidad</h2>
+      <p>Proveedores ordenados por su puntaje de cumplimiento ambiental e institucional.</p>
+      
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Proveedor</th>
+              <th>Puntaje</th>
+              <th>Cobertura</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body">
+            </tbody>
+        </table>
+      </div>
     </main>
 
     <footer>
@@ -83,5 +177,35 @@
         <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo-footer"/>
       </div>
     </footer>
+
+    <script src="./js/datosPlanos.js"></script>
+    <script>
+      const tbody = document.getElementById("tabla-body");
+
+      /* Ordenar los proveedores de mayor a menor puntaje */
+      const proveedoresOrdenados = [...PROVEEDORES].sort((a, b) => b.puntaje - a.puntaje);
+
+      proveedoresOrdenados.forEach(p => {
+        const fila = document.createElement("tr");
+        
+        // Determinamos el color del semáforo según el puntaje
+        let colorClase = "bg-rojo"; // Menor a 50
+        if (p.puntaje >= 75) {
+          colorClase = "bg-verde";
+        } else if (p.puntaje >= 50) {
+          colorClase = "bg-amarillo";
+        }
+
+        const coberturaFormateada = p.cobertura.charAt(0).toUpperCase() + p.cobertura.slice(1);
+
+        fila.innerHTML = `
+          <td><strong>${p.nombre}</strong></td>
+          <td><span class="badge-score ${colorClase}">${p.puntaje} pts</span></td>
+          <td>${coberturaFormateada}</td>
+          <td><a href="detallesDeProveedor.html?id=${p.id}" class="btn-detail">Ver detalle →</a></td>
+        `;
+        tbody.appendChild(fila);
+      });
+    </script>
   </body>
 </html>
