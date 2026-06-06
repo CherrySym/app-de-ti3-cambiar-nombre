@@ -6,6 +6,13 @@
     <title>Añadir Proveedor</title>
     <link rel="stylesheet" href="./css/global-styles.css"/>
     <style>
+      /* Estilos para el logo */
+      .logo {
+        display: block;
+        height: 40px;
+        width: auto;
+        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco sobre fondo oscuro */
+      }
       /* Estilos del Header */
       header {
         background-color: #1E3264;
@@ -34,6 +41,105 @@
       header nav ul li a:hover {
         color: #007bff; /* Cambia a azul cuando pasás el mouse por encima */
       }
+      .form-container {
+        flex: 1;
+        max-width: 750px; 
+        margin: 40px auto; 
+        padding: 0 20px;
+      }
+
+      .form-card {
+        background-color: #ffffff;
+        padding: 35px;
+        border-radius: 6px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Sombra sutil para despegarlo del fondo */
+      }
+
+      .form-card h2 {
+        font-size: 24px;
+        color: #1E3264;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 10px;
+      }
+
+      /* Filas del formulario (Para poner inputs en paralelo) */
+      .form-row {
+        display: flex;
+        gap: 20px;
+      }
+
+      .form-row .form-group {
+        flex: 1; /* Hace que los elementos de la misma fila midan lo mismo */
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        font-weight: 500;
+        color: #333333;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      /* Estilo unificado para campos de entrada */
+      .form-input, .form-select, .form-textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        background-color: #ffffff;
+      }
+
+      .form-input:focus, .form-select:focus, .form-textarea:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      /* Contenedor especial para los Checkboxes múltiples */
+      .checkbox-group {
+        display: flex;
+        gap: 25px;
+        margin-top: 5px;
+      }
+
+      .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 400;
+        cursor: pointer;
+      }
+
+      .form-textarea {
+        resize: vertical; /* Permite estirarlo hacia abajo pero no hacia los lados */
+        min-height: 80px;
+      }
+
+      /* Botón para enviar el formulario */
+      .btn-submit-prov {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 14px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.2s;
+        margin-top: 10px;
+      }
+
+      .btn-submit-prov:hover {
+        background-color: #0056b3;
+      }
+
+      /* Estilos del Footer */
       .footer-container {
         background-color: #1E3264; /* Un gris oscuro elegante o el azul oscuro de la UCU */
         padding: 20px 0; /* Un poquito más de aire arriba y abajo */
@@ -50,7 +156,7 @@
 
   <body>
     <header>
-      <h1>Añadir Proveedor</h1>
+      <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo"/>
       <nav>
         <ul>
           <li><a href="landing.html">Inicio</a></li>
@@ -59,16 +165,102 @@
         </ul>
       </nav>
     </header>
-    <main>
-      <section>
-        <div style="text-align: center">
-          <img src="./assets/Jerboa.jpg" height="600px" />
-        </div>
+
+    <main class="form-container">
+      <section class="form-card">
+        <h2>Registrar Nuevo Proveedor</h2>
+        
+        <form action="ranking.html" method="POST">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre">Nombre de la Empresa:</label>
+              <input type="text" id="nombre" required class="form-input" placeholder="Ej: EcoProveedores UY Ltda.">
+            </div>
+            <div class="form-group">
+              <label for="contacto">Persona de Contacto:</label>
+              <input type="text" id="contacto" required class="form-input" placeholder="Ej: Valentina Rocha">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Correo Electrónico:</label>
+              <input type="email" id="email" required class="form-input" placeholder="contacto@empresa.com.uy">
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono de Contacto:</label>
+              <input type="tel" id="telefono" required class="form-input" placeholder="Ej: +598 2 410 8800">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cobertura">Cobertura de Logística:</label>
+              <select id="cobertura" class="form-select">
+                <option value="local">Local (Nacional)</option>
+                <option value="importado">Importado (Internacional)</option>
+                <option value="ambos">Ambos</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="mat_reciclados_pct">Materiales Reciclados (%):</label>
+              <input type="number" id="mat_reciclados_pct" min="0" max="100" class="form-input" placeholder="Ej: 80">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="embalaje_sostenible">¿Utiliza Embalaje Sostenible?:</label>
+              <select id="embalaje_sostenible" class="form-select">
+                <option value="si">Sí</option>
+                <option value="no">No</option>
+                <option value="parcial">Parcial</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="energia_renovable">¿Utiliza Energía Renovable?:</label>
+              <select id="energia_renovable" class="form-select">
+                <option value="si">Sí</option>
+                <option value="no">No</option>
+                <option value="parcial">Parcial</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Certificaciones de la Empresa:</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label"><input type="checkbox" name="certificaciones" value="ISO14001"> ISO 14001</label>
+              <label class="checkbox-label"><input type="checkbox" name="certificaciones" value="FSC"> FSC</label>
+              <label class="checkbox-label"><input type="checkbox" name="certificaciones" value="EMAS"> EMAS</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="pdf_certificados">Adjuntar Comprobantes de Certificación (Formato PDF):</label>
+            <input type="file" id="pdf_certificados" accept=".pdf" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="descripcion">Descripción Comercial:</label>
+            <textarea id="descripcion" class="form-textarea" placeholder="Breve reseña sobre la empresa y sus materiales..."></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="desafios">Desafíos de Sostenibilidad:</label>
+              <textarea id="desafios" class="form-textarea" placeholder="¿Qué dificultades enfrenta la empresa actualmente?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="metas">Metas a Futuro:</label>
+              <textarea id="metas" class="form-textarea" placeholder="Ej: Reducir packaging plástico al 50% para 2027"></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit-prov">Guardar Proveedor</button>
+        </form>
       </section>
-
-      <section></section>
-
-      <section></section>
     </main>
 
     <footer>

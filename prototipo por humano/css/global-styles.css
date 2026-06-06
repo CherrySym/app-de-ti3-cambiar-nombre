@@ -18,3 +18,6 @@ body {
 input, button, select, textarea {
   font-family: inherit;
 }
+footer {
+  margin-top: auto; /* Le dice al footer: "Chupá todo el espacio libre que haya arriba tuyo" */
+}
