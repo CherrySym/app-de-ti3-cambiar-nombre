@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoCompras Universidad</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #eef7ef;
+      color: #173827;
+    }
+
+    /* ================= LOGIN ================= */
+
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background:
+        linear-gradient(rgba(9, 60, 38, 0.75), rgba(9, 60, 38, 0.85)),
+        url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      padding: 20px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      padding: 35px;
+      border-radius: 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+      text-align: center;
+    }
+
+    .login-logo {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    .login-card h1 {
+      color: #0f3d2e;
+      margin-bottom: 8px;
+      font-size: 30px;
+    }
+
+    .login-card p {
+      color: #5d7567;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-weight: 700;
+      margin-bottom: 7px;
+      color: #214c35;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #b9d5c2;
+      border-radius: 14px;
+      font-size: 15px;
+      margin-bottom: 16px;
+      outline: none;
+      background: #fbfffc;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #2f8f5b;
+      box-shadow: 0 0 0 4px rgba(47, 143, 91, 0.14);
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 15px;
+      background: linear-gradient(135deg, #17643f, #4caf72);
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(23, 100, 63, 0.28);
+    }
+
+    .login-warning {
+      margin-top: 18px;
+      padding: 12px;
+      background: #edf8ef;
+      border-radius: 12px;
+      font-size: 14px;
+      color: #28553b;
+    }
+
+    /* ================= APP ================= */
+
+    .app {
+      display: none;
+      min-height: 100vh;
+      grid-template-columns: 260px 1fr;
+    }
+
+    .sidebar {
+      background: #0f3d2e;
+      color: white;
+      padding: 25px;
+    }
+
+    .sidebar h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar p {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 30px;
+    }
+
+    .menu-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.18);
+      margin-bottom: 12px;
+      padding: 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .menu-btn:hover,
+    .menu-btn.active {
+      background: #2f8f5b;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .logout {
+      margin-top: 30px;
+      background: #b23b3b;
+    }
+
+    .content {
+      padding: 35px;
+    }
+
+    .topbar {
+      background: white;
+      padding: 22px 26px;
+      border-radius: 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 24px rgba(31, 53, 40, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .topbar h1 {
+      color: #0f3d2e;
+      font-size: 28px;
+    }
+
+    .user-badge {
+      background: #d8f3dc;
+      padding: 10px 15px;
+      border-radius: 999px;
+      font-weight: 800;
+      color: #0f3d2e;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 22px;
+      box-shadow: 0 8px 24px rgba(31, 53, 40, 0.08);
+      border: 1px solid #d7eadc;
+      margin-bottom: 25px;
+    }
+
+    .section-title {
+      color: #0f3d2e;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      color: #5c735f;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .eco-info {
+      background: #edf8ef;
+      border-left: 7px solid #2f8f5b;
+      padding: 16px;
+      border-radius: 14px;
+      margin-bottom: 22px;
+      color: #244a34;
+      line-height: 1.5;
+    }
+
+    .small-btn {
+      width: auto;
+      padding: 11px 16px;
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 18px;
+      background: white;
+    }
+
+    th {
+      background: #0f3d2e;
+      color: white;
+      padding: 15px;
+      text-align: left;
+    }
+
+    td {
+      padding: 15px;
+      border-bottom: 1px solid #e2eee6;
+    }
+
+    tr:nth-child(even) {
+      background: #f4fbf5;
+    }
+
+    .score {
+      display: inline-block;
+      background: #c8f0d0;
+      color: #0f3d2e;
+      padding: 8px 13px;
+      border-radius: 999px;
+      font-weight: 900;
+    }
+
+    .product {
+      background: white;
+      border-radius: 22px;
+      padding: 25px;
+      box-shadow: 0 8px 24px rgba(31, 53, 40, 0.08);
+      border: 1px solid #d7eadc;
+    }
+
+    .product-icon {
+      font-size: 45px;
+      margin-bottom: 12px;
+    }
+
+    .product h3 {
+      color: #0f3d2e;
+      margin-bottom: 10px;
+    }
+
+    .product p {
+      color: #5c735f;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      color: #17643f;
+      font-size: 25px;
+      font-weight: 900;
+      margin: 15px 0;
+    }
+
+    .cart-box {
+      background: #edf8ef;
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px solid #cde8d3;
+      margin-top: 25px;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+      }
+
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOGIN BLOQUEANTE -->
+  <section class="login-page" id="loginPage">
+    <div class="login-card">
+      <div class="login-logo">Gestion de Proveedores UCU</div>
+              <img src="./assets/logo-ucu.png" alt="Logotipo UCU" width="100">
+      <h1>EcoCompras</h1>
+      <p>
+        Nuestros proveedores comprometidos con la mision de un mundo mas sustentable.
+      </p>
+
+      <form id="loginForm">
+        <label for="rol">Ingresar como</label>
+        <select id="rol" required>
+          <option value="">Seleccioná tu tipo de usuario</option>
+          <option value="compras">Encargado de compras</option>
+          <option value="proveedor">Proveedor</option>
+        </select>
+
+        <label for="correo">Correo</label>
+        <input type="email" id="correo" placeholder="usuario@correo.com" required>
+
+        <label for="clave">Contraseña</label>
+        <input type="password" id="clave" placeholder="Contraseña" required>
+
+        <button type="submit">Iniciar sesión</button>
+      </form>
+
+      <div class="login-warning">
+        No se puede acceder al sistema sin iniciar sesión.
+      </div>
+    </div>
+  </section>
+
+  <!-- APLICACIÓN DESPUÉS DEL LOGIN -->
+  <section class="app" id="app">
+
+    <aside class="sidebar">
+      <h2>🌱 EcoCompras</h2>
+      <p>Panel de compras sostenibles</p>
+
+      <button class="menu-btn compras-only active" onclick="mostrarPagina('dashboard', this)">🏠 Inicio</button>
+      <button class="menu-btn compras-only" onclick="mostrarPagina('agregar', this)">➕ Agregar proveedor</button>
+      <button class="menu-btn" onclick="mostrarPagina('ranking', this)">🏆 Ranking</button>
+      <button class="menu-btn compras-only" onclick="mostrarPagina('comprar', this)">🛒 Comprar papel</button>
+      <button class="menu-btn" onclick="mostrarPagina('postulacion', this)">📩 Postulación proveedor</button>
+
+      <button class="logout" onclick="cerrarSesion()">Cerrar sesión</button>
+    </aside>
+
+    <main class="content">
+
+      <div class="topbar">
+        <h1 id="tituloPanel">Panel principal</h1>
+        <div class="user-badge" id="userBadge">Usuario</div>
+      </div>
+
+      <!-- INICIO -->
+      <section class="page active" id="dashboard">
+        <div class="card">
+          <h2 class="section-title">Bienvenido al sistema</h2>
+          <p class="section-subtitle">
+            Desde este panel se pueden gestionar proveedores, ver su ranking sostenible y comprar papel priorizando certificaciones ambientales.
+          </p>
+
+          <div class="grid-3">
+            <div class="card">
+              <h3>🏆 Mejor proveedor</h3>
+              <p>EcoPapeles S.A.</p>
+              <p><span class="score">60 pts</span></p>
+            </div>
+
+            <div class="card">
+              <h3>📄 Producto destacado</h3>
+              <p>Papel reciclado A4</p>
+              <p><span class="score">60 pts</span></p>
+            </div>
+
+            <div class="card">
+              <h3>🌿 Criterio</h3>
+              <p>El puntaje se calcula sumando certificaciones.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AGREGAR PROVEEDOR -->
+      <section class="page" id="agregar">
+        <div class="card">
+          <h2 class="section-title">➕ Agregar proveedor</h2>
+          <p class="section-subtitle">
+            El encargado de compras registra proveedores y las certificaciones que posee.
+          </p>
+
+          <div class="eco-info">
+            Puntajes sugeridos: ISO 14001 = 30 pts, Empresa B = 25 pts, FSC = 20 pts,
+            Comercio Justo = 15 pts, Carbono Neutral = 10 pts.
+          </div>
+
+          <form>
+            <div class="grid-2">
+              <div>
+                <label>Nombre del proveedor</label>
+                <input type="text" placeholder="EcoPapeles S.A.">
+              </div>
+
+              <div>
+                <label>Rubro</label>
+                <input type="text" placeholder="Papelería">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div>
+                <label>Correo de contacto</label>
+                <input type="email" placeholder="contacto@proveedor.com">
+              </div>
+
+              <div>
+                <label>Certificación</label>
+                <select>
+                  <option>ISO 14001 - 30 pts</option>
+                  <option>Empresa B - 25 pts</option>
+                  <option>FSC - 20 pts</option>
+                  <option>Comercio Justo - 15 pts</option>
+                  <option>Carbono Neutral - 10 pts</option>
+                </select>
+              </div>
+            </div>
+
+            <label>Observaciones</label>
+            <textarea placeholder="Detalles de la certificación o documentación presentada"></textarea>
+
+            <button type="button">Guardar proveedor</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- RANKING -->
+      <section class="page" id="ranking">
+        <div class="card">
+          <h2 class="section-title">🏆 Ranking de proveedores</h2>
+          <p class="section-subtitle">
+            Ordenado de mayor a menor puntaje sostenible.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Posición</th>
+                <th>Proveedor</th>
+                <th>Rubro</th>
+                <th>Certificaciones</th>
+                <th>Puntaje</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>EcoPapeles S.A.</td>
+                <td>Papelería</td>
+                <td>ISO 14001, FSC, Carbono Neutral</td>
+                <td><span class="score">60 pts</span></td>
+              </tr>
+
+              <tr>
+                <td>2</td>
+                <td>Limpieza Verde Ltda.</td>
+                <td>Limpieza</td>
+                <td>Empresa B, ISO 14001</td>
+                <td><span class="score">55 pts</span></td>
+              </tr>
+
+              <tr>
+                <td>3</td>
+                <td>Bosque Responsable</td>
+                <td>Papelería</td>
+                <td>FSC, Comercio Justo</td>
+                <td><span class="score">35 pts</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- COMPRAR PAPEL -->
+      <section class="page" id="comprar">
+        <div class="card">
+          <h2 class="section-title">🛒 Comprar papel sostenible</h2>
+          <p class="section-subtitle">
+            El encargado de compras puede elegir papel según precio, proveedor y puntaje ambiental.
+          </p>
+
+          <div class="grid-3">
+            <div class="product">
+              <div class="product-icon">📄🌱</div>
+              <h3>Papel reciclado A4</h3>
+              <p><strong>Proveedor:</strong> EcoPapeles S.A.</p>
+              <p><strong>Certificaciones:</strong> ISO 14001, FSC, Carbono Neutral</p>
+              <p><span class="score">60 pts</span></p>
+              <div class="price">$290</div>
+              <p>Resma de 500 hojas</p>
+              <button onclick="comprar('Papel reciclado A4', 'EcoPapeles S.A.', 290)">Comprar</button>
+            </div>
+
+            <div class="product">
+              <div class="product-icon">📄🍃</div>
+              <h3>Papel FSC A4</h3>
+              <p><strong>Proveedor:</strong> Bosque Responsable</p>
+              <p><strong>Certificaciones:</strong> FSC, Comercio Justo</p>
+              <p><span class="score">35 pts</span></p>
+              <div class="price">$260</div>
+              <p>Resma de 500 hojas</p>
+              <button onclick="comprar('Papel FSC A4', 'Bosque Responsable', 260)">Comprar</button>
+            </div>
+
+            <div class="product">
+              <div class="product-icon">📄♻️</div>
+              <h3>Papel económico eco</h3>
+              <p><strong>Proveedor:</strong> Papelería Verde</p>
+              <p><strong>Certificaciones:</strong> Carbono Neutral</p>
+              <p><span class="score">10 pts</span></p>
+              <div class="price">$230</div>
+              <p>Resma de 500 hojas</p>
+              <button onclick="comprar('Papel económico eco', 'Papelería Verde', 230)">Comprar</button>
+            </div>
+          </div>
+
+          <div class="cart-box" id="carrito">
+            Todavía no seleccionaste ningún producto.
+          </div>
+        </div>
+      </section>
+
+      <!-- POSTULACIÓN -->
+      <section class="page" id="postulacion">
+        <div class="card">
+          <h2 class="section-title">📩 Postulación independiente</h2>
+          <p class="section-subtitle">
+            El proveedor puede enviar sus datos para ser evaluado por la universidad.
+          </p>
+
+          <form>
+            <div class="grid-2">
+              <div>
+                <label>Nombre de la empresa</label>
+                <input type="text" placeholder="Nombre legal">
+              </div>
+
+              <div>
+                <label>RUT</label>
+                <input type="text" placeholder="RUT o identificación fiscal">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div>
+                <label>Correo</label>
+                <input type="email" placeholder="proveedor@empresa.com">
+              </div>
+
+              <div>
+                <label>Teléfono</label>
+                <input type="tel" placeholder="+598 ...">
+              </div>
+            </div>
+
+            <label>Certificaciones</label>
+            <textarea placeholder="ISO 14001, FSC, Empresa B, Carbono Neutral..."></textarea>
+
+            <label>Adjuntar documentación</label>
+            <input type="file">
+
+            <button type="button">Enviar postulación</button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </section>
+
+  <script>
+    const loginPage = document.getElementById("loginPage");
+    const app = document.getElementById("app");
+    const loginForm = document.getElementById("loginForm");
+    const userBadge = document.getElementById("userBadge");
+    const tituloPanel = document.getElementById("tituloPanel");
+
+    loginForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const rol = document.getElementById("rol").value;
+      const correo = document.getElementById("correo").value;
+
+      loginPage.style.display = "none";
+      app.style.display = "grid";
+
+      if (rol === "compras") {
+        userBadge.textContent = "Encargado de compras";
+        mostrarBotonesCompras(true);
+        mostrarPaginaPorId("dashboard");
+      }
+
+      if (rol === "proveedor") {
+        userBadge.textContent = "Proveedor";
+        mostrarBotonesCompras(false);
+        mostrarPaginaPorId("postulacion");
+      }
+    });
+
+    function mostrarBotonesCompras(mostrar) {
+      const botones = document.querySelectorAll(".compras-only");
+
+      botones.forEach(function(boton) {
+        boton.style.display = mostrar ? "block" : "none";
+      });
+    }
+
+    function mostrarPagina(id, boton) {
+      mostrarPaginaPorId(id);
+
+      const botones = document.querySelectorAll(".menu-btn");
+      botones.forEach(btn => btn.classList.remove("active"));
+
+      boton.classList.add("active");
+    }
+
+    function mostrarPaginaPorId(id) {
+      const paginas = document.querySelectorAll(".page");
+
+      paginas.forEach(function(pagina) {
+        pagina.classList.remove("active");
+      });
+
+      document.getElementById(id).classList.add("active");
+
+      if (id === "dashboard") tituloPanel.textContent = "Panel principal";
+      if (id === "agregar") tituloPanel.textContent = "Agregar proveedor";
+      if (id === "ranking") tituloPanel.textContent = "Ranking de proveedores";
+      if (id === "comprar") tituloPanel.textContent = "Comprar papel";
+      if (id === "postulacion") tituloPanel.textContent = "Postulación de proveedor";
+    }
+
+    function comprar(producto, proveedor, precio) {
+      const carrito = document.getElementById("carrito");
+
+      carrito.innerHTML = `
+        <h3>Compra seleccionada</h3>
+        <p><strong>Producto:</strong> ${producto}</p>
+        <p><strong>Proveedor:</strong> ${proveedor}</p>
+        <p><strong>Precio:</strong> $${precio}</p>
+        <br>
+        <button class="small-btn" onclick="confirmarCompra()">Confirmar compra</button>
+      `;
+    }
+
+    function confirmarCompra() {
+      alert("Compra registrada correctamente.");
+    }
+
+    function cerrarSesion() {
+      app.style.display = "none";
+      loginPage.style.display = "flex";
+      loginForm.reset();
+    }
+  </script>
+
+</body>
+</html>
