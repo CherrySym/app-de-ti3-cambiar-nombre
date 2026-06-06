@@ -6,8 +6,7 @@ Cosas en el repo: desarrollo de diseño hecho por ia de forma apresurada, desarr
 
 **Notas mias:** 
 carpeta de assets para almacenar imagenes o elementos relevantes
-investigar de que manera manejar la subida y el guardado de documentos (las certificaciones) en una base de datos, intentar con JSON que promete. o bd clave-valor
-ENCONTRE LA FORMA DE HACERLO, INVESTIGAR FIREBASE Y SUPRABASE
+FireBase va a ser la base de datos, tiene api integrada asi que se ahorra el back, revisiar cual es su limite se uso si tiene
 
 ## Descripcion
 
@@ -17,19 +16,24 @@ El sitio web de compras es una herramienta dedicada del equipo de compras de la 
 
 1. **Login** - Identifico que al ser una herramienta dedicada al equipo de compras y estaria acoplada al ecosistema de la universidad el registro de cuentas no es necesario. El equipo de IT encargado del manejo de las cuentas de la comunidad se encargarian de que unicamente el equpo de compras pueda loguearse y hacer uso de la herramienta. 
 
-El login seria utilizando el correo institucional con su contraseña.
+El login seria utilizando el usuario institucional con su contraseña.
 
 2. **Landing Page** - Pagina de acceso al resto de apartados y tal vez con algo mas que sea relevante.
+Con explicaciones de uso? eeeee ni puta idea 
 
-3. **Formulario de adicion de proveedores** - Apartado para registrar a un nuevo proovedor, su nombre, sus datos de empresa relevantes (despues saco info de alguien que haga administracion de empresas) y sus certificaciones.
+3. **Formulario de adicion de proveedores** - Apartado para registrar a un nuevo proovedor, su nombre, sus datos de empresa relevantes (despues saco info de alguien que haga administracion de empresas) y sus certificaciones (no lo hice lol).
 Dos planes para la forma de aceptar registros.
     1 - Campos especificos para cada certificacion y un campo de certificaciones adicionales no listadas
     2 - Un solo campo para añadir todos
+    emm no se cual estaria mejor, cualquiera
+4. **Ranking** - Un ranking de los proveedores con sus puntajes (la forma de calcular el puntaje falta definirse) Mientas tanto los puntos de estan hardcodeados en datosPlanos.js
 
-4. **Ranking** - Un ranking de los proveedores con sus puntajes (la forma de calcular el puntaje esta por definirse)
+5. **Detalle de X proveedor** - Información específica de un proveedor ya añadido en la herramienta por el/los encargado/s. Se visualizan sus datos, sus certificaciones (con fecha de expiracion en caso de que sea relevante(no lo creo)), su puntaje actual y tal vez sus productos(probably). 
+El usuario encargado de compras debe poder editar inforamcion del proveedor, seguramente toda, en especial poder añadir certificaciones que el proveedor haya conseguido luego de haber sido registrado / cambios de nombre y cosas relevantes.
 
-5. **Detalle de X proveedor** - Información específica de un proveedor ya añadido en la herramienta por el/los encargado/s. Se visualizan sus datos, sus certificaciones (con fecha de expiracion en caso de que sea relevante(no lo creo)), su puntaje actual y tal vez sus productos(probably).
-Noto un desafio en esta pantalla, como hacer display de los diferentes proveedores.
+6. **Listado de todos los proveedores** - No se si funcionaria mejor fusionar esta con el ranking o dejarla separados, si los separo sacara el ranking del nav y meteria este y desde aca se puede acceder al ranking. tiene sentido para mi.
+
+7. **¿Hacer compras** - eeeeee si o no¿
 
 ## Pantallas adicionales
 

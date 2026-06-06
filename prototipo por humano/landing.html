@@ -6,6 +6,13 @@
     <title>Landing Page</title>
     <link rel="stylesheet" href="./css/global-styles.css" />
     <style>
+      /* Estilos para el logo del header*/
+      .logo {
+        display: block;
+        height: 40px;
+        width: auto;
+        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco */
+      }
       /* Estilos del Header */
       header {
         background-color: #1E3264;
@@ -18,7 +25,7 @@
 
       /* Estilos del menu de enlaces */
       header nav ul {
-        list-style: none; /* Le quita los puntitos negros a la lista */
+        list-style: none; /* Le quita los puntos a la lista */
         margin: 0;
         padding: 0;
         display: flex; /* Hace que los <li> se pongan uno al lado del otro */
@@ -30,14 +37,14 @@
         color: #ffffff;
         font-weight: 500;
       }
-      /*Estilos adicionales de los enlaces para el estado hover */
+      /*Estilos adicionales de los enlaces para el estado hover (al pasar el mouse por encima) */
       header nav ul li a:hover {
-        color: #007bff; /* Cambia a azul cuando pasás el mouse por encima */
+        color: #298eec; 
       }
       .landing-container {
         flex: 1;
-        max-width: 1000px; /* Centra el contenido en un bloque agradable a la vista */
-        margin: 40px auto; /* Le da aire arriba, abajo y lo centra horizontalmente */
+        max-width: 1000px; 
+        margin: 40px auto; 
         padding: 0 20px;
       }
       .welcome-block {
@@ -55,30 +62,29 @@
         font-size: 15px;
       }
 
-      /* Contenedor Flex para poner las tarjetas lado a lado */
+      
       .dashboard-grid {
         display: flex;
         gap: 25px;
-        flex-wrap: wrap; /* Permite que colapsen en celulares */
+        flex-wrap: wrap; 
       }
 
-      /* Caja de la tarjeta */
       .menu-card {
         background-color: #ffffff;
         padding: 25px;
         border-radius: 6px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         flex: 1;
-        min-width: 280px; /* Evita que se deformen demasiado */
+        min-width: 280px; 
         
         display: flex;
         flex-direction: column;
-        justify-content: space-between; /* Clava el botón al fondo de la tarjeta */
+        justify-content: space-between; 
       }
 
       .menu-card h3 {
         font-size: 19px;
-        color: #007bff; /* Tu azul característico */
+        color: #007bff;
         margin-bottom: 12px;
       }
 
@@ -89,7 +95,6 @@
         margin-bottom: 25px;
       }
 
-      /* Botón interno de la tarjeta */
       .btn-dashboard {
         display: block;
         text-align: center;
@@ -107,15 +112,15 @@
         background-color: #0056b3;
       }
       .footer-container {
-        background-color: #1E3264; /* Un gris oscuro elegante o el azul oscuro de la UCU */
-        padding: 20px 0; /* Un poquito más de aire arriba y abajo */
+        background-color: #1E3264;
+        padding: 20px 0; 
         width: 100%;
       }
       .logo-footer {
         display: block;
         margin: auto;
         height: 30px;
-        filter: brightness(0) invert(1); /* TRUCO PRO: Si el logo es negro, esto lo vuelve 100% blanco para que resalte sobre el fondo oscuro */
+        filter: brightness(0) invert(1); 
       }
     </style>
   </head>
@@ -123,7 +128,7 @@
   <body>
 
     <header>
-      <h1>Landing Page</h1>
+      <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo"/>
       <nav>
         <ul>
           <li><a href="landing.html">Inicio</a></li>

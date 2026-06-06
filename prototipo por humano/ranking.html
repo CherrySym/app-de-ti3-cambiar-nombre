@@ -101,7 +101,7 @@
         background-color: #f1f5f9;
       }
 
-      /* Estilo pro para la insignia del puntaje */
+      /* Estilo para la insignia del puntaje */
       .badge-score {
         color: white;
         padding: 4px 8px;
@@ -113,7 +113,7 @@
       .bg-amarillo { background-color: #ffc107; color: #333333; } /* Texto oscuro para que se lea bien */
       .bg-rojo { background-color: #dc3545; }
 
-      /* Link de Ver Detalle transformado en un botoncito sutil */
+      /* Link de Ver Detalle transformado en un boton sutil */
       .btn-detail {
         color: #007bff;
         text-decoration: none;
@@ -188,7 +188,7 @@
       proveedoresOrdenados.forEach(p => {
         const fila = document.createElement("tr");
         
-        // Determinamos el color del semáforo según el puntaje
+        // Determinar el color del puntaje según el valor
         let colorClase = "bg-rojo"; // Menor a 50
         if (p.puntaje >= 75) {
           colorClase = "bg-verde";
