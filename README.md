@@ -43,6 +43,7 @@ Estas pantallas no forman parte de lo basico para que la web cumpla su cometido,
 Deberan añadir toda su infomacion empresarial pertinente junto a las certificaciones de las cuales disponga. La forma de añadir sus certifiaciones hace falta definir junto al formulario de la pantalla principal. No sera obligatorio cumplir con TODAS las certificaciones pero sera requisito añadir minimo una o que se haga un calculo previo de su puntaje para que cumpla un umbral minimo (a discutir)
 
 La adicion de esta pantalla arraiga a una segunda:
+
 2. **Aprobacion de postulaciones** - Apartado adicional para que el encargado revise las postulaciones hechas por los proveedores interesados y valide la informacion. En especial debe dar un ok a la/s certificacion/es que el proveedor haya subido. Evitaria que se tome como valido un archivo vacio o algo nada que ver.
 
 
