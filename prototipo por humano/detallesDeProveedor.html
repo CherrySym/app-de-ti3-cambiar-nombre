@@ -11,42 +11,42 @@
         display: block;
         height: 40px;
         width: auto;
-        filter: brightness(0) invert(1);
+        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco */
       }
-      
+      /* Estilos del Header */
       header {
         background-color: #1E3264;
         padding: 15px 30px;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        justify-content: space-between; /* Título a la izquierda, Menú a la derecha */
+        align-items: center; /* Centra verticalmente los textos */
         color: white;
       }
-      /* Fuerza a que los enlaces y el avatar estén en la misma línea */
+      /* Estilos para que los enlaces y el avatar del nav estén en la misma línea */
       header nav {
         display: flex;
         align-items: center;
         gap: 25px;
       }
-
+      /* Estilos del menu de enlaces */
       header nav ul {
-        list-style: none;
+        list-style: none; /* Le quita los puntos a la lista */
         margin: 0;
         padding: 0;
-        display: flex;
-        gap: 20px;
+        display: flex; /* Hace que los <li> se pongan uno al lado del otro */
+        gap: 20px; /* Separa los enlaces entre sí */
       }
-
+      /* Estilos de los enlaces */
       header nav ul li a {
-        text-decoration: none;
+        text-decoration: none; /* Le quita el subrayado */
         color: #ffffff;
         font-weight: 500;
       }
-
+      /* Cambio de color al pasar el mouse por los enlaces del nav */
       header nav ul li a:hover {
         color: #007bff;
       }
-/* La cajita del menú flotante */
+      /* Estilos para el contenedor del menu flotante que aparece al hacer click en el icono de usuario */
       .dropdown-content {
         position: absolute;
         right: 0;
@@ -58,29 +58,29 @@
         padding: 12px 0;
         z-index: 1000;
       }
-
+      /* Estilos para la sección interna con el nombre y mail del usuario */
       .dropdown-user-info {
         padding: 4px 16px 8px 16px;
         display: flex;
         flex-direction: column;
       }
-
+      /* Texto en negrita para el nombre del usuario */
       .dropdown-user-info strong {
         font-size: 14px;
         color: #333333;
       }
-
+      /* Texto gris y más chico para el correo */
       .dropdown-user-info span {
         font-size: 12px;
         color: #777777;
       }
-
+      /* Línea divisoria del menú desplegable */
       .dropdown-content hr {
         border: 0;
         border-top: 1px solid #eeeeee;
         margin: 8px 0;
       }
-
+      /* Estilos para el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link {
         color: #dc3545;
         padding: 8px 16px;
@@ -89,11 +89,11 @@
         font-size: 14px;
         font-weight: 500;
       }
-
+      /* Cambio de color al pasar el mouse por el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link:hover {
         background-color: #fff5f5;
       }
-      /* --- ESTILOS DE LA PÁGINA DE DETALLE --- */
+      /* Estilos del contenedor de detalles */
       .detail-container {
         flex: 1;
         max-width: 800px;
@@ -102,7 +102,7 @@
         width: 100%;
       }
 
-      /* Botón para volver atrás */
+      /* Estilos del botón para volver atrás */
       .btn-back {
         display: inline-block;
         margin-bottom: 20px;
@@ -110,18 +110,19 @@
         text-decoration: none;
         font-weight: 500;
       }
+      /* Cambio de color al pasar el mouse por el boton de "Volver Atrás" */
       .btn-back:hover {
         text-decoration: underline;
       }
 
-      /* Tarjeta Principal */
+      /* Estilos de la tarjeta de detalles*/
       .detail-card {
         background-color: #ffffff;
         padding: 40px;
         border-radius: 6px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       }
-
+      /* Estilos del encabezado de la tarjeta */
       .detail-header {
         display: flex;
         justify-content: space-between;
@@ -130,14 +131,14 @@
         padding-bottom: 20px;
         margin-bottom: 25px;
       }
-
+      /* Estilos para el nombre del proveedor */
       .detail-header h2 {
         font-size: 28px;
         color: #1E3264;
         margin: 0 0 8px 0;
       }
-      /* Estilo base del botón */
-      .btn-editar-simulado {
+      /* Estilos del botón "Editar información" */ 
+       .btn-editar-simulado {
         padding: 8px 14px;
         border: 1px solid #cccccc;
         border-radius: 4px;
@@ -145,20 +146,13 @@
         color: #333333;
         font-weight: 500;
         cursor: pointer;
-        transition: background-color 0.2s, transform 0.1s; /* Suaviza los efectos */
+        transition: background-color 0.2s, transform 0.1s;
       }
 
-      /* Cuando pasás el mouse por encima (Hover) */
+      /* Cambio de color al pasar el mouse por el boton de "Editar información" */
       .btn-editar-simulado:hover {
         background-color: #e2e2e2; /* Se oscurece un poquito */
       }
-
-      /* Cuando lo clickeás (Active) */
-      .btn-editar-simulado:active {
-        background-color: #d4d4d4;
-        transform: scale(0.97); /* Efecto sutil de hundido */
-      }
-
       /* Estilos de las insignias de puntaje */
       .badge-score {
         color: white;
@@ -168,15 +162,16 @@
         font-size: 16px;
         white-space: nowrap;
       }
+      /* El color de fondo de las insignias depenndiendo el puntaje*/
       .bg-verde { background-color: #28a745; }
       .bg-amarillo { background-color: #ffc107; color: #333333; }
       .bg-rojo { background-color: #dc3545; }
 
-      /* Secciones de Información */
+      /* Estilos para separar los bloques de secciones */ 
       .info-section {
         margin-bottom: 30px;
       }
-
+      /* Estilos de los títulos de las secciones  */
       .info-section h3 {
         font-size: 16px;
         color: #1E3264;
@@ -187,7 +182,7 @@
         padding-left: 10px;
       }
 
-      /* Grilla para datos de contacto o técnicos */
+      /* Estilos de la grilla para datos de contacto */
       .info-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -196,7 +191,7 @@
         padding: 20px;
         border-radius: 4px;
       }
-
+      /* Estilos para las etiquetas dentro de las grillas de información */
       .info-item label {
         display: block;
         font-size: 12px;
@@ -205,27 +200,27 @@
         font-weight: 600;
         margin-bottom: 4px;
       }
-
+      /* Estilos para los textos con los datos reales dentro de las grillas */
       .info-item span {
         font-size: 15px;
         color: #333333;
         font-weight: 500;
       }
-
+      /* Estilos para los textos  */
       .description-text {
         font-size: 15px;
         line-height: 1.6;
         color: #555555;
       }
 
-      /* Bloque de Certificaciones */
+      /* Estilos para el bloque de Certificaciones */
       .cert-list {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
         margin-top: 10px;
       }
-
+      /* Estilos para las cositas individuales de certificación */
       .cert-badge {
         background-color: #e1ecf4;
         color: #39739d;
@@ -234,7 +229,7 @@
         font-size: 13px;
         font-weight: 600;
       }
-
+      /* Texto gris en cursiva cuando no se encuentran certificaciones */
       .no-certs {
         color: #888888;
         font-style: italic;
@@ -247,15 +242,15 @@
         padding: 20px 0;
         width: 100%;
       }
-      
+      /* Estilos para el logo del footer */
       .logo-footer {
         display: block;
         margin: auto;
-        height: 30px;
-        filter: brightness(0) invert(1);
+        height: 30px; 
+        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco */
       }
 
-      /* Estado de error si no encuentra proveedor */
+      /* Estilos para el estado de error si no encuentra proveedor */
       .error-message {
         text-align: center;
         padding: 40px;
@@ -316,38 +311,45 @@
 
     <script src="./js/datosPlanos.js"></script>
     <script>
-      // 1. Obtener el ID que viene en la URL (?id=lo-que-sea)
+
+      // 1. Obtener el ID del proveedor que viene en la URL (?id=lo-que-sea)
       const params = new URLSearchParams(window.location.search);
       const proveedorId = params.get("id");
-
+      
+      // Obtener el contenedor donde se va a inyectar el html con la información del proveedor
       const cardContainer = document.getElementById("detail-card-content");
 
-      // 2. Buscar el proveedor específico en nuestro array global
+      // 2. Buscar el proveedor específico en la lista global por su id
       const prov = PROVEEDORES.find(p => p.id === proveedorId);
 
+      // Si el proveedor existe en los datos simulados, se construye la interfaz
       if (prov) {
-        // Calcular color del semáforo para el detalle
-        let colorClase = "bg-rojo";
-        if (prov.puntaje >= 75) colorClase = "bg-verde";
-        else if (prov.puntaje >= 50) colorClase = "bg-amarillo";
+        // Define el color de fondo para el puntaje (Rojo por defecto)
+        let colorClase = "bg-rojo"; 
+        if (prov.puntaje >= 75) colorClase = "bg-verde"; // Verde para puntajes 75 o más
+        else if (prov.puntaje >= 50) colorClase = "bg-amarillo"; // Amarillo para puntajes entre 50 y 74
 
-        // Formatear certificaciones
+        // Inicializa la variable que almacenará el bloque de código de certificaciones
         let certsHTML = "";
+        // Valida si el proveedor contiene una lista de certificaciones con elementos cargados
         if (prov.certificaciones && prov.certificaciones.length > 0) {
+          // Mapea el arreglo para transformar cada texto en una pastilla HTML y unirlas en un único String
           certsHTML = `<div class="cert-list">` + 
             prov.certificaciones.map(c => `<span class="cert-badge">✓ ${c}</span>`).join("") + 
             `</div>`;
         } else {
+          // Mensaje si no se registran certificados
           certsHTML = `<p class="no-certs">Este proveedor no cuenta con certificaciones ambientales registradas.</p>`;
         }
 
-        // Traducir booleanos o textos internos de forma pro
+        // Convierte los valores de texto a mayúsculas
         const embalaje = prov.embalaje_sostenible.toUpperCase();
         const energia = prov.energia_renovable.toUpperCase();
-        const devolucion = prov.politica_devolucion ? "SÍ (Cuenta con logística inversa)" : "NO";
         const cobertura = prov.cobertura.toUpperCase();
+        // Evalua el booleano de la política de devolución para transformarlo en texto explicativo
+        const devolucion = prov.politica_devolucion ? "SÍ (Cuenta con logística inversa)" : "NO";
 
-        // 3. Inyectar la plantilla HTML con los datos reales
+        // 3. Inyectar la plantilla HTML con los datos del proveedor
         cardContainer.innerHTML = `
           <div class="detail-header">
             <div>
@@ -436,7 +438,7 @@
         `;
       }
     </script>
-        <script>
+    <script>
       // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
       function toggleMenu() {
         const menu = document.getElementById("menuDropdown");

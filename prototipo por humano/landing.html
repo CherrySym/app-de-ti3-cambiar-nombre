@@ -22,13 +22,12 @@
         align-items: center; /* Centra verticalmente los textos */
         color: white;
       }
-      /* Fuerza a que los enlaces y el avatar estén en la misma línea */
+      /* Estilos para que los enlaces y el avatar del nav estén en la misma línea */
       header nav {
         display: flex;
         align-items: center;
         gap: 25px;
       }
-
       /* Estilos del menu de enlaces */
       header nav ul {
         list-style: none; /* Le quita los puntos a la lista */
@@ -43,11 +42,11 @@
         color: #ffffff;
         font-weight: 500;
       }
-      /*Estilos adicionales de los enlaces para el estado hover (al pasar el mouse por encima) */
+      /* Cambio de color al pasar el mouse por los enlaces del nav */
       header nav ul li a:hover {
         color: #298eec;
       }
-      /* La cajita del menú flotante */
+      /* Estilos para el contenedor del menu flotante que aparece al hacer click en el icono de usuario */
       .dropdown-content {
         position: absolute;
         right: 0;
@@ -59,29 +58,29 @@
         padding: 12px 0;
         z-index: 1000;
       }
-
+      /* Estilos para la sección interna con el nombre y mail del usuario */
       .dropdown-user-info {
         padding: 4px 16px 8px 16px;
         display: flex;
         flex-direction: column;
       }
-
+      /* Texto en negrita para el nombre del usuario */
       .dropdown-user-info strong {
         font-size: 14px;
         color: #333333;
       }
-
+      /* Texto gris y más chico para el correo */
       .dropdown-user-info span {
         font-size: 12px;
         color: #777777;
       }
-
+      /* Línea divisoria del menú desplegable */
       .dropdown-content hr {
         border: 0;
         border-top: 1px solid #eeeeee;
         margin: 8px 0;
       }
-
+      /* Estilos para el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link {
         color: #dc3545;
         padding: 8px 16px;
@@ -90,37 +89,39 @@
         font-size: 14px;
         font-weight: 500;
       }
-
+      /* Cambio de color al pasar el mouse por el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link:hover {
         background-color: #fff5f5;
       }
+      /* Estilos para el contenedor de la landing page */
       .landing-container {
         flex: 1;
         max-width: 1000px;
         margin: 40px auto;
         padding: 0 20px;
       }
+      /* Estilos para el contenedor del título de bienvenida */
       .welcome-block {
         margin-bottom: 35px;
       }
-
+      /* Estilos del título de bienvenida */
       .welcome-block h2 {
         font-size: 26px;
         color: #222222;
         margin-bottom: 8px;
       }
-
+      /* Estilo del texto descriptivo de bienvenida */
       .welcome-block p {
         color: #666666;
         font-size: 15px;
       }
-
+      /* Grilla contenedora de las tarjetas de navegación */
       .dashboard-grid {
         display: flex;
         gap: 25px;
         flex-wrap: wrap;
       }
-
+      /* Estilos de las tarjetas del menú */
       .menu-card {
         background-color: #ffffff;
         padding: 25px;
@@ -128,25 +129,24 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         flex: 1;
         min-width: 280px;
-
         display: flex;
         flex-direction: column;
         justify-content: space-between;
       }
-
+      /* Estilos para los títulos de las tarjetas */
       .menu-card h3 {
         font-size: 19px;
         color: #007bff;
         margin-bottom: 12px;
       }
-
+      /* Estilos para los textos explicativos dentro de las tarjetas */
       .menu-card p {
         color: #555555;
         font-size: 14px;
         line-height: 1.6;
         margin-bottom: 25px;
       }
-
+      /* Estilos para los botones de acción de las tarjetas */
       .btn-dashboard {
         display: block;
         text-align: center;
@@ -159,20 +159,22 @@
         font-size: 14px;
         transition: background-color 0.2s;
       }
-
+      /* Cambio de color al pasar el mouse por los botones */
       .btn-dashboard:hover {
         background-color: #0056b3;
       }
+      /* Estilos del Footer */
       .footer-container {
         background-color: #1e3264;
         padding: 20px 0;
         width: 100%;
       }
+      /* Estilos para el logo dentro del footer */
       .logo-footer {
         display: block;
         margin: auto;
         height: 30px;
-        filter: brightness(0) invert(1);
+        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco */
       }
     </style>
   </head>
@@ -239,7 +241,7 @@
               decisiones de compra.
             </p>
           </div>
-          <a href="lista-de-proveedores.html" class="btn-dashboard">Ver Listado</a>
+          <a href="ranking.html" class="btn-dashboard">Ver Ranking</a>
         </div>
       </section>
     </main>

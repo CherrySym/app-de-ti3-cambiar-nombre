@@ -23,13 +23,13 @@
         align-items: center;
         color: white;
       }
-      /* Fuerza a que los enlaces y el avatar estén en la misma línea */
+      /* Estilos para que los enlaces y el avatar del nav estén en la misma línea */
       header nav {
         display: flex;
         align-items: center;
         gap: 25px;
       }
-
+      /* Estilos para la lista del nav*/
       header nav ul {
         list-style: none;
         margin: 0;
@@ -37,22 +37,22 @@
         display: flex;
         gap: 20px;
       }
-
+      /* Estilos de los enlaces individuales del nav */
       header nav ul li a {
         text-decoration: none;
         color: #ffffff;
         font-weight: 500;
       }
-
+      /* Cambio de color al pasar el mouse por los enlaces del nav */
       header nav ul li a:hover {
         color: #007bff;
       }
       
-      /* La cajita del menú flotante */
+      /* Estilos para el contenedor del menu flotante que aparece al hacer click en el icono de usuario */
       .dropdown-content {
         position: absolute;
         right: 0;
-        top: 45px; /* Se posiciona justo abajo de la imagen */
+        top: 45px; 
         background-color: #ffffff;
         min-width: 220px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -60,29 +60,29 @@
         padding: 12px 0;
         z-index: 1000;
       }
-
+      /* Estilos para la sección interna con el nombre y mail del usuario */
       .dropdown-user-info {
         padding: 4px 16px 8px 16px;
         display: flex;
         flex-direction: column;
       }
-
+      /* Texto en negrita para el nombre del usuario */
       .dropdown-user-info strong {
         font-size: 14px;
         color: #333333;
       }
-
+      /* Texto gris y más chico para el correo */
       .dropdown-user-info span {
         font-size: 12px;
         color: #777777;
       }
-
+      /* Línea divisoria del menú desplegable */
       .dropdown-content hr {
         border: 0;
         border-top: 1px solid #eeeeee;
         margin: 8px 0;
       }
-
+      /* Estilos para el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link {
         color: #dc3545;
         padding: 8px 16px;
@@ -91,7 +91,7 @@
         font-size: 14px;
         font-weight: 500;
       }
-
+      /* Cambio de color al pasar el mouse por el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link:hover {
         background-color: #fff5f5;
       }
@@ -105,12 +105,12 @@
         width: 100%;
       }
 
-      /* Contenedor para el botón de volver y los títulos */
+      /* Contenedor para el botón de volver y el titulo "Ranking de Proveedores" */
       .ranking-header {
-        margin-bottom: 25px;
+        margin-bottom: 20px;
       }
 
-      /* Estilo para el botón de regresar al listado principal */
+      /* Estilo para el botón de "Volver a la lista"*/
       .btn-back-list {
         display: inline-flex;
         align-items: center;
@@ -121,64 +121,64 @@
         margin-bottom: 15px;
         transition: color 0.2s;
       }
-
+      /* Subrayado al pasar el mouse por el botón de regresar */
       .btn-back-list:hover {
         color: #0056b3;
         text-decoration: underline;
       }
-
+      /* Estilos para el título principal del ranking " Ranking de Sostenibilidad" en Azul */
       .ranking-container h2 {
         font-size: 24px;
         color: #1E3264;
         margin: 0 0 8px 0;
       }
-
+      /* Estilos para el subtítulo debajo del título principal */
       .ranking-container p {
         color: #666666;
         font-size: 14px;
         margin: 0;
       }
 
-      /* Contenedor de la tabla para que tenga bordes lindos */
+      /* Estilos para el contenedor de la tabla */
       .table-responsive {
         background-color: #ffffff;
         border-radius: 6px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        overflow: hidden; /* Corta las esquinas de la tabla */
+        overflow: hidden; 
         margin-top: 20px;
       }
-
+      /* Estilo para la tabla del ranking */
       table {
         width: 100%;
         border-collapse: collapse;
         text-align: left;
         font-size: 15px;
       }
-
+      /* Encabezados de la tabla con fondo azul y texto blanco */
       th {
         background-color: #1E3264;
         color: white;
         padding: 15px;
         font-weight: 600;
       }
-
+      /* Celdas con un borde inferior gris*/
       td {
         padding: 15px;
         border-bottom: 1px solid #eeeeee;
         color: #333333;
       }
 
-      /* Efecto cebra */
+      /* Efecto cebra en las filas de la tabla */
       tr:nth-child(even) td {
         background-color: #f9f9f9;
       }
 
-      /* Hover para resaltar la fila */
+      /* Resaltado en la fila al pasar el mouse por encima */
       tr:hover td {
         background-color: #f1f5f9;
       }
 
-      /* Estilo para la insignia del puntaje */
+      /* Estilos para las insignia del puntaje */
       .badge-score {
         color: white;
         padding: 4px 8px;
@@ -186,17 +186,18 @@
         font-weight: bold;
         font-size: 13px;
       }
+      /* El color de fondo de las insignias depenndiendo el puntaje*/
       .bg-verde { background-color: #28a745; }
       .bg-amarillo { background-color: #ffc107; color: #333333; }
       .bg-rojo { background-color: #dc3545; }
 
-      /* Link de Ver Detalle */
+      /* Estilos para los enlaces de Ver Detalles */
       .btn-detail {
         color: #007bff;
         text-decoration: none;
         font-weight: 500;
       }
-
+      /* Subrayado al pasar el mouse en Ver Detalles */
       .btn-detail:hover {
         text-decoration: underline;
       }
@@ -207,7 +208,7 @@
         padding: 20px 0;
         width: 100%;
       }
-      
+      /* Estilos para el logo del Footer */
       .logo-footer {
         display: block;
         margin: auto;
@@ -255,7 +256,9 @@
     <main class="ranking-container">
       <!-- Sección de cabecera modificada con el botón de regreso -->
       <div class="ranking-header">
-        <a href="lista-de-proveedores.html" class="btn-back-list">← Volver a la Lista</a>
+        <a href="#" onclick="window.history.back(); return false;" class="btn-back-list">
+          ← Volver atrás
+        </a>
         <h2>Ranking de Sostenibilidad</h2>
         <p>Proveedores ordenados por su puntaje de cumplimiento ambiental e institucional.</p>
       </div>
@@ -284,34 +287,41 @@
 
     <script src="./js/datosPlanos.js"></script>
     <script>
+
+      // Seleccionar el cuerpo de la tabla para cargarle los proveedores más adelante
       const tbody = document.getElementById("tabla-body");
 
-      /* Ordenar los proveedores de mayor a menor puntaje */
+      /*Copiar la lista de provedoores de DatosPlanos.js y ordenar los proveedores de mayor a menor puntaje */
       const proveedoresOrdenados = [...PROVEEDORES].sort((a, b) => b.puntaje - a.puntaje);
 
+      // Recorrer la lista de proveedores ordenado y crear las filas de la tabla <tr> 
       proveedoresOrdenados.forEach(p => {
         const fila = document.createElement("tr");
         
-        // Determinar el color del puntaje según el valor
-        let colorClase = "bg-rojo"; 
+        // Validacion de que color usar para la insginia del puntaje 
+        let colorClase = "bg-rojo"; // Si tiene menos de 50, queda en rojo por defecto
         if (p.puntaje >= 75) {
-          colorClase = "bg-verde";
+          colorClase = "bg-verde"; // Verde para puntajes 75 o más
         } else if (p.puntaje >= 50) {
-          colorClase = "bg-amarillo";
+          colorClase = "bg-amarillo"; // Amarillo para puntajes entre 50 y 74
         }
 
+       // Formatear el string para que empiece con mayúscula
         const coberturaFormateada = p.cobertura.charAt(0).toUpperCase() + p.cobertura.slice(1);
 
+        // Inyeccion de codigo html las celdas armadas con los datos correspondientes del proveedor
         fila.innerHTML = `
           <td><strong>${p.nombre}</strong></td>
           <td><span class="badge-score ${colorClase}">${p.puntaje} pts</span></td>
           <td>${coberturaFormateada}</td>
           <td><a href="detallesDeProveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
         `;
+        // Agregar la fila terminada al del cuerpo de la tabla
         tbody.appendChild(fila);
       });
     </script>
     <script>
+
       // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
       function toggleMenu() {
         const menu = document.getElementById("menuDropdown");

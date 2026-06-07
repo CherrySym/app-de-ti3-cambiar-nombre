@@ -6,12 +6,12 @@
     <title>Añadir Proveedor</title>
     <link rel="stylesheet" href="./css/global-styles.css"/>
     <style>
-      /* Estilos para el logo */
+      /* Estilos para el logo del header */
       .logo {
         display: block;
         height: 40px;
         width: auto;
-        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco sobre fondo oscuro */
+        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco*/
       }
       /* Estilos del Header */
       header {
@@ -22,7 +22,7 @@
         align-items: center; /* Centra verticalmente los textos */
         color: white;
       }
-      /* Fuerza a que los enlaces y el avatar estén en la misma línea */
+      /* Estilos para que los enlaces y el avatar del nav estén en la misma línea */
       header nav {
         display: flex;
         align-items: center;
@@ -43,11 +43,11 @@
         color: #ffffff;
         font-weight: 500;
       }
-      /*Estilos adicionales de los enlaces para el estado hover */
+      /* Cambio de color al pasar el mouse por los enlaces del nav */
       header nav ul li a:hover {
         color: #007bff;
       }
-      /* La cajita del menú flotante */
+      /* Estilos para el contenedor del menu flotante que aparece al hacer click en el icono de usuario */
       .dropdown-content {
         position: absolute;
         right: 0;
@@ -59,29 +59,30 @@
         padding: 12px 0;
         z-index: 1000;
       }
+      /* Estilos para la sección interna con el nombre y mail del usuario */
 
       .dropdown-user-info {
         padding: 4px 16px 8px 16px;
         display: flex;
         flex-direction: column;
       }
-
+      /* Texto en negrita para el nombre del usuario */
       .dropdown-user-info strong {
         font-size: 14px;
         color: #333333;
       }
-
+      /* Texto gris y más chico para el correo */
       .dropdown-user-info span {
         font-size: 12px;
         color: #777777;
       }
-
+      /* Línea divisoria del menú desplegable */
       .dropdown-content hr {
         border: 0;
         border-top: 1px solid #eeeeee;
         margin: 8px 0;
       }
-
+      /* Estilos para el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link {
         color: #dc3545;
         padding: 8px 16px;
@@ -90,24 +91,25 @@
         font-size: 14px;
         font-weight: 500;
       }
-
+      /* Cambio de color al pasar el mouse por el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link:hover {
         background-color: #fff5f5;
       }
+      /* Estilos para el contenedor del formulario */
       .form-container {
         flex: 1;
         max-width: 750px; 
         margin: 40px auto; 
         padding: 0 20px;
       }
-
+      /* Estilos de la tarjeta del formulario */
       .form-card {
         background-color: #ffffff;
         padding: 35px;
         border-radius: 6px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Sombra sutil para despegarlo del fondo */
       }
-
+      /* Estilos para el título del formulario */
       .form-card h2 {
         font-size: 24px;
         color: #1E3264;
@@ -121,17 +123,17 @@
         display: flex;
         gap: 20px;
       }
-
+      /* Hace que los elementos de la misma fila midan lo mismo */
       .form-row .form-group {
-        flex: 1; /* Hace que los elementos de la misma fila midan lo mismo */
+        flex: 1; 
       }
-
+      /* Contenedor vertical para cada etiqueta e input */
       .form-group {
         display: flex;
         flex-direction: column;
         margin-bottom: 20px;
       }
-
+      /* Estilos para las etiquetas de los campos */
       .form-group label {
         font-weight: 500;
         color: #333333;
@@ -139,7 +141,7 @@
         font-size: 14px;
       }
 
-      /* Estilo unificado para los inputs */
+      /* Estilo unificado para los inputs, selects y textareas */
       .form-input, .form-select, .form-textarea {
         padding: 10px;
         border: 1px solid #ccc;
@@ -147,7 +149,7 @@
         font-size: 14px;
         background-color: #ffffff;
       }
-
+      /* Cambio de color de borde cuando el input está activo */
       .form-input:focus, .form-select:focus, .form-textarea:focus {
         border-color: #007bff;
         outline: none;
@@ -159,7 +161,7 @@
         gap: 25px;
         margin-top: 5px;
       }
-
+      /* Estilos para las etiquetas que envuelven a cada checkbox */
       .checkbox-label {
         display: flex;
         align-items: center;
@@ -167,7 +169,7 @@
         font-weight: 400;
         cursor: pointer;
       }
-
+      /* Estilos para los cuadros de texto largo */
       .form-textarea {
         resize: vertical; 
         min-height: 80px;
@@ -187,22 +189,22 @@
         transition: background-color 0.2s;
         margin-top: 10px;
       }
-
+      /* Cambio de color al pasar el mouse por el botón de guardar */
       .btn-submit-prov:hover {
         background-color: #0056b3;
       }
 
       /* Estilos del Footer */
       .footer-container {
-        background-color: #1E3264; /* Un gris oscuro elegante o el azul oscuro de la UCU */
-        padding: 20px 0; /* Un poquito más de aire arriba y abajo */
+        background-color: #1E3264; 
+        padding: 20px 0; 
         width: 100%;
       }
       .logo-footer {
         display: block;
         margin: auto;
         height: 30px;
-        filter: brightness(0) invert(1); /* TRUCO PRO: Si el logo es negro, esto lo vuelve 100% blanco para que resalte sobre el fondo oscuro */
+        filter: brightness(0) invert(1); /* Hace que el logo se vea blancoo */
       }
     </style>
   </head>
@@ -243,6 +245,11 @@
 
     <main class="form-container">
       <section class="form-card">
+        <div style="margin-bottom: 20px;">
+          <a href="#" onclick="window.history.back(); return false;" style="text-decoration: none; color: #007bff; font-weight: 500; display: inline-flex; align-items: center; gap: 5px;">
+             ← Volver atrás
+            </a>
+        </div>
         <h2>Registrar Nuevo Proveedor</h2>
         
         <form action="ranking.html">

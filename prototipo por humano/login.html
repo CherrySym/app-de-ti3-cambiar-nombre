@@ -27,21 +27,21 @@
       .card-subtitle {
         font-size: 18px;
         font-weight: 400;
-        margin-bottom: 20px; /* Agrega espacio debajo del subtítulo */
+        margin-bottom: 20px; 
       }
       /* Estilos para CENTRAR el contenedor de inicio de sesión */
       .login-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 80vh; /* Ocupa casi todo el alto de la pantalla */
+        min-height: 80vh;
       }
 
       /* Estilos para la tarjeta de inicio de sesión */
       .login-card {
         background-color: #ffffff;
         padding: 30px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
         width: 100%;
         max-width: 400px; /* Para que no se estire infinito en monitores grandes */
         border-radius: 5px;
@@ -51,13 +51,13 @@
       .form-group {
         display: flex;
         flex-direction: column; /* Label arriba, Input abajo */
-        margin-bottom: 20px;    /* El reemplazo limpio del <br> */
+        margin-bottom: 20px; 
       }
       /* Estilos para separar un poco los inputs de los labels */
       .form-group label {
         margin-bottom: 10px;
       }
-      /* Estilos de los campos input */
+      /* Estilos de los campos de texto e input */
       .form-input {
         padding: 10px;
         border: 1px solid #ccc;
@@ -68,27 +68,29 @@
       .btn-submit {
         width: 100%;
         padding: 12px;
-        background-color: #007bff; /* Un azul estándar de sistemas */
+        background-color: #007bff;
         color: white;
         border: none;
         border-radius: 4px;
         cursor: pointer;
         font-size: 16px;
       }
-       /* Estilos adicionales del botón "ingresar" para el estado hover */
+      /* Cambio de color al pasar el mouse por el botón de "Ingresar" */
       .btn-submit:hover {
-        background-color: #0056b3; /* Se oscurece al pasar el mouse */
+        background-color: #0056b3; 
       }
+      /* Estilos para el Footer */
       .footer-container {
-        background-color: #1E3264; /* Un gris oscuro elegante o el azul oscuro de la UCU */
-        padding: 20px 0; /* Un poquito más de aire arriba y abajo */
+        background-color: #1E3264; 
+        padding: 20px 0; 
         width: 100%;
       }
+      /* Estilos para el logo del Footer */
       .logo-footer {
         display: block;
         margin: auto;
         height: 30px;
-        filter: brightness(0) invert(1); /* TRUCO PRO: Si el logo es negro, esto lo vuelve 100% blanco para que resalte sobre el fondo oscuro */
+        filter: brightness(0) invert(1); /* Invierte los colores de la imagen del logo de la UCU */
       }
     </style>
   </head>

@@ -24,7 +24,7 @@
         color: white;
       }
 
-      /* Fuerza a que los enlaces y el avatar estén en la misma línea */
+      /* Estilos para que los enlaces y el avatar del nav estén en la misma línea */
       header nav {
         display: flex;
         align-items: center;
@@ -47,12 +47,12 @@
         font-weight: 500;
       }
       
-      /* Estilos para el estado hover de los enlaces */
+      /* Cambio de color al pasar el mouse por los enlaces del nav */
       header nav ul li a:hover {
         color: #298eec;
       }
 
-      /* La cajita del menú flotante del Perfil */
+      /* Estilos para el contenedor del menu flotante que aparece al hacer click en el icono de usuario */
       .dropdown-content {
         position: absolute;
         right: 0;
@@ -64,29 +64,29 @@
         padding: 12px 0;
         z-index: 1000;
       }
-
+      /* Estilos para la sección interna con el nombre y mail del usuario */
       .dropdown-user-info {
         padding: 4px 16px 8px 16px;
         display: flex;
         flex-direction: column;
       }
-
+      /* Texto en negrita para el nombre del usuario */
       .dropdown-user-info strong {
         font-size: 14px;
         color: #333333;
       }
-
+      /* Texto gris y más chico para el correo */
       .dropdown-user-info span {
         font-size: 12px;
         color: #777777;
       }
-
+      /* Línea divisoria del menú desplegable */
       .dropdown-content hr {
         border: 0;
         border-top: 1px solid #eeeeee;
         margin: 8px 0;
       }
-
+      /* Estilos para el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link {
         color: #dc3545;
         padding: 8px 16px;
@@ -95,12 +95,12 @@
         font-size: 14px;
         font-weight: 500;
       }
-
+      /* Cambio de color al pasar el mouse por el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link:hover {
         background-color: #fff5f5;
       }
 
-      /* --- CONTENEDOR DE LA NUEVA PÁGINA --- */
+      /* Estilos para el contenedor de la lista de proveedores */
       .listado-container {
         flex: 1;
         max-width: 1000px;
@@ -108,23 +108,23 @@
         padding: 0 20px;
       }
 
-      /* CABECERA CORREGIDA: Separa el título y el botón a los extremos y maneja pantallas chicas */
+      /* Estilos para la cabecera que separa el título del botón de ranking */  
       .listado-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 35px;
         gap: 20px;
-        flex-wrap: wrap; /* Si la pantalla es muy chica, el botón baja solo sin romperse */
+        flex-wrap: wrap; 
       }
-
+      /* Estilos para el título principal del listado */
       .listado-header h2 {
         font-size: 26px;
         color: #222222;
         margin: 0;
       }
 
-      /* Botón de acceso al Ranking pulido */
+      /* Estilos para el botón de acceso al Ranking */
       .btn-ranking-link {
         display: inline-flex;
         align-items: center;
@@ -139,25 +139,25 @@
         box-shadow: 0 2px 6px rgba(0, 123, 255, 0.15);
         transition: background-color 0.2s, transform 0.1s;
       }
-
+      /* Cambio de color al pasar el mouse por el botón de ranking */
       .btn-ranking-link:hover {
         background-color: #0056b3;
-        transform: translateY(-1px); /* Efecto sutil de empuje */
+        transform: translateY(-1px); 
       }
-      
+      /* Efecto de clic presionado en el botón */
       .btn-ranking-link:active {
         transform: translateY(0);
       }
 
-      /* GRILLA AUTOMÁTICA DE CARDS (3 Columnas o auto-fill para que sea responsivo) */
+      /* Estilos para la grilla automática que organiza las tarjetas en columnas */
       .providers-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 25px;
       }
 
-      /* Estilo base de la Card (Clickeable completa) */
-      .provider-card {
+      /* Estilos de las tarjetas de los proveedores */ 
+       .provider-card {
         background-color: #ffffff;
         border: 1px solid #e0e0e0;
         border-radius: 6px;
@@ -171,30 +171,30 @@
         transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
       }
 
-      /* Efecto visual al pasar el mouse por la tarjeta */
+      /* Efecto visual de elevacion al pasar el mouse por la tarjeta */
       .provider-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         border-color: #007bff;
       }
-
+      /* Estilos para el nombre del proveedor dentro de la tarjeta */
       .provider-card h3 {
         font-size: 19px;
-        color: #1e3264; /* Azul UCU */
+        color: #1e3264; 
         margin: 0 0 15px 0;
       }
-
+      /* Estilos para el texto descriptivo del puntaje */
       .provider-card .score-text {
         font-size: 15px;
         color: #555555;
         margin: 0;
       }
-
+      /* Estilos para resaltar el número de puntaje en negrita */
       .provider-card .score-number {
         font-weight: 700;
         color: #222222;
       }
-
+      /* Estilos para el botón  de "Ver detalles" en la tarjeta */
       .provider-card .card-footer {
         margin-top: 20px;
         font-size: 13px;
@@ -207,9 +207,9 @@
         background-color: #1e3264;
         padding: 20px 0;
         width: 100%;
-        margin-top: auto; /* Empuja el footer abajo si hay poco contenido */
+        margin-top: auto; /* Pega el footer al final siempre */
       }
-
+      /* Estilos para el logo del footer */
       .logo-footer {
         display: block;
         margin: auto;
@@ -275,6 +275,8 @@
     <script src="./js/datosPlanos.js"></script>
 
     <script>
+
+      // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
       function toggleMenu() {
         const menu = document.getElementById("menuDropdown");
         if (menu.style.display === "none" || menu.style.display === "") {
@@ -283,7 +285,7 @@
           menu.style.display = "none";
         }
       }
-
+      // Función para ocultar el menú desplegable si se hace clic fuera de él
       window.onclick = function(event) {
         const menu = document.getElementById("menuDropdown");
         const avatar = document.querySelector("nav div img");
@@ -292,11 +294,15 @@
         }
       }
 
+      // Seleccionar el contenedor de la grilla e inicializar el acumulador de HTML
       function renderizarCards() {
         const grid = document.getElementById("gridProveedores");
         let htmlAcumulado = "";
 
-        if (typeof PROVEEDORES !== 'undefined' && PROVEEDORES.length > 0) {
+        // Validar si existen datos cargados dentro del array de proveedores
+        if (typeof PROVEEDORES !== 'undefined' && PROVEEDORES.length > 0) { 
+
+          // Recorrer la lista de proveedores y fabricar una tarjeta HTML por cada uno
           PROVEEDORES.forEach(p => {
             htmlAcumulado += `
               <a href="detallesDeProveedor.html?id=${p.id}" class="provider-card">
@@ -308,11 +314,14 @@
               </a>
             `;
           });
+          // Inyectar el bloque de tarjetas html dentro del contenedor
           grid.innerHTML = htmlAcumulado;
         } else {
           grid.innerHTML = "<p>No se encontraron proveedores cargados o falló datosPlanos.js.</p>";
         }
       }
+      
+      // Ejecutar la renderización de las tarjetas al cargar la página
       renderizarCards();
     </script>
   </body>
