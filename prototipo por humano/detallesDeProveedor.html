@@ -22,6 +22,12 @@
         align-items: center;
         color: white;
       }
+      /* Fuerza a que los enlaces y el avatar estén en la misma línea */
+      header nav {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+      }
 
       header nav ul {
         list-style: none;
@@ -40,7 +46,53 @@
       header nav ul li a:hover {
         color: #007bff;
       }
+/* La cajita del menú flotante */
+      .dropdown-content {
+        position: absolute;
+        right: 0;
+        top: 45px; /* Se posiciona justo abajo de la imagen */
+        background-color: #ffffff;
+        min-width: 220px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        border-radius: 6px;
+        padding: 12px 0;
+        z-index: 1000;
+      }
 
+      .dropdown-user-info {
+        padding: 4px 16px 8px 16px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .dropdown-user-info strong {
+        font-size: 14px;
+        color: #333333;
+      }
+
+      .dropdown-user-info span {
+        font-size: 12px;
+        color: #777777;
+      }
+
+      .dropdown-content hr {
+        border: 0;
+        border-top: 1px solid #eeeeee;
+        margin: 8px 0;
+      }
+
+      .dropdown-content .logout-link {
+        color: #dc3545;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .dropdown-content .logout-link:hover {
+        background-color: #fff5f5;
+      }
       /* --- ESTILOS DE LA PÁGINA DE DETALLE --- */
       .detail-container {
         flex: 1;
@@ -214,17 +266,39 @@
   </head>
 
   <body>
-    <header>
-      <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo"/>
+        <header>
+      <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo" />
       <nav>
         <ul>
           <li><a href="landing.html">Inicio</a></li>
           <li><a href="adicionDeProveedor.html">Añadir Proveedor</a></li>
           <li><a href="ranking.html">Ranking de Proveedores</a></li>
         </ul>
+        <div style="position: relative">
+          <img
+            src="./assets/icono generico de usuario.png"
+            alt="Perfil"
+            onclick="toggleMenu()"
+            style="
+              width: 38px;
+              height: 38px;
+              border-radius: 50%;
+              cursor: pointer;
+              display: block;
+            "
+          />
+
+          <div id="menuDropdown" class="dropdown-content" style="display: none">
+            <div class="dropdown-user-info">
+              <strong>Encargado de Compras</strong>
+              <span>compras@ucu.edu.uy</span>
+            </div>
+            <hr />
+            <a href="login.html" class="logout-link">Cerrar Sesión</a>
+          </div>
+        </div>
       </nav>
     </header>
-
     <main class="detail-container">
       <a href="ranking.html" class="btn-back">← Volver al Ranking</a>
       
@@ -360,6 +434,26 @@
           </div>
         `;
       }
+    </script>
+        <script>
+      // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
+      function toggleMenu() {
+        const menu = document.getElementById("menuDropdown");
+        if (menu.style.display === "none" || menu.style.display === "") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      }
+      // Función para ocultar el menú desplegable si se hace clic fuera de él (me gusta que haga eso)
+      window.onclick = function (event) {
+        const menu = document.getElementById("menuDropdown");
+        const avatar = document.querySelector("nav div img");
+
+        if (event.target !== avatar && !menu.contains(event.target)) {
+          menu.style.display = "none";
+        }
+      };
     </script>
   </body>
 </html>
