@@ -3,7 +3,7 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Obliga al cuerpo a medir el 100% de la pantalla */
+  min-height: 100vh; /* Obliga al body a medir el 100% de la pantalla */
   background-color: #ffffff;
   font-family:
     "Segoe UI", "Helvetica Neue", "Lucida Grande", "Roboto", "Ebrima",
@@ -19,5 +19,5 @@ input, button, select, textarea {
   font-family: inherit;
 }
 footer {
-  margin-top: auto; /* Le dice al footer: "Chupá todo el espacio libre que haya arriba tuyo" */
+  margin-top: auto; /* Pega el footer al final siempre */
 }

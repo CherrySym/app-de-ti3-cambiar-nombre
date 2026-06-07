@@ -1,18 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Landing Page</title>
+    <title>Lista de Proveedores</title>
     <link rel="stylesheet" href="./css/global-styles.css" />
     <style>
-      /* Estilos para el logo del header*/
+      /* Estilos para el logo del header */
       .logo {
         display: block;
         height: 40px;
         width: auto;
         filter: brightness(0) invert(1); /* Hace que el logo se vea blanco */
       }
+      
       /* Estilos del Header */
       header {
         background-color: #1e3264;
@@ -22,6 +23,7 @@
         align-items: center; /* Centra verticalmente los textos */
         color: white;
       }
+
       /* Fuerza a que los enlaces y el avatar estén en la misma línea */
       header nav {
         display: flex;
@@ -37,17 +39,20 @@
         display: flex; /* Hace que los <li> se pongan uno al lado del otro */
         gap: 20px; /* Separa los enlaces entre sí */
       }
+      
       /* Estilos de los enlaces */
       header nav ul li a {
         text-decoration: none; /* Le quita el subrayado */
         color: #ffffff;
         font-weight: 500;
       }
-      /*Estilos adicionales de los enlaces para el estado hover (al pasar el mouse por encima) */
+      
+      /* Estilos para el estado hover de los enlaces */
       header nav ul li a:hover {
         color: #298eec;
       }
-      /* La cajita del menú flotante */
+
+      /* La cajita del menú flotante del Perfil */
       .dropdown-content {
         position: absolute;
         right: 0;
@@ -94,80 +99,117 @@
       .dropdown-content .logout-link:hover {
         background-color: #fff5f5;
       }
-      .landing-container {
+
+      /* --- CONTENEDOR DE LA NUEVA PÁGINA --- */
+      .listado-container {
         flex: 1;
         max-width: 1000px;
         margin: 40px auto;
         padding: 0 20px;
       }
-      .welcome-block {
+
+      /* CABECERA CORREGIDA: Separa el título y el botón a los extremos y maneja pantallas chicas */
+      .listado-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-bottom: 35px;
+        gap: 20px;
+        flex-wrap: wrap; /* Si la pantalla es muy chica, el botón baja solo sin romperse */
       }
 
-      .welcome-block h2 {
+      .listado-header h2 {
         font-size: 26px;
         color: #222222;
-        margin-bottom: 8px;
+        margin: 0;
       }
 
-      .welcome-block p {
-        color: #666666;
-        font-size: 15px;
-      }
-
-      .dashboard-grid {
-        display: flex;
-        gap: 25px;
-        flex-wrap: wrap;
-      }
-
-      .menu-card {
-        background-color: #ffffff;
-        padding: 25px;
-        border-radius: 6px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        flex: 1;
-        min-width: 280px;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-
-      .menu-card h3 {
-        font-size: 19px;
-        color: #007bff;
-        margin-bottom: 12px;
-      }
-
-      .menu-card p {
-        color: #555555;
-        font-size: 14px;
-        line-height: 1.6;
-        margin-bottom: 25px;
-      }
-
-      .btn-dashboard {
-        display: block;
-        text-align: center;
-        text-decoration: none;
+      /* Botón de acceso al Ranking pulido */
+      .btn-ranking-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         background-color: #007bff;
         color: white;
-        padding: 12px;
+        text-decoration: none;
+        padding: 10px 20px;
         border-radius: 4px;
         font-weight: 600;
         font-size: 14px;
-        transition: background-color 0.2s;
+        box-shadow: 0 2px 6px rgba(0, 123, 255, 0.15);
+        transition: background-color 0.2s, transform 0.1s;
       }
 
-      .btn-dashboard:hover {
+      .btn-ranking-link:hover {
         background-color: #0056b3;
+        transform: translateY(-1px); /* Efecto sutil de empuje */
       }
+      
+      .btn-ranking-link:active {
+        transform: translateY(0);
+      }
+
+      /* GRILLA AUTOMÁTICA DE CARDS (3 Columnas o auto-fill para que sea responsivo) */
+      .providers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+      }
+
+      /* Estilo base de la Card (Clickeable completa) */
+      .provider-card {
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 25px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        text-decoration: none; /* Saca el subrayado azul por ser un <a> */
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      }
+
+      /* Efecto visual al pasar el mouse por la tarjeta */
+      .provider-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        border-color: #007bff;
+      }
+
+      .provider-card h3 {
+        font-size: 19px;
+        color: #1e3264; /* Azul UCU */
+        margin: 0 0 15px 0;
+      }
+
+      .provider-card .score-text {
+        font-size: 15px;
+        color: #555555;
+        margin: 0;
+      }
+
+      .provider-card .score-number {
+        font-weight: 700;
+        color: #222222;
+      }
+
+      .provider-card .card-footer {
+        margin-top: 20px;
+        font-size: 13px;
+        color: #007bff;
+        font-weight: 500;
+      }
+
+      /* Estilos del Footer */
       .footer-container {
         background-color: #1e3264;
         padding: 20px 0;
         width: 100%;
+        margin-top: auto; /* Empuja el footer abajo si hay poco contenido */
       }
+
       .logo-footer {
         display: block;
         margin: auto;
@@ -177,27 +219,35 @@
     </style>
   </head>
 
-  <body>
+  <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
+    
     <header>
       <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo" />
       <nav>
         <ul>
           <li><a href="landing.html">Inicio</a></li>
-          <li><a href="lista-de-proveedores.html">Lista de Proveedores</a></li>          
+          <li><a href="lista-de-proveedores.html" style="color: #298eec;">Lista de Proveedores</a></li>          
           <li><a href="adicionDeProveedor.html">Añadir Proveedor</a></li>
         </ul>
+        
         <div style="position: relative">
-          <img src="./assets/icono generico de usuario.png" alt="Perfil" onclick="toggleMenu()"
+          <img
+            src="./assets/icono generico de usuario.png"
+            alt="Perfil"
+            onclick="toggleMenu()"
             style="
               width: 38px;
               height: 38px;
               border-radius: 50%;
               cursor: pointer;
-              display: block;"/>
+              display: block;
+            "
+          />
+
           <div id="menuDropdown" class="dropdown-content" style="display: none">
             <div class="dropdown-user-info">
               <strong>Encargado de Compras</strong>
-              <span>compras@correo.ucu.edu.uy</span>
+              <span>compras@ucu.edu.uy</span>
             </div>
             <hr />
             <a href="login.html" class="logout-link">Cerrar Sesión</a>
@@ -206,41 +256,13 @@
       </nav>
     </header>
 
-    <main class="landing-container">
-      <section class="welcome-block">
-        <h2>Panel de Gestión de Proveedores</h2>
-        <p>
-          Esta es la herramienta de pruebas para el sistema de compras
-          sostenibles de la UCU.
-        </p>
-      </section>
+    <main class="listado-container">
+      <div class="listado-header">
+        <h2>Listado de Proveedores</h2>
+        <a href="ranking.html" class="btn-ranking-link">🏆 Ver Ranking</a>
+      </div>
 
-      <section class="dashboard-grid">
-        <div class="menu-card">
-          <div class="card-content">
-            <h3>Añadir Proveedor</h3>
-            <p>
-              Registra un nuevo proveedor en el sistema. Vas a poder cargar sus
-              datos, información de contacto y adjuntar sus certificaciones
-              vigentes para aplicarle un puntaje de sostenibilidad.
-            </p>
-          </div>
-          <a href="adicionDeProveedor.html" class="btn-dashboard"
-            >Abrir Formulario</a
-          >
-        </div>
-
-        <div class="menu-card">
-          <div class="card-content">
-            <h3>Ranking de Proveedores</h3>
-            <p>
-              Compara el nivel de compromiso con la sostenibilidad de los
-              proveedores registrados. Revisa sus puntajes para tomar mejores
-              decisiones de compra.
-            </p>
-          </div>
-          <a href="lista-de-proveedores.html" class="btn-dashboard">Ver Listado</a>
-        </div>
+      <section class="providers-grid" id="gridProveedores">
       </section>
     </main>
 
@@ -249,8 +271,10 @@
         <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
       </div>
     </footer>
+
+    <script src="./js/datosPlanos.js"></script>
+
     <script>
-      // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
       function toggleMenu() {
         const menu = document.getElementById("menuDropdown");
         if (menu.style.display === "none" || menu.style.display === "") {
@@ -259,15 +283,37 @@
           menu.style.display = "none";
         }
       }
-      // Función para ocultar el menú desplegable si se hace clic fuera de él (me gusta que haga eso)
-      window.onclick = function (event) {
+
+      window.onclick = function(event) {
         const menu = document.getElementById("menuDropdown");
         const avatar = document.querySelector("nav div img");
-
-        if (event.target !== avatar && !menu.contains(event.target)) {
+        if (menu && event.target !== avatar && !menu.contains(event.target)) {
           menu.style.display = "none";
         }
-      };
+      }
+
+      function renderizarCards() {
+        const grid = document.getElementById("gridProveedores");
+        let htmlAcumulado = "";
+
+        if (typeof PROVEEDORES !== 'undefined' && PROVEEDORES.length > 0) {
+          PROVEEDORES.forEach(p => {
+            htmlAcumulado += `
+              <a href="detallesDeProveedor.html?id=${p.id}" class="provider-card">
+                <div>
+                  <h3>${p.nombre}</h3>
+                  <p class="score-text">Puntaje: <span class="score-number">${p.puntaje} pts</span></p>
+                </div>
+                <div class="card-footer">Ver detalles →</div>
+              </a>
+            `;
+          });
+          grid.innerHTML = htmlAcumulado;
+        } else {
+          grid.innerHTML = "<p>No se encontraron proveedores cargados o falló datosPlanos.js.</p>";
+        }
+      }
+      renderizarCards();
     </script>
   </body>
 </html>
