@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="./css/global-styles.css" />
+    <style>
+      /* Estilos para el logo del header*/
+      .logo {
+        display: block;
+        height: 40px;
+        width: auto;
+        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco */
+      }
+      /* Estilos del Header */
+      header {
+        background-color: #1e3264;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between; /* Título a la izquierda, Menú a la derecha */
+        align-items: center; /* Centra verticalmente los textos */
+        color: white;
+      }
+      /* Estilos para que los enlaces y el avatar del nav estén en la misma línea */
+      header nav {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+      }
+      /* Estilos del menu de enlaces */
+      header nav ul {
+        list-style: none; /* Le quita los puntos a la lista */
+        margin: 0;
+        padding: 0;
+        display: flex; /* Hace que los <li> se pongan uno al lado del otro */
+        gap: 20px; /* Separa los enlaces entre sí */
+      }
+      /* Estilos de los enlaces */
+      header nav ul li a {
+        text-decoration: none; /* Le quita el subrayado */
+        color: #ffffff;
+        font-weight: 500;
+      }
+      /* Cambio de color al pasar el mouse por los enlaces del nav */
+      header nav ul li a:hover {
+        color: #298eec;
+      }
+      /* Estilos para el contenedor del menu flotante que aparece al hacer click en el icono de usuario */
+      .dropdown-content {
+        position: absolute;
+        right: 0;
+        top: 45px; /* Se posiciona justo abajo de la imagen */
+        background-color: #ffffff;
+        min-width: 220px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        border-radius: 6px;
+        padding: 12px 0;
+        z-index: 1000;
+      }
+      /* Estilos para la sección interna con el nombre y mail del usuario */
+      .dropdown-user-info {
+        padding: 4px 16px 8px 16px;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Texto en negrita para el nombre del usuario */
+      .dropdown-user-info strong {
+        font-size: 14px;
+        color: #333333;
+      }
+      /* Texto gris y más chico para el correo */
+      .dropdown-user-info span {
+        font-size: 12px;
+        color: #777777;
+      }
+      /* Línea divisoria del menú desplegable */
+      .dropdown-content hr {
+        border: 0;
+        border-top: 1px solid #eeeeee;
+        margin: 8px 0;
+      }
+      /* Estilos para el enlace de "Cerrar Sesión" */
+      .dropdown-content .logout-link {
+        color: #dc3545;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      /* Cambio de color al pasar el mouse por el enlace de "Cerrar Sesión" */
+      .dropdown-content .logout-link:hover {
+        background-color: #fff5f5;
+      }
+      /* Estilos para el contenedor de la landing page */
+      .landing-container {
+        flex: 1;
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+      /* Estilos para el contenedor del título de bienvenida */
+      .welcome-block {
+        margin-bottom: 35px;
+      }
+      /* Estilos del título de bienvenida */
+      .welcome-block h2 {
+        font-size: 26px;
+        color: #222222;
+        margin-bottom: 8px;
+      }
+      /* Estilo del texto descriptivo de bienvenida */
+      .welcome-block p {
+        color: #666666;
+        font-size: 15px;
+      }
+      /* Grilla contenedora de las tarjetas de navegación */
+      .dashboard-grid {
+        display: flex;
+        gap: 25px;
+        flex-wrap: wrap;
+      }
+      /* Estilos de las tarjetas del menú */
+      .menu-card {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        flex: 1;
+        min-width: 280px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      /* Estilos para los títulos de las tarjetas */
+      .menu-card h3 {
+        font-size: 19px;
+        color: #007bff;
+        margin-bottom: 12px;
+      }
+      /* Estilos para los textos explicativos dentro de las tarjetas */
+      .menu-card p {
+        color: #555555;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 25px;
+      }
+      /* Estilos para los botones de acción de las tarjetas */
+      .btn-dashboard {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        background-color: #007bff;
+        color: white;
+        padding: 12px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: background-color 0.2s;
+      }
+      /* Cambio de color al pasar el mouse por los botones */
+      .btn-dashboard:hover {
+        background-color: #0056b3;
+      }
+      /* Estilos del Footer */
+      .footer-container {
+        background-color: #1e3264;
+        padding: 20px 0;
+        width: 100%;
+      }
+      /* Estilos para el logo dentro del footer */
+      .logo-footer {
+        display: block;
+        margin: auto;
+        height: 30px;
+        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco */
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo" />
+      <nav>
+        <ul>
+          <li><a href="landing.html">Inicio</a></li>
+          <li><a href="lista-de-proveedores.html">Lista de Proveedores</a></li>          
+          <li><a href="adicionDeProveedor.html">Añadir Proveedor</a></li>
+        </ul>
+        <div style="position: relative">
+          <img src="./assets/icono generico de usuario.png" alt="Perfil" onclick="toggleMenu()"
+            style="
+              width: 38px;
+              height: 38px;
+              border-radius: 50%;
+              cursor: pointer;
+              display: block;"/>
+          <div id="menuDropdown" class="dropdown-content" style="display: none">
+            <div class="dropdown-user-info">
+              <strong>Encargado de Compras</strong>
+              <span>compras@correo.ucu.edu.uy</span>
+            </div>
+            <hr />
+            <a href="login.html" class="logout-link">Cerrar Sesión</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="landing-container">
+      <section class="welcome-block">
+        <h2>Panel de Gestión de Proveedores</h2>
+        <p>
+          Esta es la herramienta de pruebas para el sistema de compras
+          sostenibles de la UCU.
+        </p>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="menu-card">
+          <div class="card-content">
+            <h3>Añadir Proveedor</h3>
+            <p>
+              Registra un nuevo proveedor en el sistema. Vas a poder cargar sus
+              datos, información de contacto y adjuntar sus certificaciones
+              vigentes para aplicarle un puntaje de sostenibilidad.
+            </p>
+          </div>
+          <a href="adicionDeProveedor.html" class="btn-dashboard"
+            >Abrir Formulario</a
+          >
+        </div>
+
+        <div class="menu-card">
+          <div class="card-content">
+            <h3>Ranking de Proveedores</h3>
+            <p>
+              Compara el nivel de compromiso con la sostenibilidad de los
+              proveedores registrados. Revisa sus puntajes para tomar mejores
+              decisiones de compra.
+            </p>
+          </div>
+          <a href="ranking.html" class="btn-dashboard">Ver Ranking</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-container">
+        <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
+      </div>
+    </footer>
+    <script>
+      // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
+      function toggleMenu() {
+        const menu = document.getElementById("menuDropdown");
+        if (menu.style.display === "none" || menu.style.display === "") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      }
+      // Función para ocultar el menú desplegable si se hace clic fuera de él (me gusta que haga eso)
+      window.onclick = function (event) {
+        const menu = document.getElementById("menuDropdown");
+        const avatar = document.querySelector("nav div img");
+
+        if (event.target !== avatar && !menu.contains(event.target)) {
+          menu.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
