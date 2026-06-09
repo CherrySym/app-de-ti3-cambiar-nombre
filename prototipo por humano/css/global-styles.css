@@ -1,10 +1,11 @@
 body {
+  background: url('../assets/fondo-ucu.jpeg') no-repeat center top fixed;
+  background-size: cover;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   min-height: 100vh; /* Obliga al body a medir el 100% de la pantalla */
-  background-color: #ffffff;
   font-family:
     "Segoe UI", "Helvetica Neue", "Lucida Grande", "Roboto", "Ebrima",
     "Nirmala UI", "Gadugi", "Segoe Xbox Symbol", "Segoe UI Symbol", "Meiryo UI",

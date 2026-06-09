@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proveedores de UCU</title>
+  <link rel="stylesheet" href="./css/global-styles.css" />
+lol
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: url('./assets/fondo-ucu.jpeg') no-repeat center top fixed;
+      background-size: cover;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Obliga al cuerpo a medir el total de la pantalla */
+    }
+
+    /* Contenedor elástico que distribuye el contenido */
+    .main-container {
+      display: flex;
+      flex: 1; /* Se estira para ocupar todo el espacio vertical disponible */
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px 40px 20px; /* Más espacio arriba para controlar el inicio */
+    }
+
+    /* Modificado para que se ubique más arriba */
+    .main-container h1 {
+      color: #646B4C;
+      font-size: 48px;
+      margin-top: 40px;      
+      margin-bottom: auto;  
+      text-shadow: 2px 2px 4px #646B4C;
+    }
+    .main-container h3 {
+      color: #646B4C;
+      font-size: 24px;
+      text-shadow: 1px 1px 3px rgba(160, 106, 106, 0.5);
+    }
+    /* Contenedor para alinear los botones en la misma línea */
+    .buttons-container {
+      display: flex;
+      flex-direction: row;   
+      justify-content: center;
+      gap: 10px;            
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: auto;   
+    }
+
+    /* Estilos unificados para botones */
+    #form-postulacion, #redireccion-login {
+      background-color: #1e3264;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      cursor: pointer;
+      font-size: 16px;
+      text-decoration: none; 
+      font-weight: 600;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(30, 50, 100, 0.3);
+      transition: transform 0.2s, background-color 0.2s;
+      display: inline-block;
+      text-align: center;
+      min-width: 220px;
+    }
+
+    /* Efecto sutil al pasar el mouse por arriba */
+    #form-postulacion:hover, #redireccion-login:hover {
+      background-color: #173a73;
+      transform: translateY(-2px);
+    }
+
+    #form-postulacion:active, #redireccion-login:active {
+      transform: translateY(0);
+    }
+
+    /* Estilos para el Footer */
+    footer {
+      margin-top: auto; /* Garantía extra para pegarlo abajo */
+      width: 100%;
+    }
+
+    .footer-container {
+      background-color: #1e3264;
+      padding: 20px 0;
+      width: 100%;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Estilos para el logo del Footer */
+    .logo-footer {
+      display: block;
+      margin: auto;
+      height: 30px;
+      filter: brightness(0) invert(1); /* Deja el logo de la UCU completamente blanco */
+    }
+
+    /* Responsivo: Si entran desde un celular, los botones se vuelven a poner uno abajo del otro para que no se aplasten */
+    @media (max-width: 520px) {
+      .buttons-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="main-container">
+    <h1>Bienvenido</h1>
+    <h3>Selecciona una opción para continuar</h3>
+    <div class="buttons-container">
+      <a href="postulacion.html" id="form-postulacion">Postula tu Empresa</a>
+      <a href="login.html" id="redireccion-login">Iniciar Sesión</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
+    </div>
+  </footer>
+
+</body>
+</html>

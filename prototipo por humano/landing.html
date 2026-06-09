@@ -107,12 +107,12 @@
       /* Estilos del título de bienvenida */
       .welcome-block h2 {
         font-size: 26px;
-        color: #222222;
+        color: #d48544;
         margin-bottom: 8px;
       }
       /* Estilo del texto descriptivo de bienvenida */
       .welcome-block p {
-        color: #666666;
+        color: #4b4a48;
         font-size: 15px;
       }
       /* Grilla contenedora de las tarjetas de navegación */
@@ -185,8 +185,8 @@
       <nav>
         <ul>
           <li><a href="landing.html">Inicio</a></li>
-          <li><a href="lista-de-proveedores.html">Lista de Proveedores</a></li>          
-          <li><a href="adicionDeProveedor.html">Añadir Proveedor</a></li>
+          <li><a href="lista-proveedores.html">Lista de Proveedores</a></li>          
+          <li><a href="agregar-proveedor.html">Añadir Proveedor</a></li>
         </ul>
         <div style="position: relative">
           <img src="./assets/icono generico de usuario.png" alt="Perfil" onclick="toggleMenu()"
@@ -227,9 +227,7 @@
               vigentes para aplicarle un puntaje de sostenibilidad.
             </p>
           </div>
-          <a href="adicionDeProveedor.html" class="btn-dashboard"
-            >Abrir Formulario</a
-          >
+          <a href="agregar-proveedor.html" class="btn-dashboard">Abrir Formulario</a>
         </div>
 
         <div class="menu-card">
@@ -243,6 +241,28 @@
           </div>
           <a href="ranking.html" class="btn-dashboard">Ver Ranking</a>
         </div>
+            <div class="menu-card">
+            <div class="card-content">
+              <h3>Postulaciones a revisar</h3>
+              <p>
+                Revisa las postulaciones de nuevos proveedores que aún no han sido 
+                agregados a la red de proveedores. Revisa su informacion y valida sus certificaciones
+                antes de aprobar la postulacion.
+              </p>
+              <a href="revision-postulaciones.html" class="btn-dashboard">Revisar Postulaciones</a>
+            </div>
+          </div>
+        </div>
+            <div class="menu-card">
+            <div class="card-content">
+              <h3>Red de Proveedores</h3>
+              <p>
+                Revisa el listado completo de proveedores que forman
+                parte de la red de compras sostenibles de UCU. Busca a uno en especifico y accede a su informacion detallada 
+              </p>
+              <a href="lista-proveedores.html" class="btn-dashboard">Ver Red</a>       
+            </div>
+          </div>
       </section>
     </main>
 

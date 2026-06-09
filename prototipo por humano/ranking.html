@@ -224,8 +224,8 @@
       <nav>
         <ul>
           <li><a href="landing.html">Inicio</a></li>
-          <li><a href="lista-de-proveedores.html">Lista de Proveedores</a></li>          
-          <li><a href="adicionDeProveedor.html">Añadir Proveedor</a></li>
+          <li><a href="lista-proveedores.html">Lista de Proveedores</a></li>          
+          <li><a href="agregar-proveedor.html">Añadir Proveedor</a></li>
         </ul>
         <div style="position: relative">
           <img
@@ -271,6 +271,7 @@
               <th>Puntaje</th>
               <th>Cobertura</th>
               <th>Acciones</th>
+              <th>Productos</th>
             </tr>
           </thead>
           <tbody id="tabla-body">
@@ -314,7 +315,9 @@
           <td><strong>${p.nombre}</strong></td>
           <td><span class="badge-score ${colorClase}">${p.puntaje} pts</span></td>
           <td>${coberturaFormateada}</td>
-          <td><a href="detallesDeProveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
+          <td><a href="detalles-de-proveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
+          <td><a href="productos.html?id=${p.id}" class="btn-detail">Ver productos →</a></td>
+
         `;
         // Agregar la fila terminada al del cuerpo de la tabla
         tbody.appendChild(fila);

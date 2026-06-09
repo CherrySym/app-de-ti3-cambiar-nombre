@@ -154,7 +154,18 @@
         border-color: #007bff;
         outline: none;
       }
-
+      /* Estiliza el botón interno de los inputs tipo file */
+      .form-input::file-selector-button {
+        background: rgba(47, 128, 237, 0.1);
+        color: #2f80ed;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: 600;
+        margin-right: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
       /* Estilos del contenedor para los Checkboxes múltiples */
       .checkbox-group {
         display: flex;
@@ -215,7 +226,7 @@
       <nav>
         <ul>
           <li><a href="landing.html">Inicio</a></li>
-          <li><a href="lista-de-proveedores.html">Lista de Proveedores</a></li>          
+          <li><a href="lista-proveedores">Lista de Proveedores</a></li>          
           <li><a href="adicionDeProveedor.html">Añadir Proveedor</a></li>
         </ul>
         <div style="position: relative">
@@ -252,7 +263,7 @@
         </div>
         <h2>Registrar Nuevo Proveedor</h2>
         
-        <form action="ranking.html">
+        <form action="lista-proveedores.html" onsubmit="alert('¡Proveedor registrado correctamente!');">
           
           <div class="form-row">
             <div class="form-group">
