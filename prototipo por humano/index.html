@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Proveedores de UCU</title>
   <link rel="stylesheet" href="./css/global-styles.css" />
-lol
   <style>
     * {
       box-sizing: border-box;
@@ -30,32 +29,35 @@ lol
       padding: 60px 20px 40px 20px; /* Más espacio arriba para controlar el inicio */
     }
 
-    /* Modificado para que se ubique más arriba */
+    /* Modificado para que se ubique más arriba y contraste mejor con el fondo */
     .main-container h1 {
-      color: #646B4C;
+      color: #1e3264; /* Cambiado al azul institucional para mejor contraste */
       font-size: 48px;
       margin-top: 40px;      
       margin-bottom: auto;  
-      text-shadow: 2px 2px 4px #646B4C;
+      text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
     }
+    
     .main-container h3 {
-      color: #646B4C;
+      color: #444;
       font-size: 24px;
-      text-shadow: 1px 1px 3px rgba(160, 106, 106, 0.5);
+      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+      margin-bottom: 30px;
     }
+    
     /* Contenedor para alinear los botones en la misma línea */
     .buttons-container {
       display: flex;
       flex-direction: row;   
       justify-content: center;
-      gap: 10px;            
+      gap: 15px;            
       width: 100%;
       max-width: 600px;
       margin-bottom: auto;   
     }
 
-    /* Estilos unificados para botones */
-    #form-postulacion, #redireccion-login {
+    /* Estilos unificados para botones (Cambiado de ID a Clase) */
+    .btn-acceso {
       background-color: #1e3264;
       color: white;
       border: none;
@@ -69,16 +71,16 @@ lol
       transition: transform 0.2s, background-color 0.2s;
       display: inline-block;
       text-align: center;
-      min-width: 220px;
+      min-width: 240px;
     }
 
     /* Efecto sutil al pasar el mouse por arriba */
-    #form-postulacion:hover, #redireccion-login:hover {
+    .btn-acceso:hover {
       background-color: #173a73;
       transform: translateY(-2px);
     }
 
-    #form-postulacion:active, #redireccion-login:active {
+    .btn-acceso:active {
       transform: translateY(0);
     }
 
@@ -103,7 +105,7 @@ lol
       filter: brightness(0) invert(1); /* Deja el logo de la UCU completamente blanco */
     }
 
-    /* Responsivo: Si entran desde un celular, los botones se vuelven a poner uno abajo del otro para que no se aplasten */
+    /* Responsivo: Si entran desde un celular, los botones se vuelven a poner uno abajo del otro */
     @media (max-width: 520px) {
       .buttons-container {
         flex-direction: column;
@@ -119,8 +121,8 @@ lol
     <h1>Bienvenido</h1>
     <h3>Selecciona una opción para continuar</h3>
     <div class="buttons-container">
-      <a href="postulacion.html" id="form-postulacion">Postula tu Empresa</a>
-      <a href="login.html" id="redireccion-login">Iniciar Sesión</a>
+      <a href="postulacion.html" class="btn-acceso">Postulate a la Red de Proveedores</a>
+      <a href="login.html" class="btn-acceso">Ingreso a gestion de compras</a>
     </div>
   </main>
 
