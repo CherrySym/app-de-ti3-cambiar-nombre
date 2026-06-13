@@ -6,6 +6,7 @@ const PROVEEDORES = [
     {
         id: "ecoproveedores-uy",
         nombre: "EcoProveedores UY Ltda.",
+        codigo: "PROV-001",
         contacto: "Valentina Rocha",
         email: "v.rocha@ecoproveedores.com.uy",
         telefono: "+598 2 410 8800",
@@ -55,6 +56,7 @@ const PROVEEDORES = [
     {
         id: "paperuy-sa",
         nombre: "PaperUY S.A.",
+        codigo: "PROV-002",
         contacto: "Rodrigo Bentancur",
         email: "rbentancur@paperuy.com.uy",
         telefono: "+598 2 900 1234",
@@ -94,6 +96,7 @@ const PROVEEDORES = [
     {
         id: "distribuidora-central",
         nombre: "Distribuidora Central S.R.L.",
+        codigo: "PROV-003",
         contacto: "Marcelo Suárez",
         email: "msuarez@distcentral.com.uy",
         telefono: "+598 2 308 5500",
@@ -143,6 +146,7 @@ const PROVEEDORES = [
     {
         id: "officeshop-uy",
         nombre: "OfficeShop Uruguay",
+        codigo: "PROV-004",
         contacto: "Lucía Fernández",
         email: "lfernandez@officeshop.com.uy",
         telefono: "+598 2 622 7700",
@@ -182,6 +186,7 @@ const PROVEEDORES = [
     {
         id: "papeleria-del-sur",
         nombre: "Papelería del Sur",
+        codigo: "PROV-005",
         contacto: "Andrés Méndez",
         email: "andres@papeleriasur.uy",
         telefono: "+598 4 332 1900",
@@ -219,3 +224,34 @@ const PROVEEDORES = [
         ]
     }
 ];
+
+const POSTULACIONES_PENDIENTES = [
+    {
+        id_postulacion: "POST-001",
+        fecha_envio: "2026-06-10",
+        estado: "pendiente",
+        // mismos campos que un proveedor
+        nombre: "Librería El Estudiante",
+        contacto: "Carlos Pérez",
+        email: "carlos@elestudiante.com.uy",
+        telefono: "+598 2 500 1111",
+        cobertura: "local",
+        descripcion: "Librería con 15 años en el mercado universitario.",
+        embalaje_sostenible: "parcial",
+        energia_renovable: "no",
+        politica_devolucion: true,
+        certificaciones: [],
+        // productos que propone al postularse
+        productos: [
+            {
+                nombre: "Resma A4 80g",
+                precio: 210,
+                categoria: "papel",
+                reciclable: true,
+                reutilizable: false,
+                mat_reciclados_pct: 30,
+                certificaciones: []
+            }
+        ]
+    }
+]

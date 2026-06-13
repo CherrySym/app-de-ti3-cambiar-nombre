@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Global de Productos - UCU</title>
+  <link rel="stylesheet" href="../css/global-styles.css">
+  <style>
+    /* Estilos para el logo del header */
+    .logo {
+      display: block;
+      height: 40px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    /* Estilos del Header */
+    header {
+      background-color: #1e3264;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+
+    header nav {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    header nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+    }
+
+    header nav ul li a {
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    header nav ul li a:hover {
+      color: #2f80ed;
+    }
+
+    .user-profile-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      position: absolute;
+      right: 0;
+      top: 45px;
+      background-color: #ffffff;
+      min-width: 220px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      border-radius: 8px;
+      padding: 12px 0;
+      z-index: 1000;
+    }
+
+    .dropdown-user-info {
+      padding: 4px 16px 8px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dropdown-user-info strong {
+      font-size: 14px;
+      color: #13213c;
+    }
+
+    .dropdown-user-info span {
+      font-size: 12px;
+      color: #555555;
+    }
+
+    .dropdown-content hr {
+      border: 0;
+      border-top: 1px solid #eeeeee;
+      margin: 8px 0;
+    }
+
+    .dropdown-content .logout-link {
+      color: #dc3545;
+      padding: 8px 16px;
+      text-decoration: none;
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .dropdown-content .logout-link:hover {
+      background-color: #fff5f5;
+    }
+
+    /* Contenedor Principal */
+    .catalog-container {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .page-title {
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      margin-bottom: 25px;
+      font-size: 28px;
+    }
+
+    /* Sección de Filtros (Glassmorphism sutil) */
+    .filter-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(19, 33, 60, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      align-items: flex-end;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .filter-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #13213c;
+      text-transform: uppercase;
+    }
+
+    .filter-input, .filter-select {
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      background-color: white;
+      color: #334155;
+    }
+
+    .checkbox-filter-group {
+      display: flex;
+      gap: 15px;
+      padding-bottom: 10px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: #13213c;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* Tabla de Productos Globales */
+    .table-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      border: 1px solid rgba(19, 33, 60, 0.1);
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    .catalog-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      text-align: left;
+    }
+
+    .catalog-table th {
+      background-color: #1e3264;
+      color: white;
+      padding: 14px 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .catalog-table tr {
+      transition: background-color 0.2s;
+    }
+
+    .catalog-table tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .catalog-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #334155;
+    }
+
+    /* Badges de soporte visual */
+    .badge-provider {
+      font-weight: 600;
+      color: #1e3264;
+    }
+
+    .badge-category {
+      background-color: #f1f5f9;
+      color: #475569;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    .badge-bool {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .badge-true {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-false {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+
+    .pct-bar-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pct-bar {
+      flex: 1;
+      background-color: #e2e8f0;
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+      min-width: 50px;
+    }
+
+    .pct-fill {
+      background-color: #16a34a;
+      height: 100%;
+    }
+
+    .badge-cert {
+      background-color: #e0f2fe;
+      color: #0369a1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 4px;
+      display: inline-block;
+    }
+
+    /* Footer */
+    .footer-container {
+      background-color: #1e3264;
+      padding: 20px 0;
+      width: 100%;
+    }
+
+    .logo-footer {
+      display: block;
+      margin: auto;
+      height: 30px;
+      filter: brightness(0) invert(1);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo">
+    <nav>
+      <ul>
+        <li><a href="landing.html">Inicio</a></li>
+        <li><a href="lista-proveedores.html">Lista de Proveedores</a></li>
+        <li><a href="agregar-proveedor.html">Añadir Proveedor</a></li>
+      </ul>
+
+      <div class="user-profile-container">
+        <img src="../assets/icono generico de usuario.png" alt="Perfil" onclick="toggleMenu()" style="width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: block;">
+        <div id="menuDropdown" class="dropdown-content" style="display: none;">
+          <div class="dropdown-user-info">
+            <strong>Encargado de Compras</strong>
+            <span>compras@correo.ucu.edu.uy</span>
+          </div>
+          <hr>
+          <a href="../login.html" class="logout-link">Cerrar Sesión</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="catalog-container">
+    <h2 class="page-title">Catálogo Global de Insumos Sostenibles</h2>
+
+    <section class="filter-section">
+      <div class="filter-grid">
+        <div class="filter-group">
+          <label for="searchProveedor">Filtrar por Proveedor:</label>
+          <input type="text" id="searchProveedor" class="filter-input" placeholder="Ej: EcoProveedores..." onkeyup="filtrarTabla()">
+        </div>
+
+        <div class="filter-group">
+          <label for="selectCategoria">Categoría:</label>
+          <select id="selectCategoria" class="filter-select" onchange="filtrarTabla()">
+            <option value="todos">Todas las categorías</option>
+            <option value="papel">Papel</option>
+            <option value="escritura">Escritura</option>
+            <option value="embalaje">Embalaje</option>
+          </select>
+        </div>
+
+        <div class="filter-group" style="flex-direction: row; gap: 20px; padding-bottom: 8px;">
+          <label class="checkbox-label">
+            <input type="checkbox" id="checkReciclable" onchange="filtrarTabla()"> Reciclable
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="checkReutilizable" onchange="filtrarTabla()"> Reutilizable
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <div class="table-card">
+      <div class="table-container">
+        <table class="catalog-table" id="tablaProductos">
+          <thead>
+            <tr>
+              <th>Nombre del Producto</th>
+              <th>Proveedor</th>
+              <th>Precio</th>
+              <th>Categoría</th>
+              <th>Reciclable</th>
+              <th>Reutilizable</th>
+              <th>% Mat. Reciclados</th>
+              <th>Certificaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-proveedor="ecoproveedores uy ltda." data-categoria="papel" data-reciclable="si" data-reutilizable="no">
+              <td><strong>Resma A4 80g Reciclada</strong></td>
+              <td class="badge-provider">EcoProveedores UY Ltda.</td>
+              <td><strong>$320</strong></td>
+              <td><span class="badge-category">papel</span></td>
+              <td><span class="badge-bool badge-true">SÍ</span></td>
+              <td><span class="badge-bool badge-false">NO</span></td>
+              <td>
+                <div class="pct-bar-container">
+                  <div class="pct-bar"><div class="pct-fill" style="width: 100%;"></div></div>
+                  <span>100%</span>
+                </div>
+              </td>
+              <td><span class="badge-cert">FSC</span></td>
+            </tr>
+
+            <tr data-proveedor="uruguay verde distribuciones" data-categoria="papel" data-reciclable="si" data-reutilizable="no">
+              <td><strong>Resma A4 80g Reciclada</strong></td>
+              <td class="badge-provider">Uruguay Verde Distribuciones</td>
+              <td><strong>$295</strong></td>
+              <td><span class="badge-category">papel</span></td>
+              <td><span class="badge-bool badge-true">SÍ</span></td>
+              <td><span class="badge-bool badge-false">NO</span></td>
+              <td>
+                <div class="pct-bar-container">
+                  <div class="pct-bar"><div class="pct-fill" style="width: 75%;"></div></div>
+                  <span>75%</span>
+                </div>
+              </td>
+              <td><span class="badge-cert">ISO14001</span></td>
+            </tr>
+
+            <tr data-proveedor="ecoproveedores uy ltda." data-categoria="papel" data-reciclable="si" data-reutilizable="no">
+              <td><strong>Cuaderno Universitario Kraft</strong></td>
+              <td class="badge-provider">EcoProveedores UY Ltda.</td>
+              <td><strong>$180</strong></td>
+              <td><span class="badge-category">papel</span></td>
+              <td><span class="badge-bool badge-true">SÍ</span></td>
+              <td><span class="badge-bool badge-false">NO</span></td>
+              <td>
+                <div class="pct-bar-container">
+                  <div class="pct-bar"><div class="pct-fill" style="width: 80%;"></div></div>
+                  <span>80%</span>
+                </div>
+              </td>
+              <td><span class="badge-cert">FSC</span></td>
+            </tr>
+
+            <tr data-proveedor="ecoproveedores uy ltda." data-categoria="escritura" data-reciclable="si" data-reutilizable="no">
+              <td><strong>Set Bolígrafos Bioplástico x5</strong></td>
+              <td class="badge-provider">EcoProveedores UY Ltda.</td>
+              <td><strong>$210</strong></td>
+              <td><span class="badge-category">escritura</span></td>
+              <td><span class="badge-bool badge-true">SÍ</span></td>
+              <td><span class="badge-bool badge-false">NO</span></td>
+              <td>
+                <div class="pct-bar-container">
+                  <div class="pct-bar"><div class="pct-fill" style="width: 60%;"></div></div>
+                  <span>60%</span>
+                </div>
+              </td>
+              <td style="color: #999; font-size: 12px;">Ninguna</td>
+            </tr>
+
+            <tr data-proveedor="importaciones biometricas del sur" data-categoria="embalaje" data-reciclable="si" data-reutilizable="si">
+              <td><strong>Caja de Cartón Corrugado Reutilizable</strong></td>
+              <td class="badge-provider">Importaciones Biométricas del Sur</td>
+              <td><strong>$85</strong></td>
+              <td><span class="badge-category">embalaje</span></td>
+              <td><span class="badge-bool badge-true">SÍ</span></td>
+              <td><span class="badge-bool badge-true">SÍ</span></td>
+              <td>
+                <div class="pct-bar-container">
+                  <div class="pct-bar"><div class="pct-fill" style="width: 40%;"></div></div>
+                  <span>40%</span>
+                </div>
+              </td>
+              <td><span class="badge-cert">EMAS</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer">
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menuDropdown");
+      if (menu.style.display === "none" || menu.style.display === "") {
+        menu.style.display = "block";
+      } else {
+        menu.style.display = "none";
+      }
+    }
+
+    window.onclick = function (event) {
+      const menu = document.getElementById("menuDropdown");
+      const avatar = document.querySelector(".user-profile-container img");
+
+      if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
+        menu.style.display = "none";
+      }
+    };
+
+    // Lógica dinámica de filtros locales por JS
+    function filtrarTabla() {
+      const inputProv = document.getElementById("searchProveedor").value.toLowerCase();
+      const selectCat = document.getElementById("selectCategoria").value;
+      const checkRecic = document.getElementById("checkReciclable").checked;
+      const checkReutil = document.getElementById("checkReutilizable").checked;
+      
+      const tabla = document.getElementById("tablaProductos");
+      const filas = tabla.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+      for (let i = 0; i < filas.length; i++) {
+        const fila = filas[i];
+        const provData = fila.getAttribute("data-proveedor");
+        const catData = fila.getAttribute("data-categoria");
+        const recicData = fila.getAttribute("data-reciclable");
+        const reutilData = fila.getAttribute("data-reutilizable");
+
+        let cumpleProv = provData.includes(inputProv);
+        let cumpleCat = (selectCat === "todos" || catData === selectCat);
+        let cumpleRecic = (!checkRecic || recicData === "si");
+        let cumpleReutil = (!checkReutil || reutilData === "si");
+
+        if (cumpleProv && cumpleCat && cumpleRecic && cumpleReutil) {
+          fila.style.display = "";
+        } else {
+          fila.style.display = "none";
+        }
+      }
+    }
+  </script>
+</body>
+</html>

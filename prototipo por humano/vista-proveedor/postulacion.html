@@ -4,22 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Postulación de Proveedor - UCU</title>
-  <link rel="stylesheet" href="./css/global-styles.css" />
+  <link rel="stylesheet" href="../css/global-styles.css" />
 
   <style>
     /* Configuración base para el Layout Elástico */
     * {
       box-sizing: border-box;
-    }
-
-    body {
-      background: url('./assets/fondo-ucu.jpeg') no-repeat center top fixed;
-      background-size: cover;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
     }
 
     /* Contenedor principal que centra el formulario */
@@ -53,7 +43,7 @@
       font-weight: 700;
     }
 
-    /* Filas con dos columnas */
+    /* Filas con dos columnas o bloques completos */
     .form-row {
       display: flex;
       gap: 20px;
@@ -126,18 +116,20 @@
       height: 18px;
       cursor: pointer;
     }
+
     /* Estiliza el botón interno de los inputs tipo file */
-      .form-input::file-selector-button {
-        background: rgba(47, 128, 237, 0.1);
-        color: #2f80ed;
-        border: none;
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-weight: 600;
-        margin-right: 10px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
+    .form-input::file-selector-button {
+      background: rgba(47, 128, 237, 0.1);
+      color: #2f80ed;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      margin-right: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
     /* Botón de Enviar (Estilo Institucional) */
     .btn-submit-prov {
       background: linear-gradient(135deg, #1e3264 0%, #13213c 100%);
@@ -200,7 +192,7 @@
 
       <h2>Formulario de Postulación</h2>
       
-      <form action="index.html" onsubmit="alert('¡Postulación enviada correctamente, Gracias!');">
+      <form action="agregar-producto-proveedor.html" onsubmit="alert('¡Postulación enviada correctamente, Gracias!');">
         
         <div class="form-row">
           <div class="form-group">
@@ -258,23 +250,39 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Certificaciones de la Empresa:</label>
-          <div class="checkbox-group">
-            <label class="checkbox-label"><input type="checkbox" name="certificaciones" value="ISO14001"> ISO 14001</label>
-            <label class="checkbox-label"><input type="checkbox" name="certificaciones" value="FSC"> FSC</label>
-            <label class="checkbox-label"><input type="checkbox" name="certificaciones" value="EMAS"> EMAS</label>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="politica_devolucion">Política de Devolución de Residuos / Logística Inversa:</label>
+            <select id="politica_devolucion" class="form-select">
+              <option value="si">Sí, cuenta con plan de retiro de excedentes/envases</option>
+              <option value="no">No cuenta con plan de retiro</option>
+            </select>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="pdf_certificados">Adjuntar Comprobantes de Certificación (Formato PDF):</label>
-          <input type="file" id="pdf_certificados" accept=".pdf" class="form-input">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Certificaciones de la Empresa:</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label"><input type="checkbox" name="certificaciones" value="ISO14001"> ISO 14001</label>
+              <label class="checkbox-label"><input type="checkbox" name="certificaciones" value="FSC"> FSC</label>
+              <label class="checkbox-label"><input type="checkbox" name="certificaciones" value="EMAS"> EMAS</label>
+            </div>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="descripcion">Descripción Comercial:</label>
-          <textarea id="descripcion" class="form-textarea" placeholder="Breve reseña sobre la empresa y sus materiales..."></textarea>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pdf_certificados">Adjuntar Comprobantes de Certificación (Formato PDF):</label>
+            <input type="file" id="pdf_certificados" accept=".pdf" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="descripcion">Descripción Comercial:</label>
+            <textarea id="descripcion" class="form-textarea" placeholder="Breve reseña sobre la empresa y sus materiales..."></textarea>
+          </div>
         </div>
 
         <div class="form-row">
@@ -295,7 +303,7 @@
 
   <footer>
     <div class="footer-container">
-      <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
+      <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
     </div>
   </footer>
 

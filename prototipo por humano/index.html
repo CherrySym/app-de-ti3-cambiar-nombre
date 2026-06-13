@@ -17,21 +17,19 @@
       font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
-      min-height: 100vh; /* Obliga al cuerpo a medir el total de la pantalla */
+      min-height: 100vh;
     }
 
-    /* Contenedor elástico que distribuye el contenido */
     .main-container {
       display: flex;
-      flex: 1; /* Se estira para ocupar todo el espacio vertical disponible */
+      flex: 1;
       flex-direction: column;
       align-items: center;
-      padding: 60px 20px 40px 20px; /* Más espacio arriba para controlar el inicio */
+      padding: 60px 20px 40px 20px;
     }
 
-    /* Modificado para que se ubique más arriba y contraste mejor con el fondo */
     .main-container h1 {
-      color: #1e3264; /* Cambiado al azul institucional para mejor contraste */
+      color: #1e3264;
       font-size: 48px;
       margin-top: 40px;      
       margin-bottom: auto;  
@@ -45,18 +43,36 @@
       margin-bottom: 30px;
     }
     
-    /* Contenedor para alinear los botones en la misma línea */
+    /* Contenedor principal de flujos */
     .buttons-container {
       display: flex;
       flex-direction: row;   
       justify-content: center;
-      gap: 15px;            
+      align-items: flex-start;
+      gap: 25px;            
       width: 100%;
-      max-width: 600px;
+      max-width: 700px;
       margin-bottom: auto;   
     }
 
-    /* Estilos unificados para botones (Cambiado de ID a Clase) */
+    /* Sub-bloque vertical exclusivo para las opciones de proveedores */
+    .provider-block {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 240px;
+    }
+
+    .provider-label {
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      color: #1e3264;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+      margin-bottom: 2px;
+    }
+
     .btn-acceso {
       background-color: #1e3264;
       color: white;
@@ -74,19 +90,111 @@
       min-width: 240px;
     }
 
-    /* Efecto sutil al pasar el mouse por arriba */
+    .btn-acceso.btn-secondary {
+      background-color: #ffffff;
+      color: #1e3264;
+      border: 2px solid #1e3264;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
     .btn-acceso:hover {
       background-color: #173a73;
       transform: translateY(-2px);
     }
 
-    .btn-acceso:active {
-      transform: translateY(0);
+    .btn-acceso.btn-secondary:hover {
+      background-color: #f4f6f9;
+      color: #173a73;
     }
 
-    /* Estilos para el Footer */
+    /* ESTILOS DEL ACCESO REFINADO (MODAL INTERNO) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(19, 33, 60, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
+
+    .modal-card h4 {
+      margin: 0 0 10px 0;
+      color: #1e3264;
+      font-size: 18px;
+    }
+
+    .modal-card p {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 20px;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 15px;
+      text-align: center;
+      margin-bottom: 15px;
+      outline: none;
+    }
+
+    .modal-input:focus {
+      border-color: #1e3264;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-modal {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-modal-confirm { background-color: #1e3264; color: white; }
+    .btn-modal-cancel { background-color: #e2e8f0; color: #475569; }
+
+    .error-msg {
+      color: #dc3545;
+      font-size: 12px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
     footer {
-      margin-top: auto; /* Garantía extra para pegarlo abajo */
+      margin-top: auto;
       width: 100%;
     }
 
@@ -97,20 +205,21 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Estilos para el logo del Footer */
     .logo-footer {
       display: block;
       margin: auto;
       height: 30px;
-      filter: brightness(0) invert(1); /* Deja el logo de la UCU completamente blanco */
+      filter: brightness(0) invert(1);
     }
 
-    /* Responsivo: Si entran desde un celular, los botones se vuelven a poner uno abajo del otro */
-    @media (max-width: 520px) {
+    @media (max-width: 600px) {
       .buttons-container {
         flex-direction: column;
         align-items: center;
-        gap: 20px;
+        gap: 30px;
+      }
+      .provider-block {
+        width: 100%;
       }
     }
   </style>
@@ -120,11 +229,37 @@
   <main class="main-container">
     <h1>Bienvenido</h1>
     <h3>Selecciona una opción para continuar</h3>
+    
     <div class="buttons-container">
-      <a href="postulacion.html" class="btn-acceso">Postulate a la Red de Proveedores</a>
-      <a href="login.html" class="btn-acceso">Ingreso a gestion de compras</a>
+      
+      <div class="provider-block">
+        <div class="provider-label">Espacio Proveedores</div>
+        <a href="./vista-proveedor/postulacion.html" class="btn-acceso">Postularme a la Red</a>
+        <button onclick="abrirModal()" class="btn-acceso btn-secondary" style="font-size: 14px; padding: 12px 20px;">Agregar Producto</button>
+      </div>
+
+      <div class="provider-block">
+        <div class="provider-label">Encargado UCU</div>
+        <a href="login.html" class="btn-acceso" style="margin-top: 24px;">Ingreso Gestión de Compras</a>
+      </div>
+
     </div>
   </main>
+
+  <div id="modalAcceso" class="modal-overlay">
+    <div class="modal-card">
+      <h4>Validación de Proveedor</h4>
+      <p>Introduce tu código de verificación asignado por la UCU.</p>
+      
+      <input type="text" id="codigoProveedor" class="modal-input" placeholder="Ej: PROV-001" autocomplete="off">
+      <div id="errorAcceso" class="error-msg">Código incorrecto. Intenta de nuevo.</div>
+      
+      <div class="modal-buttons">
+        <button onclick="cerrarModal()" class="btn-modal btn-modal-cancel">Cancelar</button>
+        <button onclick="validarYRedirigir()" class="btn-modal btn-modal-confirm">Ingresar</button>
+      </div>
+    </div>
+  </div>
 
   <footer>
     <div class="footer-container">
@@ -132,5 +267,53 @@
     </div>
   </footer>
 
+  <script>
+    // Control visual del modal integrado
+    function abrirModal() {
+      document.getElementById("modalAcceso").classList.add("active");
+      document.getElementById("codigoProveedor").focus();
+      document.getElementById("errorAcceso").style.display = "none";
+    }
+
+    function cerrarModal() {
+      document.getElementById("modalAcceso").classList.remove("active");
+      document.getElementById("codigoProveedor").value = "";
+    }
+
+    // Validación segura a prueba de fallos de carga JS externos
+    function validarYRedirigir() {
+  const codigo = document.getElementById("codigoProveedor").value.trim().toUpperCase();
+  const inputError = document.getElementById("errorAcceso");
+
+  if (typeof PROVEEDORES !== 'undefined') {
+    // Buscamos usando p.codigo en lugar de id_proveedor
+    const proveedorExistente = PROVEEDORES.find(p => p.codigo && p.codigo.toUpperCase() === codigo);
+
+    if (proveedorExistente) {
+      cerrarModal();
+      // Le pasamos el código real de la BD por la URL
+      window.location.href = "./vista-proveedor/agregar-producto-proveedor.html?prov=" + proveedorExistente.codigo;
+    } else {
+      inputError.style.display = "block";
+      document.getElementById("codigoProveedor").value = "";
+    }
+  } else {
+    // Resguardo por si las moscas
+    if (codigo === "PROV-001") {
+      cerrarModal();
+      window.location.href = "./vista-proveedor/agregar-producto-proveedor.html?prov=PROV-001";
+    } else {
+      inputError.style.display = "block";
+    }
+  }
+}
+
+    // Permitir ingresar tocando "Enter" en el input
+    document.getElementById("codigoProveedor").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        validarYRedirigir();
+      }
+    });
+  </script>
 </body>
 </html>

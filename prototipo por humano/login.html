@@ -1,96 +1,143 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Login - Gestión de Proveedores UCU</title>
     <link rel="stylesheet" href="./css/global-styles.css"/>
 
     <style>
-        /* Estilos para el logo de la UCU */
+      /* Estilos específicos y exclusivos para la tarjeta de login */
+      .login-container {
+        display: flex;
+        flex: 1; /* Se estira en el espacio vertical que deja libre el body global */
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+      }
+
+      /* Tarjeta de inicio de sesión con desenfoque institucional */
+      .login-card {
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 35px 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+        border-radius: 16px;
+        border: 1px solid rgba(19, 33, 60, 0.1);
+      }
+
+      /* Estilos para el logo de la UCU centrado */
       .logo {
         display: block;
-        margin: auto; /* Centra la imagen */
-        height: 40px;
+        margin: 0 auto 15px auto;
+        height: 45px;
         width: auto;
       }
-    lol
-        /* Estilos para el título "Gestion de proveedores" */
+
+      /* Títulos internos de la tarjeta */
       .card-title {
         text-align: center;
         font-size: 24px;
-        font-weight: 600;
-        margin: 5px;
-
+        font-weight: 700;
+        color: #13213c;
+        margin: 5px 0;
       }
-         /* Estilos para el subtítulo "Iniciar Sesión" */
+
       .card-subtitle {
-        font-size: 18px;
+        text-align: center;
+        font-size: 16px;
         font-weight: 400;
-        margin-bottom: 20px; 
-      }
-      /* Estilos para CENTRAR el contenedor de inicio de sesión */
-      .login-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 80vh;
+        color: #666;
+        margin-top: 0;
+        margin-bottom: 25px; 
       }
 
-      /* Estilos para la tarjeta de inicio de sesión */
-      .login-card {
-        background-color: #ffffff;
-        padding: 30px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-        width: 100%;
-        max-width: 400px; /* Para que no se estire infinito en monitores grandes */
-        border-radius: 5px;
-      }
-
-      /* Estilos para separar los inputs del formuario en lineas distintas */
+      /* Separación de los campos del formulario */
       .form-group {
         display: flex;
-        flex-direction: column; /* Label arriba, Input abajo */
+        flex-direction: column;
         margin-bottom: 20px; 
       }
-      /* Estilos para separar un poco los inputs de los labels */
+
       .form-group label {
-        margin-bottom: 10px;
-      }
-      /* Estilos de los campos de texto e input */
-      .form-input {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #13213c;
+        font-size: 14px;
       }
 
-      /* Estilos del botón "ingresar" */
+      /* Inputs estilizados (la fuente ya la hereda gracias al global) */
+      .form-input {
+        padding: 12px;
+        border: 1px solid rgba(19, 33, 60, 0.2);
+        border-radius: 8px;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      .form-input:focus {
+        border-color: #2f80ed;
+        box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.15);
+      }
+
+      /* Botón de ingreso con azul institucional */
       .btn-submit {
         width: 100%;
-        padding: 12px;
-        background-color: #007bff;
+        padding: 14px;
+        background: linear-gradient(135deg, #1e3264 0%, #13213c 100%);
         color: white;
         border: none;
-        border-radius: 4px;
+        border-radius: 8px;
         cursor: pointer;
         font-size: 16px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(30, 50, 100, 0.3);
+        transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+        margin-top: 10px;
       }
-      /* Cambio de color al pasar el mouse por el botón de "Ingresar" */
+
       .btn-submit:hover {
-        background-color: #0056b3; 
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #243b75 0%, #1a2c52 100%);
+        box-shadow: 0 6px 20px rgba(30, 50, 100, 0.4);
       }
-      /* Estilos para el Footer */
+
+      .btn-submit:active {
+        transform: translateY(0);
+      }
+
+      /* Enlace de retorno */
+      .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #1e3264;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      /* Estilos del Footer contenedor (el margin-top auto ya es global) */
       .footer-container {
         background-color: #1E3264; 
         padding: 20px 0; 
         width: 100%;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
-      /* Estilos para el logo del Footer */
+
       .logo-footer {
         display: block;
         margin: auto;
         height: 30px;
-        filter: brightness(0) invert(1); /* Invierte los colores de la imagen del logo de la UCU */
+        filter: brightness(0) invert(1);
       }
     </style>
   </head>
@@ -99,9 +146,10 @@
     <main class="login-container">
       <section class="login-card">
         <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo"/>
-        <h3 class="card-title">Gestion de Proveedores</h3>
-        <h4 class ="card-subtitle">Iniciar Sesión</h4>
-        <form action="landing.html" class="login-form">
+        <h3 class="card-title">Gestión de Proveedores</h3>
+        <h4 class="card-subtitle">Iniciar Sesión</h4>
+        
+        <form action="./vista-encargado/landing.html" class="login-form" method="GET">
           <div class="form-group">
             <label for="username">Usuario:</label>
             <input type="text" id="username" name="username" class="form-input" placeholder="Ej: mika.schaffell"/>
@@ -115,6 +163,7 @@
           <input type="submit" value="Ingresar" class="btn-submit" />
         </form>
 
+        <a href="index.html" class="back-link">← Volver al inicio</a>
       </section>
     </main>
 

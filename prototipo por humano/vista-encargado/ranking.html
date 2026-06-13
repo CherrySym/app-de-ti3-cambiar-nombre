@@ -1,10 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ranking de Proveedores</title>
-    <link rel="stylesheet" href="./css/global-styles.css"/>
+    <title>Ranking de Proveedores - UCU</title>
+    <link rel="stylesheet" href="../css/global-styles.css"/>
     <style>
       /* Estilos para el logo del Header */
       .logo {
@@ -16,7 +16,7 @@
       
       /* Estilos del Header */
       header {
-        background-color: #1E3264;
+        background-color: #1e3264;
         padding: 15px 30px;
         display: flex;
         justify-content: space-between;
@@ -45,7 +45,7 @@
       }
       /* Cambio de color al pasar el mouse por los enlaces del nav */
       header nav ul li a:hover {
-        color: #007bff;
+        color: #2f80ed;
       }
       
       /* Estilos para el contenedor del menu flotante que aparece al hacer click en el icono de usuario */
@@ -56,7 +56,7 @@
         background-color: #ffffff;
         min-width: 220px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        border-radius: 6px;
+        border-radius: 8px;
         padding: 12px 0;
         z-index: 1000;
       }
@@ -69,12 +69,12 @@
       /* Texto en negrita para el nombre del usuario */
       .dropdown-user-info strong {
         font-size: 14px;
-        color: #333333;
+        color: #13213c;
       }
       /* Texto gris y más chico para el correo */
       .dropdown-user-info span {
         font-size: 12px;
-        color: #777777;
+        color: #555555;
       }
       /* Línea divisoria del menú desplegable */
       .dropdown-content hr {
@@ -96,7 +96,7 @@
         background-color: #fff5f5;
       }
 
-      /*  Estilos del contenedor del ranking  */
+      /* Estilos del contenedor del ranking  */
       .ranking-container {
         flex: 1;
         max-width: 900px;
@@ -107,43 +107,45 @@
 
       /* Contenedor para el botón de volver y el titulo "Ranking de Proveedores" */
       .ranking-header {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
       }
 
-      /* Estilo para el botón de "Volver a la lista"*/
+      /* Estilo para el botón de "Volver atrás" */
       .btn-back-list {
         display: inline-flex;
         align-items: center;
-        color: #007bff;
+        color: #1e3264;
         text-decoration: none;
         font-weight: 600;
         font-size: 14px;
         margin-bottom: 15px;
         transition: color 0.2s;
+        gap: 5px;
       }
-      /* Subrayado al pasar el mouse por el botón de regresar */
+      /* Efecto al pasar el mouse por el botón de regresar */
       .btn-back-list:hover {
-        color: #0056b3;
-        text-decoration: underline;
+        color: #2f80ed;
       }
-      /* Estilos para el título principal del ranking " Ranking de Sostenibilidad" en Azul */
+      /* Estilos para el título principal del ranking */
       .ranking-container h2 {
-        font-size: 24px;
-        color: #1E3264;
+        font-size: 26px;
+        color: #13213c;
         margin: 0 0 8px 0;
+        font-weight: 700;
       }
       /* Estilos para el subtítulo debajo del título principal */
       .ranking-container p {
-        color: #666666;
-        font-size: 14px;
+        color: #555555;
+        font-size: 15px;
         margin: 0;
       }
 
       /* Estilos para el contenedor de la tabla */
       .table-responsive {
         background-color: #ffffff;
-        border-radius: 6px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(19, 33, 60, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
         overflow: hidden; 
         margin-top: 20px;
       }
@@ -154,9 +156,9 @@
         text-align: left;
         font-size: 15px;
       }
-      /* Encabezados de la tabla con fondo azul y texto blanco */
+      /* Encabezados de la tabla con fondo azul institucional y texto blanco */
       th {
-        background-color: #1E3264;
+        background-color: #1e3264;
         color: white;
         padding: 15px;
         font-weight: 600;
@@ -170,7 +172,7 @@
 
       /* Efecto cebra en las filas de la tabla */
       tr:nth-child(even) td {
-        background-color: #f9f9f9;
+        background-color: #f9fafb;
       }
 
       /* Resaltado en la fila al pasar el mouse por encima */
@@ -178,35 +180,38 @@
         background-color: #f1f5f9;
       }
 
-      /* Estilos para las insignia del puntaje */
+      /* Estilos para las insignias del puntaje */
       .badge-score {
         color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-weight: bold;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: 700;
         font-size: 13px;
+        display: inline-block;
       }
-      /* El color de fondo de las insignias depenndiendo el puntaje*/
-      .bg-verde { background-color: #28a745; }
-      .bg-amarillo { background-color: #ffc107; color: #333333; }
-      .bg-rojo { background-color: #dc3545; }
+      /* El color de fondo de las insignias dependiendo el puntaje (Paleta suavizada y profesional) */
+      .bg-verde { background-color: #219653; }
+      .bg-amarillo { background-color: #f2c94c; color: #333333; }
+      .bg-rojo { background-color: #eb5757; }
 
-      /* Estilos para los enlaces de Ver Detalles */
+      /* Estilos para los enlaces de Acciones */
       .btn-detail {
-        color: #007bff;
+        color: #2f80ed;
         text-decoration: none;
-        font-weight: 500;
+        font-weight: 600;
       }
-      /* Subrayado al pasar el mouse en Ver Detalles */
+      /* Efecto hover en los enlaces de acción */
       .btn-detail:hover {
+        color: #1e3264;
         text-decoration: underline;
       }
 
       /* Estilos del Footer */
       .footer-container {
-        background-color: #1E3264;
+        background-color: #1e3264;
         padding: 20px 0;
         width: 100%;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
       /* Estilos para el logo del Footer */
       .logo-footer {
@@ -220,7 +225,7 @@
 
   <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
     <header>
-      <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo" />
+      <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo" />
       <nav>
         <ul>
           <li><a href="landing.html">Inicio</a></li>
@@ -229,7 +234,7 @@
         </ul>
         <div style="position: relative">
           <img
-            src="./assets/icono generico de usuario.png"
+            src="../assets/icono generico de usuario.png"
             alt="Perfil"
             onclick="toggleMenu()"
             style="
@@ -247,14 +252,13 @@
               <span>compras@correo.ucu.edu.uy</span>
             </div>
             <hr />
-            <a href="login.html" class="logout-link">Cerrar Sesión</a>
+            <a href="../login.html" class="logout-link">Cerrar Sesión</a>
           </div>
         </div>
       </nav>
     </header>
 
     <main class="ranking-container">
-      <!-- Sección de cabecera modificada con el botón de regreso -->
       <div class="ranking-header">
         <a href="#" onclick="window.history.back(); return false;" class="btn-back-list">
           ← Volver atrás
@@ -275,31 +279,30 @@
             </tr>
           </thead>
           <tbody id="tabla-body">
-          </tbody>
+            </tbody>
         </table>
       </div>
     </main>
 
     <footer>
       <div class="footer-container">
-        <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo-footer"/>
+        <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer"/>
       </div>
     </footer>
 
-    <script src="./js/datosPlanos.js"></script>
+    <script src="../js/datosPlanos.js"></script>
     <script>
-
       // Seleccionar el cuerpo de la tabla para cargarle los proveedores más adelante
       const tbody = document.getElementById("tabla-body");
 
-      /*Copiar la lista de provedoores de DatosPlanos.js y ordenar los proveedores de mayor a menor puntaje */
+      /* Copiar la lista de proveedores de DatosPlanos.js y ordenar los proveedores de mayor a menor puntaje */
       const proveedoresOrdenados = [...PROVEEDORES].sort((a, b) => b.puntaje - a.puntaje);
 
-      // Recorrer la lista de proveedores ordenado y crear las filas de la tabla <tr> 
+      // Recorrer la lista de proveedores ordenados y crear las filas de la tabla <tr> 
       proveedoresOrdenados.forEach(p => {
         const fila = document.createElement("tr");
         
-        // Validacion de que color usar para la insginia del puntaje 
+        // Validación de qué color usar para la insignia del puntaje 
         let colorClase = "bg-rojo"; // Si tiene menos de 50, queda en rojo por defecto
         if (p.puntaje >= 75) {
           colorClase = "bg-verde"; // Verde para puntajes 75 o más
@@ -307,24 +310,23 @@
           colorClase = "bg-amarillo"; // Amarillo para puntajes entre 50 y 74
         }
 
-       // Formatear el string para que empiece con mayúscula
+        // Formatear el string para que empiece con mayúscula
         const coberturaFormateada = p.cobertura.charAt(0).toUpperCase() + p.cobertura.slice(1);
 
-        // Inyeccion de codigo html las celdas armadas con los datos correspondientes del proveedor
+        // Inyección de código HTML: Corregido enlace hacia "detallesDeProveedor.html" para mantener coherencia
         fila.innerHTML = `
           <td><strong>${p.nombre}</strong></td>
           <td><span class="badge-score ${colorClase}">${p.puntaje} pts</span></td>
           <td>${coberturaFormateada}</td>
-          <td><a href="detalles-de-proveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
-          <td><a href="productos.html?id=${p.id}" class="btn-detail">Ver productos →</a></td>
-
+          <td><a href="detalle-proveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
+          <td><a href="lista-productos.html?id=${p.id}" class="btn-detail">Ver productos →</a></td>
         `;
-        // Agregar la fila terminada al del cuerpo de la tabla
+        // Agregar la fila terminada al cuerpo de la tabla
         tbody.appendChild(fila);
       });
     </script>
+    
     <script>
-
       // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
       function toggleMenu() {
         const menu = document.getElementById("menuDropdown");
@@ -334,12 +336,13 @@
           menu.style.display = "none";
         }
       }
-      // Función para ocultar el menú desplegable si se hace clic fuera de él
+      
+      // Función para ocultar el menú desplegable si se hace clic fuera de él (Blindada contra errores de target nulo)
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
         const avatar = document.querySelector("nav div img");
 
-        if (event.target !== avatar && !menu.contains(event.target)) {
+        if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
           menu.style.display = "none";
         }
       };
