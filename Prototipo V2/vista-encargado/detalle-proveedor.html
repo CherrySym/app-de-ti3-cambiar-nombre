@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle del Proveedor - UCU</title>
+    <link rel="stylesheet" href="../css/global-styles.css"/>
+    <style>
+      /* Estilos del Logo */
+      .logo {
+        display: block;
+        height: 40px;
+        width: auto;
+        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco */
+      }
+      /* Estilos del Header */
+      header {
+        background-color: #1e3264;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between; /* Título a la izquierda, Menú a la derecha */
+        align-items: center; /* Centra verticalmente los textos */
+        color: white;
+      }
+      /* Estilos para que los enlaces y el avatar del nav estén en la misma línea */
+      header nav {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+      }
+      /* Estilos del menu de enlaces */
+      header nav ul {
+        list-style: none; /* Le quita los puntos a la lista */
+        margin: 0;
+        padding: 0;
+        display: flex; /* Hace que los <li> se pongan uno al lado del otro */
+        gap: 20px; /* Separa los enlaces entre sí */
+      }
+      /* Estilos de los enlaces */
+      header nav ul li a {
+        text-decoration: none; /* Le quita el subrayado */
+        color: #ffffff;
+        font-weight: 500;
+      }
+      /* Cambio de color al pasar el mouse por los enlaces del nav */
+      header nav ul li a:hover {
+        color: #2f80ed;
+      }
+      /* Estilos para el contenedor del menu flotante que aparece al hacer click en el icono de usuario */
+      .dropdown-content {
+        position: absolute;
+        right: 0;
+        top: 45px; /* Se posiciona justo abajo de la imagen */
+        background-color: #ffffff;
+        min-width: 220px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        padding: 12px 0;
+        z-index: 1000;
+      }
+      /* Estilos para la sección interna con el nombre y mail del usuario */
+      .dropdown-user-info {
+        padding: 4px 16px 8px 16px;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Texto en negrita para el nombre del usuario */
+      .dropdown-user-info strong {
+        font-size: 14px;
+        color: #13213c;
+      }
+      /* Texto gris y más chico para el correo */
+      .dropdown-user-info span {
+        font-size: 12px;
+        color: #555555;
+      }
+      /* Línea divisoria del menú desplegable */
+      .dropdown-content hr {
+        border: 0;
+        border-top: 1px solid #eeeeee;
+        margin: 8px 0;
+      }
+      /* Estilos para el enlace de "Cerrar Sesión" */
+      .dropdown-content .logout-link {
+        color: #dc3545;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      /* Cambio de color al pasar el mouse por el enlace de "Cerrar Sesión" */
+      .dropdown-content .logout-link:hover {
+        background-color: #fff5f5;
+      }
+      /* Estilos del contenedor de detalles */
+      .detail-container {
+        flex: 1;
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 20px;
+        width: 100%;
+      }
+
+      /* Estilos del botón para volver atrás */
+      .btn-back {
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 20px;
+        color: #1e3264;
+        text-decoration: none;
+        font-weight: 600;
+        gap: 5px;
+      }
+      /* Cambio de color al pasar el mouse por el boton de "Volver Atrás" */
+      .btn-back:hover {
+        color: #2f80ed;
+      }
+
+      /* Estilos de la tarjeta de detalles*/
+      .detail-card {
+        background-color: #ffffff;
+        padding: 40px;
+        border: 1px solid rgba(19, 33, 60, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+      }
+      /* Estilos del encabezado de la tarjeta */
+      .detail-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 20px;
+        margin-bottom: 25px;
+      }
+      /* Estilos para el nombre del proveedor */
+      .detail-header h2 {
+        font-size: 28px;
+        color: #13213c;
+        margin: 0 0 8px 0;
+        font-weight: 700;
+      }
+      /* Estilos del botón "Editar información" */ 
+      .btn-editar-simulado {
+        padding: 8px 14px;
+        border: 1px solid #cccccc;
+        border-radius: 6px;
+        background-color: #f5f5f5;
+        color: #333333;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.1s;
+      }
+
+      /* Cambio de color al pasar el mouse por el boton de "Editar información" */
+      .btn-editar-simulado:hover {
+        background-color: #e2e2e2;
+      }
+      /* Estilos de las insignias de puntaje */
+      .badge-score {
+        color: white;
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 15px;
+        white-space: nowrap;
+      }
+      /* El color de fondo de las insignias dependiendo el puntaje*/
+      .bg-verde { background-color: #219653; }
+      .bg-amarillo { background-color: #f2c94c; color: #333333; }
+      .bg-rojo { background-color: #eb5757; }
+
+      /* Estilos para separar los bloques de secciones */ 
+      .info-section {
+        margin-bottom: 30px;
+      }
+      /* Estilos de los títulos de las secciones  */
+      .info-section h3 {
+        font-size: 14px;
+        color: #1e3264;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 12px;
+        border-left: 3px solid #2f80ed;
+        padding-left: 10px;
+        font-weight: 700;
+      }
+
+      /* Estilos de la grilla para datos de contacto */
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        background-color: #f8fafb;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #eee;
+      }
+      /* Estilos para las etiquetas dentro de las grillas de información */
+      .info-item label {
+        display: block;
+        font-size: 11px;
+        color: #777777;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 4px;
+        letter-spacing: 0.5px;
+      }
+      /* Estilos para los textos con los datos reales dentro de las grillas */
+      .info-item span {
+        font-size: 15px;
+        color: #333333;
+        font-weight: 500;
+      }
+      /* Estilos para los textos  */
+      .description-text {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #4f4f4f;
+      }
+
+      /* Estilos para el bloque de Certificaciones */
+      .cert-list {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      /* Estilos para las cositas individuales de certificación (Mejorado paleta verde ecológica) */
+      .cert-badge {
+        background-color: #e6f4ea;
+        color: #137333;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid rgba(19, 115, 51, 0.1);
+      }
+      /* Texto gris en cursiva cuando no se encuentran certificaciones */
+      .no-certs {
+        color: #888888;
+        font-style: italic;
+        font-size: 14px;
+      }
+
+      /* Estilos del Footer */
+      .footer-container {
+        background-color: #1e3264;
+        padding: 20px 0;
+        width: 100%;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      /* Estilos para el logo del footer */
+      .logo-footer {
+        display: block;
+        margin: auto;
+        height: 30px; 
+        filter: brightness(0) invert(1);
+      }
+
+      /* Estilos para el estado de error si no encuentra proveedor */
+      .error-message {
+        text-align: center;
+        padding: 40px;
+        color: #eb5757;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+
+  <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
+    <header>
+      <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo" />
+      <nav>
+        <ul>
+          <li><a href="landing.html">Inicio</a></li>
+          <li><a href="lista-proveedores.html">Lista de Proveedores</a></li>
+          <li><a href="agregar-proveedor.html">Añadir Proveedor</a></li>
+        </ul>
+        <div style="position: relative">
+          <img
+            src="../assets/icono generico de usuario.png"
+            alt="Perfil"
+            onclick="toggleMenu()"
+            style="
+              width: 38px;
+              height: 38px;
+              border-radius: 50%;
+              cursor: pointer;
+              display: block;
+            "
+          />
+
+          <div id="menuDropdown" class="dropdown-content" style="display: none">
+            <div class="dropdown-user-info">
+              <strong>Encargado de Compras</strong>
+              <span>compras@correo.ucu.edu.uy</span>
+            </div>
+            <hr />
+            <a href="../login.html" class="logout-link">Cerrar Sesión</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    
+    <main class="detail-container">
+      <a href="lista-proveedores.html" class="btn-back" onclick="window.history.back(); return false;">
+        ← Volver atrás
+      </a>
+      <article class="detail-card" id="detail-card-content">
+        <div style="text-align: center; color: #666; padding: 20px;">Cargando información del proveedor...</div>
+      </article>
+    </main>
+
+    <footer>
+      <div class="footer-container">
+        <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer"/>
+      </div>
+    </footer>
+
+    <script src="../js/datosPlanos.js"></script>
+    <script>
+      // 1. Obtener el ID del proveedor que viene en la URL (?id=lo-que-sea)
+      const params = new URLSearchParams(window.location.search);
+      const proveedorId = params.get("id");
+      
+      // Obtener el contenedor donde se va a inyectar el html con la información del proveedor
+      const cardContainer = document.getElementById("detail-card-content");
+
+      // 2. Buscar el proveedor específico en la lista global por su id
+      const prov = (typeof PROVEEDORES !== 'undefined') ? PROVEEDORES.find(p => p.id === proveedorId) : null;
+
+      // Si el proveedor existe en los datos simulados, se construye la interfaz
+      if (prov) {
+        // Define el color de fondo para el puntaje 
+        let colorClase = "bg-rojo"; 
+        if (prov.puntaje >= 75) colorClase = "bg-verde"; // Verde para puntajes 75 o más
+        else if (prov.puntaje >= 50) colorClase = "bg-amarillo"; // Amarillo para puntajes entre 50 y 74
+
+        // Inicializa la variable que almacenará el bloque de código de certificaciones
+        let certsHTML = "";
+        // Valida si el proveedor contiene una lista de certificaciones con elementos cargados
+        if (prov.certificaciones && prov.certificaciones.length > 0) {
+          // Mapea el arreglo para transformar cada texto en una pastilla HTML y unirlas en un único String
+          certsHTML = `<div class="cert-list">` + 
+            prov.certificaciones.map(c => `<span class="cert-badge">✓ ${c}</span>`).join("") + 
+            `</div>`;
+        } else {
+          // Mensaje si no se registran certificados
+          certsHTML = `<p class="no-certs">Este proveedor no cuenta con certificaciones ambientales registradas.</p>`;
+        }
+
+        // CORRECCIÓN: Formatear textos evaluando primero si la propiedad existe y no está vacía
+        const embalaje = prov.embalaje_sostenible ? prov.embalaje_sostenible.charAt(0).toUpperCase() + prov.embalaje_sostenible.slice(1) : "No especificado";
+        const energia = prov.energia_renovable ? prov.energia_renovable.charAt(0).toUpperCase() + prov.energia_renovable.slice(1) : "No especificado";
+        const cobertura = prov.cobertura ? prov.cobertura.charAt(0).toUpperCase() + prov.cobertura.slice(1) : "No especificada";
+        
+        // Evalúa el booleano de la política de devolución para transformarlo en texto explicativo
+        const devolucion = prov.politica_devolucion ? "Sí (Cuenta con logística inversa)" : "No disponible";
+
+        // 3. Inyectar la plantilla HTML con los datos del proveedor
+        cardContainer.innerHTML = `
+          <div class="detail-header">
+            <div>
+              <h2>${prov.nombre}</h2>
+              <p style="color: #666; margin: 0; font-size: 14px;">Registrado el: ${prov.fecha_registro || 'No disponible'}</p>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: flex-end;">
+              <a href="agregar-producto-encargado.html?proveedorId=${prov.id}" 
+                 style="text-decoration: none; padding: 8px 14px; background-color: #1e3264; color: white; border-radius: 6px; font-weight: 600; font-size: 14px; transition: background-color 0.2s;"
+                 onmouseover="this.style.backgroundColor='#243b75'" 
+                 onmouseout="this.style.backgroundColor='#1e3264'">
+                ➕ Agregar Producto
+              </a>
+              
+              <button class="btn-editar-simulado">Editar Información</button>
+              <span class="badge-score ${colorClase}">${prov.puntaje} Puntos</span>
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h3>Descripción Comercial</h3>
+            <p class="description-text">${prov.descripcion || "Sin descripción disponible."}</p>
+          </div>
+
+          <div class="info-section">
+            <h3>Información de Contacto</h3>
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Representante</label>
+                <span>${prov.contacto || "No asignado"}</span>
+              </div>
+              <div class="info-item">
+                <label>Correo Electrónico</label>
+                <span>${prov.email || "No asignado"}</span>
+              </div>
+              <div class="info-item">
+                <label>Teléfono</label>
+                <span>${prov.telefono || "No asignado"}</span>
+              </div>
+              <div class="info-item">
+                <label>Ámbito de Cobertura</label>
+                <span>${cobertura}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h3>Criterios de Sostenibilidad</h3>
+            <div class="info-grid" style="background-color: #f1f8ff; border-color: rgba(47, 128, 237, 0.1);">
+              <div class="info-item">
+                <label>Embalaje Sostenible</label>
+                <span>${embalaje}</span>
+              </div>
+              <div class="info-item">
+                <label>Uso de Energías Renovables</label>
+                <span>${energia}</span>
+              </div>
+              <div class="info-item">
+                <label>Política de Devolución</label>
+                <span>${devolucion}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h3>Certificaciones Oficiales</h3>
+            ${certsHTML}
+          </div>
+
+          <div class="info-section" style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 280px;">
+              <h3>Desafíos Actuales</h3>
+              <p class="description-text" style="font-size: 14px;">${prov.desafios || "No declarados."}</p>
+            </div>
+            <div style="flex: 1; min-width: 280px;">
+              <h3>Metas de Sostenibilidad</h3>
+              <p class="description-text" style="font-size: 14px;">${prov.metas || "No declaradas."}</p>
+            </div>
+          </div>
+        `;
+      } else {
+        // Si el ID de la URL no coincide con ninguno (Manejo de errores seguro)
+        cardContainer.innerHTML = `
+          <div class="error-message">
+            <h3>Error: Proveedor No Encontrado</h3>
+            <p>El identificador proporcionado no coincide con ningún registro de nuestro sistema o falló la carga de datos.</p>
+            <a href="lista-proveedores.html" class="btn-back" style="margin-top: 20px;">Volver al listado principal</a>
+          </div>
+        `;
+      }
+    </script>
+    
+    <script>
+      // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
+      function toggleMenu() {
+        const menu = document.getElementById("menuDropdown");
+        if (menu.style.display === "none" || menu.style.display === "") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      }
+      
+      // CORRECCIÓN: Ajuste del selector del avatar para blindar el cierre automático
+      window.onclick = function (event) {
+        const menu = document.getElementById("menuDropdown");
+        const avatar = document.querySelector("header nav img");
+
+        if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
+          menu.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
