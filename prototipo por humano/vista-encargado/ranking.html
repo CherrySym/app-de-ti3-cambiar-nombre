@@ -291,39 +291,53 @@
     </footer>
 
     <script src="../js/datosPlanos.js"></script>
+    
     <script>
       // Seleccionar el cuerpo de la tabla para cargarle los proveedores más adelante
       const tbody = document.getElementById("tabla-body");
 
-      /* Copiar la lista de proveedores de DatosPlanos.js y ordenar los proveedores de mayor a menor puntaje */
-      const proveedoresOrdenados = [...PROVEEDORES].sort((a, b) => b.puntaje - a.puntaje);
-
-      // Recorrer la lista de proveedores ordenados y crear las filas de la tabla <tr> 
-      proveedoresOrdenados.forEach(p => {
-        const fila = document.createElement("tr");
+      // VALIDACIÓN CRÍTICA: Validar si existen los datos antes de operar con el array
+      if (typeof PROVEEDORES !== 'undefined' && PROVEEDORES.length > 0) {
         
-        // Validación de qué color usar para la insignia del puntaje 
-        let colorClase = "bg-rojo"; // Si tiene menos de 50, queda en rojo por defecto
-        if (p.puntaje >= 75) {
-          colorClase = "bg-verde"; // Verde para puntajes 75 o más
-        } else if (p.puntaje >= 50) {
-          colorClase = "bg-amarillo"; // Amarillo para puntajes entre 50 y 74
-        }
+        /* Copiar la lista de proveedores de DatosPlanos.js y ordenar de mayor a menor puntaje */
+        const proveedoresOrdenados = [...PROVEEDORES].sort((a, b) => b.puntaje - a.puntaje);
 
-        // Formatear el string para que empiece con mayúscula
-        const coberturaFormateada = p.cobertura.charAt(0).toUpperCase() + p.cobertura.slice(1);
+        // Recorrer la lista de proveedores ordenados y crear las filas de la tabla <tr> 
+        proveedoresOrdenados.forEach(p => {
+          const fila = document.createElement("tr");
+          
+          // Validación de qué color usar para la insignia del puntaje 
+          let colorClase = "bg-rojo"; 
+          if (p.puntaje >= 75) {
+            colorClase = "bg-verde"; 
+          } else if (p.puntaje >= 50) {
+            colorClase = "bg-amarillo"; 
+          }
 
-        // Inyección de código HTML: Corregido enlace hacia "detallesDeProveedor.html" para mantener coherencia
-        fila.innerHTML = `
-          <td><strong>${p.nombre}</strong></td>
-          <td><span class="badge-score ${colorClase}">${p.puntaje} pts</span></td>
-          <td>${coberturaFormateada}</td>
-          <td><a href="detalle-proveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
-          <td><a href="lista-productos.html?id=${p.id}" class="btn-detail">Ver productos →</a></td>
+          // Formatear el string para que empiece con mayúscula
+          const coberturaFormateada = p.cobertura.charAt(0).toUpperCase() + p.cobertura.slice(1);
+
+          // Inyección de código HTML dinámico con las IDs correspondientes
+          fila.innerHTML = `
+            <td><strong>${p.nombre}</strong></td>
+            <td><span class="badge-score ${colorClase}">${p.puntaje} pts</span></td>
+            <td>${coberturaFormateada}</td>
+            <td><a href="detalle-proveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
+            <td><a href="lista-productos.html?id=${p.id}" class="btn-detail">Ver productos →</a></td>
+          `;
+          // Agregar la fila terminada al cuerpo de la tabla
+          tbody.appendChild(fila);
+        });
+      } else {
+        // Mensaje de resguardo elegante si falla el script externo
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align: center; color: #555555; padding: 30px;">
+              No se encontraron proveedores cargados o falló datosPlanos.js.
+            </td>
+          </tr>
         `;
-        // Agregar la fila terminada al cuerpo de la tabla
-        tbody.appendChild(fila);
-      });
+      }
     </script>
     
     <script>
@@ -337,10 +351,10 @@
         }
       }
       
-      // Función para ocultar el menú desplegable si se hace clic fuera de él (Blindada contra errores de target nulo)
+      // CORRECCIÓN: Ajuste del selector del avatar para mantener la consistencia global del cierre de menú
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
-        const avatar = document.querySelector("nav div img");
+        const avatar = document.querySelector("header nav img");
 
         if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
           menu.style.display = "none";

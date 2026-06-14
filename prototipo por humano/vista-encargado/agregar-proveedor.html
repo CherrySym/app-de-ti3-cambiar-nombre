@@ -414,19 +414,7 @@
                 <option value="ambos">Ambos</option>
               </select>
             </div>
-            <div class="form-group">
-              <label for="mat_reciclados_pct">Materiales Reciclados (%):</label>
-              <input
-                type="number"
-                id="mat_reciclados_pct"
-                min="0"
-                max="100"
-                class="form-input"
-                placeholder="Ej: 80"
-              />
-            </div>
-          </div>
-
+          </div> 
           <div class="form-row">
             <div class="form-group">
               <label for="embalaje_sostenible"
@@ -539,7 +527,7 @@
       // Función para ocultar el menú desplegable si se hace clic fuera de él
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
-        const avatar = document.querySelector("nav div img");
+        const avatar = document.querySelector(".user-profile-container img");
 
         if (
           menu &&

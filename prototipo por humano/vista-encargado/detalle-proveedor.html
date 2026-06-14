@@ -329,7 +329,7 @@
       const cardContainer = document.getElementById("detail-card-content");
 
       // 2. Buscar el proveedor específico en la lista global por su id
-      const prov = PROVEEDORES.find(p => p.id === proveedorId);
+      const prov = (typeof PROVEEDORES !== 'undefined') ? PROVEEDORES.find(p => p.id === proveedorId) : null;
 
       // Si el proveedor existe en los datos simulados, se construye la interfaz
       if (prov) {
@@ -351,10 +351,11 @@
           certsHTML = `<p class="no-certs">Este proveedor no cuenta con certificaciones ambientales registradas.</p>`;
         }
 
-        // Formatear los textos para que se mantengan limpios y legibles
-        const embalaje = prov.embalaje_sostenible.charAt(0).toUpperCase() + prov.embalaje_sostenible.slice(1);
-        const energia = prov.energia_renovable.charAt(0).toUpperCase() + prov.energia_renovable.slice(1);
-        const cobertura = prov.cobertura.charAt(0).toUpperCase() + prov.cobertura.slice(1);
+        // CORRECCIÓN: Formatear textos evaluando primero si la propiedad existe y no está vacía
+        const embalaje = prov.embalaje_sostenible ? prov.embalaje_sostenible.charAt(0).toUpperCase() + prov.embalaje_sostenible.slice(1) : "No especificado";
+        const energia = prov.energia_renovable ? prov.energia_renovable.charAt(0).toUpperCase() + prov.energia_renovable.slice(1) : "No especificado";
+        const cobertura = prov.cobertura ? prov.cobertura.charAt(0).toUpperCase() + prov.cobertura.slice(1) : "No especificada";
+        
         // Evalúa el booleano de la política de devolución para transformarlo en texto explicativo
         const devolucion = prov.politica_devolucion ? "Sí (Cuenta con logística inversa)" : "No disponible";
 
@@ -363,9 +364,16 @@
           <div class="detail-header">
             <div>
               <h2>${prov.nombre}</h2>
-              <p style="color: #666; margin: 0; font-size: 14px;">Registrado el: ${prov.fecha_registro}</p>
+              <p style="color: #666; margin: 0; font-size: 14px;">Registrado el: ${prov.fecha_registro || 'No disponible'}</p>
             </div>
-            <div style="display: flex; gap: 12px; align-items: center;">
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: flex-end;">
+              <a href="agregar-producto-encargado.html?proveedorId=${prov.id}" 
+                 style="text-decoration: none; padding: 8px 14px; background-color: #1e3264; color: white; border-radius: 6px; font-weight: 600; font-size: 14px; transition: background-color 0.2s;"
+                 onmouseover="this.style.backgroundColor='#243b75'" 
+                 onmouseout="this.style.backgroundColor='#1e3264'">
+                ➕ Agregar Producto
+              </a>
+              
               <button class="btn-editar-simulado">Editar Información</button>
               <span class="badge-score ${colorClase}">${prov.puntaje} Puntos</span>
             </div>
@@ -381,15 +389,15 @@
             <div class="info-grid">
               <div class="info-item">
                 <label>Representante</label>
-                <span>${prov.contacto}</span>
+                <span>${prov.contacto || "No asignado"}</span>
               </div>
               <div class="info-item">
                 <label>Correo Electrónico</label>
-                <span>${prov.email}</span>
+                <span>${prov.email || "No asignado"}</span>
               </div>
               <div class="info-item">
                 <label>Teléfono</label>
-                <span>${prov.telefono}</span>
+                <span>${prov.telefono || "No asignado"}</span>
               </div>
               <div class="info-item">
                 <label>Ámbito de Cobertura</label>
@@ -437,7 +445,7 @@
         cardContainer.innerHTML = `
           <div class="error-message">
             <h3>Error: Proveedor No Encontrado</h3>
-            <p>El identificador proporcionado no coincide con ningún registro de nuestro sistema.</p>
+            <p>El identificador proporcionado no coincide con ningún registro de nuestro sistema o falló la carga de datos.</p>
             <a href="lista-proveedores.html" class="btn-back" style="margin-top: 20px;">Volver al listado principal</a>
           </div>
         `;
@@ -455,10 +463,10 @@
         }
       }
       
-      // Función para ocultar el menú desplegable si se hace clic fuera de él
+      // CORRECCIÓN: Ajuste del selector del avatar para blindar el cierre automático
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
-        const avatar = document.querySelector("nav div img");
+        const avatar = document.querySelector("header nav img");
 
         if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
           menu.style.display = "none";

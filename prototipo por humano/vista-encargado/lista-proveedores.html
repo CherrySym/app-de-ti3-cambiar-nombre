@@ -302,11 +302,12 @@
         }
       }
       
-      // Función para ocultar el menú desplegable si se hace clic fuera de él
+      // CORRECCIÓN: Ajuste del selector del avatar para blindar el cierre automático del menú
       window.onclick = function(event) {
         const menu = document.getElementById("menuDropdown");
-        const avatar = document.querySelector("nav div img");
-        if (menu && event.target !== avatar && !menu.contains(event.target)) {
+        const avatar = document.querySelector("header nav img"); // Apunta directo a la imagen dentro del nav
+        
+        if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
           menu.style.display = "none";
         }
       }

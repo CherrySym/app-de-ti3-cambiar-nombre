@@ -458,7 +458,10 @@
     </div>
   </footer>
 
+  <script src="../js/datosPlanos.js"></script>
+
   <script>
+    // 1. SELECTOR DEL AVATAR UNIFICADO Y DROPDOWN
     function toggleMenu() {
       const menu = document.getElementById("menuDropdown");
       if (menu.style.display === "none" || menu.style.display === "") {
@@ -470,25 +473,94 @@
 
     window.onclick = function (event) {
       const menu = document.getElementById("menuDropdown");
-      const avatar = document.querySelector(".user-profile-container img");
+      const avatar = document.querySelector("header nav img"); // Consistencia con el ecosistema
 
       if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
         menu.style.display = "none";
       }
     };
 
-    // Lógica dinámica de filtros locales por JS
+    // 2. CARGA DINÁMICA DE PRODUCTOS (Elimina el hardcodeo)
+    const tbody = document.querySelector("#tablaProductos tbody");
+    
+    // Capturamos si viene un ID de proveedor por URL para pre-filtrar (?id=...)
+    const params = new URLSearchParams(window.location.search);
+    const urlProveedorId = params.get("id");
+
+    function cargarProductosDinamicos() {
+      // Limpiamos el contenedor rígido del HTML
+      tbody.innerHTML = "";
+
+      if (typeof PROVEEDORES === 'undefined' || PROVEEDORES.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:20px;">Error al cargar datosPlanos.js</td></tr>`;
+        return;
+      }
+
+      // Recorremos los proveedores y extraemos sus productos asociados
+      PROVEEDORES.forEach(prov => {
+        // Validamos si pasamos un ID por la URL y no coincide con este proveedor, lo salteamos
+        if (urlProveedorId && prov.id !== urlProveedorId) return;
+
+        if (prov.productos && prov.productos.length > 0) {
+          prov.productos.forEach(prod => {
+            const fila = document.createElement("tr");
+            
+            // Seteamos los atributos data-* para que tu función de filtrado local siga funcionando intacta
+            fila.setAttribute("data-proveedor", prov.nombre.toLowerCase());
+            fila.setAttribute("data-categoria", prod.categoria.toLowerCase());
+            fila.setAttribute("data-reciclable", prod.reciclable ? "si" : "no");
+            fila.setAttribute("data-reutilizable", prod.reutilizable ? "si" : "no");
+
+            // Formateos prolijos
+            const badgRecic = prod.reciclable ? '<span class="badge-bool badge-true">SÍ</span>' : '<span class="badge-bool badge-false">NO</span>';
+            const badgReutil = prod.reutilizable ? '<span class="badge-bool badge-true">SÍ</span>' : '<span class="badge-bool badge-false">NO</span>';
+            
+            // Render de certificaciones secundarias
+            const certs = prod.certificaciones && prod.certificaciones.length > 0 
+              ? prod.certificaciones.map(c => `<span class="badge-cert">${c}</span>`).join("")
+              : `<span style="color:#999; font-size:12px;">Ninguna</span>`;
+
+            fila.innerHTML = `
+              <td><strong>${prod.nombre}</strong></td>
+              <td class="badge-provider">${prov.nombre}</td>
+              <td><strong>$${prod.precio}</strong></td>
+              <td><span class="badge-category">${prod.categoria}</span></td>
+              <td>${badgRecic}</td>
+              <td>${badgReutil}</td>
+              <td>
+                <div class="pct-bar-container">
+                  <div class="pct-bar"><div class="pct-fill" style="width: ${prod.mat_reciclados_pct}%;"></div></div>
+                  <span>${prod.mat_reciclados_pct}%</span>
+                </div>
+              </td>
+              <td>${certs}</td>
+            `;
+            tbody.appendChild(fila);
+          });
+        }
+      });
+
+      // Si después de filtrar no quedó ningún elemento en la tabla
+      if (tbody.children.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:30px; color:#666;">No se encontraron productos para los criterios seleccionados.</td></tr>`;
+      }
+    }
+
+    // 3. LÓGICA DE FILTRADO COMBINADO (Optimizada para las nuevas filas dinámicas)
     function filtrarTabla() {
       const inputProv = document.getElementById("searchProveedor").value.toLowerCase();
       const selectCat = document.getElementById("selectCategoria").value;
       const checkRecic = document.getElementById("checkReciclable").checked;
       const checkReutil = document.getElementById("checkReutilizable").checked;
       
-      const tabla = document.getElementById("tablaProductos");
-      const filas = tabla.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+      const filas = tbody.getElementsByTagName("tr");
 
       for (let i = 0; i < filas.length; i++) {
         const fila = filas[i];
+        
+        // Ignorar fila de "no resultados"
+        if (!fila.hasAttribute("data-proveedor")) continue;
+
         const provData = fila.getAttribute("data-proveedor");
         const catData = fila.getAttribute("data-categoria");
         const recicData = fila.getAttribute("data-reciclable");
@@ -506,6 +578,21 @@
         }
       }
     }
+
+    // Ejecución inicial automatizada al cargar el documento
+    document.addEventListener("DOMContentLoaded", () => {
+      cargarProductosDinamicos();
+      
+      // Si venía un ID en la URL, podemos avisarle visualmente al usuario rellenando el buscador
+      if (urlProveedorId && typeof PROVEEDORES !== 'undefined') {
+        const pEncontrado = PROVEEDORES.find(p => p.id === urlProveedorId);
+        if (pEncontrado) {
+          const inputProv = document.getElementById("searchProveedor");
+          inputProv.value = pEncontrado.nombre;
+          inputProv.style.backgroundColor = "#e0f2fe"; // Feedback sutil de que está pre-filtrado
+        }
+      }
+    });
   </script>
 </body>
 </html>
