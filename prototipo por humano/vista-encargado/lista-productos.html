@@ -109,11 +109,28 @@
       padding: 0 20px;
     }
 
+    /* Botón Volver posicionado arriba (ESTILO UNIFICADO CON FLECHA SIMPLE) */
+    .btn-back-container {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .btn-back {
+      text-decoration: none;
+      color: #1e3264;
+      font-weight: 600;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
     .page-title {
-      color: white;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      color: #13213c;
+      margin-top: 10px;
       margin-bottom: 25px;
       font-size: 28px;
+      font-weight: 700;
     }
 
     /* Sección de Filtros (Glassmorphism sutil) */
@@ -124,7 +141,7 @@
       border-radius: 12px;
       padding: 20px;
       margin-bottom: 25px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     }
 
     .filter-grid {
@@ -176,7 +193,7 @@
     .table-card {
       background: white;
       border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       overflow: hidden;
       border: 1px solid rgba(19, 33, 60, 0.1);
     }
@@ -300,6 +317,11 @@
   <header>
     <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo">
     <nav>
+      <ul>
+        <li><a href="landing.html">Inicio</a></li>
+        <li><a href="lista-proveedores.html">Lista de Proveedores</a></li>
+        <li><a href="lista-productos.html">Catálogo Global</a></li>
+      </ul>
       <div class="user-profile-container">
         <img src="../assets/icono generico de usuario.png" alt="Perfil" onclick="toggleMenu()" style="width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: block;">
         <div id="menuDropdown" class="dropdown-content" style="display: none;">
@@ -315,6 +337,11 @@
   </header>
 
   <main class="catalog-container">
+    
+    <div class="btn-back-container">
+      <a href="#" onclick="window.history.back(); return false;" class="btn-back">← Volver atrás</a>
+    </div>
+
     <h2 class="page-title">Catálogo de Productos Sostenibles</h2>
 
     <section class="filter-section">
@@ -361,85 +388,6 @@
             </tr>
           </thead>
           <tbody>
-            <tr data-proveedor="ecoproveedores uy ltda." data-categoria="papel" data-reciclable="si" data-reutilizable="no">
-              <td><strong>Resma A4 80g Reciclada</strong></td>
-              <td class="badge-provider">EcoProveedores UY Ltda.</td>
-              <td><strong>$320</strong></td>
-              <td><span class="badge-category">papel</span></td>
-              <td><span class="badge-bool badge-true">SÍ</span></td>
-              <td><span class="badge-bool badge-false">NO</span></td>
-              <td>
-                <div class="pct-bar-container">
-                  <div class="pct-bar"><div class="pct-fill" style="width: 100%;"></div></div>
-                  <span>100%</span>
-                </div>
-              </td>
-              <td><span class="badge-cert">FSC</span></td>
-            </tr>
-
-            <tr data-proveedor="uruguay verde distribuciones" data-categoria="papel" data-reciclable="si" data-reutilizable="no">
-              <td><strong>Resma A4 80g Reciclada</strong></td>
-              <td class="badge-provider">Uruguay Verde Distribuciones</td>
-              <td><strong>$295</strong></td>
-              <td><span class="badge-category">papel</span></td>
-              <td><span class="badge-bool badge-true">SÍ</span></td>
-              <td><span class="badge-bool badge-false">NO</span></td>
-              <td>
-                <div class="pct-bar-container">
-                  <div class="pct-bar"><div class="pct-fill" style="width: 75%;"></div></div>
-                  <span>75%</span>
-                </div>
-              </td>
-              <td><span class="badge-cert">ISO14001</span></td>
-            </tr>
-
-            <tr data-proveedor="ecoproveedores uy ltda." data-categoria="papel" data-reciclable="si" data-reutilizable="no">
-              <td><strong>Cuaderno Universitario Kraft</strong></td>
-              <td class="badge-provider">EcoProveedores UY Ltda.</td>
-              <td><strong>$180</strong></td>
-              <td><span class="badge-category">papel</span></td>
-              <td><span class="badge-bool badge-true">SÍ</span></td>
-              <td><span class="badge-bool badge-false">NO</span></td>
-              <td>
-                <div class="pct-bar-container">
-                  <div class="pct-bar"><div class="pct-fill" style="width: 80%;"></div></div>
-                  <span>80%</span>
-                </div>
-              </td>
-              <td><span class="badge-cert">FSC</span></td>
-            </tr>
-
-            <tr data-proveedor="ecoproveedores uy ltda." data-categoria="escritura" data-reciclable="si" data-reutilizable="no">
-              <td><strong>Set Bolígrafos Bioplástico x5</strong></td>
-              <td class="badge-provider">EcoProveedores UY Ltda.</td>
-              <td><strong>$210</strong></td>
-              <td><span class="badge-category">escritura</span></td>
-              <td><span class="badge-bool badge-true">SÍ</span></td>
-              <td><span class="badge-bool badge-false">NO</span></td>
-              <td>
-                <div class="pct-bar-container">
-                  <div class="pct-bar"><div class="pct-fill" style="width: 60%;"></div></div>
-                  <span>60%</span>
-                </div>
-              </td>
-              <td style="color: #999; font-size: 12px;">Ninguna</td>
-            </tr>
-
-            <tr data-proveedor="importaciones biometricas del sur" data-categoria="embalaje" data-reciclable="si" data-reutilizable="si">
-              <td><strong>Caja de Cartón Corrugado Reutilizable</strong></td>
-              <td class="badge-provider">Importaciones Biométricas del Sur</td>
-              <td><strong>$85</strong></td>
-              <td><span class="badge-category">embalaje</span></td>
-              <td><span class="badge-bool badge-true">SÍ</span></td>
-              <td><span class="badge-bool badge-true">SÍ</span></td>
-              <td>
-                <div class="pct-bar-container">
-                  <div class="pct-bar"><div class="pct-fill" style="width: 40%;"></div></div>
-                  <span>40%</span>
-                </div>
-              </td>
-              <td><span class="badge-cert">EMAS</span></td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -467,22 +415,19 @@
 
     window.onclick = function (event) {
       const menu = document.getElementById("menuDropdown");
-      const avatar = document.querySelector("header nav img"); // Consistencia con el ecosistema
+      const avatar = document.querySelector("header nav img");
 
       if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
         menu.style.display = "none";
       }
     };
 
-    // 2. CARGA DINÁMICA DE PRODUCTOS (Elimina el hardcodeo)
+    // 2. CARGA DINÁMICA DE PRODUCTOS
     const tbody = document.querySelector("#tablaProductos tbody");
-    
-    // Capturamos si viene un ID de proveedor por URL para pre-filtrar (?id=...)
     const params = new URLSearchParams(window.location.search);
     const urlProveedorId = params.get("id");
 
     function cargarProductosDinamicos() {
-      // Limpiamos el contenedor rígido del HTML
       tbody.innerHTML = "";
 
       if (typeof PROVEEDORES === 'undefined' || PROVEEDORES.length === 0) {
@@ -490,26 +435,21 @@
         return;
       }
 
-      // Recorremos los proveedores y extraemos sus productos asociados
       PROVEEDORES.forEach(prov => {
-        // Validamos si pasamos un ID por la URL y no coincide con este proveedor, lo salteamos
         if (urlProveedorId && prov.id !== urlProveedorId) return;
 
         if (prov.productos && prov.productos.length > 0) {
           prov.productos.forEach(prod => {
             const fila = document.createElement("tr");
             
-            // Seteamos los atributos data-* para que tu función de filtrado local siga funcionando intacta
             fila.setAttribute("data-proveedor", prov.nombre.toLowerCase());
             fila.setAttribute("data-categoria", prod.categoria.toLowerCase());
             fila.setAttribute("data-reciclable", prod.reciclable ? "si" : "no");
             fila.setAttribute("data-reutilizable", prod.reutilizable ? "si" : "no");
 
-            // Formateos prolijos
             const badgRecic = prod.reciclable ? '<span class="badge-bool badge-true">SÍ</span>' : '<span class="badge-bool badge-false">NO</span>';
             const badgReutil = prod.reutilizable ? '<span class="badge-bool badge-true">SÍ</span>' : '<span class="badge-bool badge-false">NO</span>';
             
-            // Render de certificaciones secundarias
             const certs = prod.certificaciones && prod.certificaciones.length > 0 
               ? prod.certificaciones.map(c => `<span class="badge-cert">${c}</span>`).join("")
               : `<span style="color:#999; font-size:12px;">Ninguna</span>`;
@@ -534,13 +474,12 @@
         }
       });
 
-      // Si después de filtrar no quedó ningún elemento en la tabla
       if (tbody.children.length === 0) {
         tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:30px; color:#666;">No se encontraron productos para los criterios seleccionados.</td></tr>`;
       }
     }
 
-    // 3. LÓGICA DE FILTRADO COMBINADO (Optimizada para las nuevas filas dinámicas)
+    // 3. LÓGICA DE FILTRADO COMBINADO
     function filtrarTabla() {
       const inputProv = document.getElementById("searchProveedor").value.toLowerCase();
       const selectCat = document.getElementById("selectCategoria").value;
@@ -552,7 +491,6 @@
       for (let i = 0; i < filas.length; i++) {
         const fila = filas[i];
         
-        // Ignorar fila de "no resultados"
         if (!fila.hasAttribute("data-proveedor")) continue;
 
         const provData = fila.getAttribute("data-proveedor");
@@ -573,17 +511,15 @@
       }
     }
 
-    // Ejecución inicial automatizada al cargar el documento
     document.addEventListener("DOMContentLoaded", () => {
       cargarProductosDinamicos();
       
-      // Si venía un ID en la URL, podemos avisarle visualmente al usuario rellenando el buscador
       if (urlProveedorId && typeof PROVEEDORES !== 'undefined') {
         const pEncontrado = PROVEEDORES.find(p => p.id === urlProveedorId);
         if (pEncontrado) {
           const inputProv = document.getElementById("searchProveedor");
           inputProv.value = pEncontrado.nombre;
-          inputProv.style.backgroundColor = "#e0f2fe"; // Feedback sutil de que está pre-filtrado
+          inputProv.style.backgroundColor = "#e0f2fe";
         }
       }
     });

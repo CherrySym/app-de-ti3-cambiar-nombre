@@ -114,6 +114,21 @@
         padding: 0 20px;
       }
 
+      /* Botón Volver posicionado arriba (ESTILO ADAPTADO IGUAL A AÑADIR PROVEEDOR) */
+      .btn-back-container {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      .btn-back {
+        text-decoration: none;
+        color: #1e3264;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+
       /* Estilos para la cabecera que separa el título del botón de ranking */  
       .listado-header {
         display: flex;
@@ -241,6 +256,11 @@
     <header>
       <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo" />
       <nav>
+        <ul>
+          <li><a href="landing.html">Inicio</a></li>
+          <li><a href="lista-proveedores.html">Lista de Proveedores</a></li>
+          <li><a href="lista-productos.html">Catálogo Global</a></li>
+        </ul>
         <div style="position: relative">
           <img
             src="../assets/icono generico de usuario.png"
@@ -268,13 +288,18 @@
     </header>
 
     <main class="listado-container">
+      
+      <div class="btn-back-container">
+        <a href="lista-proveedores.html" onclick="window.history.back(); return false;" class="btn-back">← Volver atrás</a>
+      </div>
+
       <div class="listado-header">
         <h2>Listado de Proveedores</h2>
         <a href="ranking.html" class="btn-ranking-link">🏆 Ver Ranking</a>
       </div>
 
       <section class="providers-grid" id="gridProveedores">
-        </section>
+      </section>
     </main>
 
     <footer>
