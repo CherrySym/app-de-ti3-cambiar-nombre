@@ -277,12 +277,6 @@
   <header>
     <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo">
     <nav>
-      <ul>
-        <li><a href="landing.html">Inicio</a></li>
-        <li><a href="lista-proveedores.html">Lista de Proveedores</a></li>
-        <li><a href="revision-postulaciones-totales.html">Revisar Postulaciones</a></li>
-      </ul>
-
       <div class="user-profile-container">
         <img src="../assets/icono generico de usuario.png" alt="Perfil" onclick="toggleMenu()" style="width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: block;">
         <div id="menuDropdown" class="dropdown-content" style="display: none;">
@@ -306,11 +300,11 @@
 
     <div class="page-header-zone">
       <h2 class="page-title">Productos Esperando Aprobación</h2>
-      <span class="counter-badge" id="card-counter">0 sugerencias pendientes</span>
+      <span class="counter-badge" id="card-counter">0 revisiones pendientes</span>
     </div>
 
     <div id="empty-msg" class="empty-state">
-      🎉 No quedan productos pendientes de validación en la bandeja de entrada.
+       No quedan productos pendientes de validación en la bandeja de entrada.
     </div>
 
     <div class="products-grid" id="grid-productos">
@@ -384,7 +378,7 @@
       }
 
       // Actualizar la interfaz general según el estado final del contador
-      counter.innerText = `${totalPendientes} sugerencia${totalPendientes !== 1 ? 's' : ''} pendiente${totalPendientes !== 1 ? 's' : ''}`;
+      counter.innerText = `${totalPendientes} revision/es${totalPendientes !== 1 ? 's' : ''} pendiente/s${totalPendientes !== 1 ? 's' : ''}`;
       
       if (totalPendientes === 0) {
         emptyMsg.style.display = "block";

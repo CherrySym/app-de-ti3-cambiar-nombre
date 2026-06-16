@@ -122,8 +122,9 @@
     /* Checkboxes */
     .checkbox-group {
       display: flex;
+      flex-wrap: wrap;
       gap: 20px;
-      margin: 15px 0 25px 0;
+      margin: 5px 0 15px 0;
     }
 
     .checkbox-label {
@@ -132,6 +133,12 @@
       gap: 8px;
       font-size: 14px;
       color: #334155;
+      cursor: pointer;
+    }
+
+    .checkbox-label input {
+      width: 18px;
+      height: 18px;
       cursor: pointer;
     }
 
@@ -147,10 +154,24 @@
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.2s;
+      margin-top: 10px;
     }
 
     .btn-submit:hover {
       background-color: #173a73;
+    }
+
+    /* Estiliza el botón interno de los inputs tipo file */
+    .form-control::file-selector-button {
+      background: rgba(30, 50, 100, 0.1);
+      color: #1e3264;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      margin-right: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
     /* Footer */
@@ -180,8 +201,8 @@
     </div>
 
     <div class="form-card">
-      <h2>Sugerir Insumo al Catálogo</h2>
-      <p>Complete los datos del producto sustentable para enviarlo a revisión por el equipo de compras.</p>
+      <h2>Postular Nuevo Producto</h2>
+      <p>Complete los datos del producto para enviarlo a revisión por el equipo de compras.</p>
 
       <div id="infoProveedor" class="provider-badge-info">
         Cargando cuenta de proveedor...
@@ -206,33 +227,41 @@
               <option value="papel">Papel</option>
               <option value="escritura">Escritura</option>
               <option value="embalaje">Embalaje</option>
+              <option value="archivo">Archivo / Organización</option>
             </select>
           </div>
         </div>
 
-        <div class="checkbox-group">
-          <label class="checkbox-label">
-            <input type="checkbox" id="prodReciclable"> ¿Es Reciclable?
-          </label>
-          <label class="checkbox-label">
-            <input type="checkbox" id="prodReutilizable"> ¿Es Reutilizable?
-          </label>
+        <div class="form-group">
+          <label>Atributos Ecológicos:</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="prodReciclable"> ¿Es Reciclable?
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="prodReutilizable"> ¿Es Reutilizable?
+            </label>
+          </div>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="prodPct">% Materiales Reciclados</label>
-            <input type="number" id="prodPct" class="form-control" placeholder="0 a 100" min="0" max="100" value="0">
+        <div class="form-group">
+          <label for="prodPct">% Materiales Reciclados</label>
+          <input type="number" id="prodPct" class="form-control" placeholder="0 a 100" min="0" max="100" value="0">
+        </div>
+
+        <div class="form-group">
+          <label>Certificaciones del Producto:</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label"><input type="checkbox" name="prodCertificaciones" value="FSC"> FSC</label>
+            <label class="checkbox-label"><input type="checkbox" name="prodCertificaciones" value="ISO14001"> ISO 14001</label>
+            <label class="checkbox-label"><input type="checkbox" name="prodCertificaciones" value="B-Corp"> B-Corp</label>
+            <label class="checkbox-label"><input type="checkbox" name="prodCertificaciones" value="Ecolabel"> Ecolabel</label>
           </div>
-          <div class="form-group">
-            <label for="prodCert">Certificación Principal</label>
-            <select id="prodCert" class="form-control">
-              <option value="Ninguna">Ninguna</option>
-              <option value="FSC">FSC (Forest Stewardship Council)</option>
-              <option value="ISO14001">ISO 14001</option>
-              <option value="EMAS">EMAS</option>
-            </select>
-          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="prodPdf">Certificados del Producto (PDF):</label>
+          <input type="file" id="prodPdf" accept=".pdf" class="form-control">
         </div>
 
         <button type="submit" class="btn-submit">Enviar Producto a Revisión</button>
@@ -247,24 +276,20 @@
   </footer>
 
  <script>
-    // Variable global para guardar el nombre comercial del proveedor identificado
     let nombreProveedorActivo = "Proveedor Registrado";
 
     document.addEventListener("DOMContentLoaded", function() {
-      // Leemos el parámetro 'prov' que viaja desde el index.html
       const urlParams = new URLSearchParams(window.location.search);
       const provId = urlParams.get('prov');
 
       const infoBox = document.getElementById("infoProveedor");
 
       if (!provId) {
-        // Resguardo por si entran directo al link sin pasar por la validación
         infoBox.innerHTML = `⚠️ <strong>Modo Incógnito:</strong> No se detectó código de verificación.`;
         infoBox.style.borderColor = "#dc3545";
         return;
       }
 
-      // Buscamos al proveedor usando las propiedades reales de tu datosPlanos.js (.codigo y .nombre)
       if (typeof PROVEEDORES !== 'undefined') {
         const proveedor = PROVEEDORES.find(p => p.codigo && p.codigo.toUpperCase() === provId.toUpperCase());
         
@@ -275,7 +300,6 @@
           infoBox.innerHTML = ` <strong>Código Temporal:</strong> En sesión como corporativo ID: ${provId}`;
         }
       } else {
-        // Resguardo si hay desfase con el archivo JS plano externo
         infoBox.innerHTML = ` <strong>Código Activo:</strong> ID de Proveedor: ${provId}`;
       }
     });
@@ -289,7 +313,23 @@
       const esReciclable = document.getElementById("prodReciclable").checked ? "SÍ" : "NO";
       const esReutilizable = document.getElementById("prodReutilizable").checked ? "SÍ" : "NO";
       const pct = document.getElementById("prodPct").value;
-      const cert = document.getElementById("prodCert").value;
+
+      // Capturar certificaciones seleccionadas en el checklist
+      const checkboxesCert = document.getElementsByName("prodCertificaciones");
+      let certificacionesSeleccionadas = [];
+      checkboxesCert.forEach(cb => {
+        if (cb.checked) {
+          certificacionesSeleccionadas.push(cb.value);
+        }
+      });
+      const certsTexto = certificacionesSeleccionadas.length > 0 ? certificacionesSeleccionadas.join(", ") : "Ninguna";
+
+      // Capturar archivo adjunto
+      const pdfInput = document.getElementById("prodPdf");
+      let nombreArchivoPdf = "Ninguno";
+      if (pdfInput.files && pdfInput.files.length > 0) {
+        nombreArchivoPdf = pdfInput.files[0].name;
+      }
 
       let resumen = `¡Propuesta enviada con éxito por ${nombreProveedorActivo}!\n\n` +
                     `El nuevo artículo pasará por la auditoría de sostenibilidad antes de impactar en el catálogo global de la UCU.\n\n` +
@@ -299,10 +339,11 @@
                     `• Reciclable: ${esReciclable}\n` +
                     `• Reutilizable: ${esReutilizable}\n` +
                     `• Materia Prima Reciclada: ${pct}%\n` +
-                    `• Aval Técnico: ${cert}`;
+                    `• Aval Técnico (Certs): [${certsTexto}]\n` +
+                    `• Archivo Ficha Adjunta: ${nombreArchivoPdf}`;
 
       alert(resumen);
-      // Reseteamos el formulario y los mandamos derecho al inicio ordenadamente
+      
       document.getElementById("formProducto").reset();
       window.location.href = "../index.html";
     }

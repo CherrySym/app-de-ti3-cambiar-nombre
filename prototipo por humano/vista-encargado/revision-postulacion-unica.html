@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auditoría de Postulación Unificada - UCU</title>
+  <title>Revisión de Postulación - UCU</title>
   <link rel="stylesheet" href="../css/global-styles.css">
   <style>
     * {
@@ -130,7 +130,7 @@
       color: #2f80ed;
     }
 
-    /* Bloques de Información Unificados */
+    /* Bloques de Información */
     .audit-master-card {
       background: white;
       border-radius: 16px;
@@ -314,12 +314,6 @@
   <header>
     <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo">
     <nav>
-      <ul>
-        <li><a href="landing.html">Inicio</a></li>
-        <li><a href="lista-proveedores.html">Lista de Proveedores</a></li>
-        <li><a href="revision-postulaciones-totales.html">Revisar Postulaciones</a></li>
-      </ul>
-
       <div class="user-profile-container">
         <img src="../assets/icono generico de usuario.png" alt="Perfil" onclick="toggleMenu()" style="width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: block;">
         <div id="menuDropdown" class="dropdown-content" style="display: none;">
@@ -396,8 +390,8 @@
       </div>
 
       <div class="decision-zone">
-        <button class="btn-decision btn-reject" onclick="procesarPostulacion('Rechazada')">Rechazar Postulación Completa</button>
-        <button class="btn-decision btn-approve" onclick="procesarPostulacion('Aprobada')">Aprobar Empresa e Incorporar Catálogo</button>
+        <button class="btn-decision btn-reject" onclick="procesarPostulacion('Rechazada')">Rechazar Postulación</button>
+        <button class="btn-decision btn-approve" onclick="procesarPostulacion('Aprobada')">Aprobar Postulación</button>
       </div>
 
     </div>
@@ -524,7 +518,7 @@
     }
 
     function procesarPostulacion(dictamen) {
-      alert('La postulación ha sido calificada como: ' + dictamen + '.\n(En Protovivo V3 esto actualizará Supabase de forma permanente).');
+      alert('La postulación ha sido calificada como: ' + dictamen + '.\n');
       window.location.href = "revision-postulaciones-totales.html";
     }
   </script>
