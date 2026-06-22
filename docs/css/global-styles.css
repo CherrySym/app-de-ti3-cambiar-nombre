@@ -1,0 +1,24 @@
+body {
+  background: url('../assets/fondo-ucu.jpeg') no-repeat center top fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Obliga al body a medir el 100% de la pantalla */
+  font-family:
+    "Segoe UI", "Helvetica Neue", "Lucida Grande", "Roboto", "Ebrima",
+    "Nirmala UI", "Gadugi", "Segoe Xbox Symbol", "Segoe UI Symbol", "Meiryo UI",
+    "Khmer UI", "Tunga", "Lao UI", "Raavi", "Iskoola Pota", "Latha",
+    "Leelawadee", "Microsoft YaHei UI", "Microsoft JhengHei UI",
+    "Malgun Gothic", "Estrangelo Edessa", "Microsoft Himalaya",
+    "Microsoft New Tai Lue", "Microsoft PhagsPa", "Microsoft Tai Le",
+    "Microsoft Yi Baiti", "Mongolian Baiti", "MV Boli", "Myanmar Text",
+    "Cambria Math";
+}
+input, button, select, textarea {
+  font-family: inherit;
+}
+footer {
+  margin-top: auto; /* Pega el footer al final siempre */
+}
