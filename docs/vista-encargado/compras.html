@@ -153,6 +153,50 @@
         font-size: 28px;
         font-weight: 700;
       }
+.filter-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(19, 33, 60, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      align-items: flex-end;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .filter-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #13213c;
+      text-transform: uppercase;
+    }
+
+    .filter-input, .filter-select {
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      background-color: white;
+      color: #334155;
+    }
+
+    .checkbox-filter-group {
+      display: flex;
+      gap: 15px;
+      padding-bottom: 10px;
+    }
 
       /* Tabla de Catálogo */
       .table-card {
@@ -401,11 +445,6 @@
     <header>
       <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo" />
       <nav>
-        <ul>
-          <li><a href="landing.html">Inicio</a></li>
-          <li><a href="lista-proveedores.html">Lista de Proveedores</a></li>
-          <li><a href="lista-productos.html">Catálogo Global</a></li>
-        </ul>
         <div class="user-profile-container">
           <img
             src="../assets/icono generico de usuario.png"
@@ -433,12 +472,69 @@
 
     <main class="shop-container">
       <div class="left-panel">
-        
         <div class="btn-back-container">
-          <a href="#" onclick="window.history.back(); return false;" class="btn-back">← Volver atrás</a>
+          <a
+            href="#"
+            onclick="
+              window.history.back();
+              return false;
+            "
+            class="btn-back"
+            >← Volver atrás</a
+          >
         </div>
 
         <h2 class="page-title">Ordenar Productos Sostenibles</h2>
+        <section class="filter-section">
+          <div class="filter-grid">
+            <div class="filter-group">
+              <label for="searchProveedor">Filtrar por Proveedor:</label>
+              <input
+                type="text"
+                id="searchProveedor"
+                class="filter-input"
+                placeholder="Ej: EcoProveedores..."
+                onkeyup="filtrarTabla()"
+              />
+            </div>
+
+            <div class="filter-group">
+              <label for="selectCategoria">Categoría:</label>
+              <select
+                id="selectCategoria"
+                class="filter-select"
+                onchange="filtrarTabla()"
+              >
+                <option value="todos">Todas las categorías</option>
+                <option value="papel">Papel</option>
+                <option value="escritura">Escritura</option>
+                <option value="embalaje">Embalaje</option>
+              </select>
+            </div>
+
+            <div
+              class="filter-group"
+              style="flex-direction: row; gap: 20px; padding-bottom: 8px"
+            >
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  id="checkReciclable"
+                  onchange="filtrarTabla()"
+                />
+                Reciclable
+              </label>
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  id="checkReutilizable"
+                  onchange="filtrarTabla()"
+                />
+                Reutilizable
+              </label>
+            </div>
+          </div>
+        </section>
 
         <div class="table-card">
           <div class="table-container">

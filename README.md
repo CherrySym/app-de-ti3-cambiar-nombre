@@ -77,4 +77,7 @@ Cuando este pronto el documento de los criterios:
 Mientras tanto:
 - ¿Agregar esto a SupaBase...? 
 - Mejorar todos los estilos porque se ve medio generico 
-- FUSIONAR LSA PAGINAS DE LISTA DE PRODUCTOS Y COMPRAS
+- FUSIONAR LSA PAGINAS DE LISTA DE PRODUCTOS Y COMPRAS - Meter en compras la parte de de busqueda y filtros que tiene lista de productos y despues borrar lista de productos. (LISTOOOO)
+- En la parte de aprobacion de postulaciones añadir un nuevo coso/algo/bloque de texto lindo para darle un puntaje al proveeodr, 100% manual porqe es un bolaso hacer calculos lol. 
+Ademas en la parte de detallles-proveedor poder editar el puntaje (y toda la info con el boton de editar informacion)
+- Idea: Agregar un bloque aparte fijado en la pantalla en revision-postulacion-unica para que el encargado pueda ir al documenot de Criterios o la tabla de criterios o info releveante, que este moviendose al subir y bajar en la pagina, para que nunca se pierda de la vision del encargado.
