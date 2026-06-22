@@ -1,142 +1,77 @@
-# Aplicacion de Compras Sostenibles UCU — TI3
+# Aplicacion de Compras Sostenibles UCU — TI3 (Prototipo)
 
 **Herramienta web para evaluar y comparar proveedores de papelería según criterios de sostenibilidad**
 
 ## Descripcion
 
-El sitio web de compras es una herramienta dedicada del equipo de compras de la Universidad por eso el estilo de la misma tiene un parecido a las herrmientas usadas por la comunidad, AutoGestion, WebAsignatura, la aplicacion movil de la Universidad y la misma pagina principal de la UCU.
+El sitio web de compras es una herramienta destinada al equipo de compras de la Universidad. Su estilo visual busca ser consistente con otras herramientas internas de la UCU como AutoGestion, WebAsignatura y la aplicación móvil.
 
-## Pantallas principales 
+## Estructura de Archivos
 
-1. **Pantalla de Inicio** (index.html)
-Página pública, sin login requerido. Es la entrada a la herramienta y separa a los dos tipos de usuario.
+Los archivos HTML están organizados en dos carpetas principales según el tipo de usuario:
 
-Contenido:
+-   `vista-encargado/`: Contiene todas las páginas exclusivas para el personal de compras.
+-   `vista-proveedor/`: Contiene las páginas para los proveedores externos.
+-   Los archivos `index.html` y `login.html` permanecen en la raíz del prototipo, ya que son puntos de acceso comunes.
 
-Flujo
-Botón principal: "Soy encargado de compras → Ingresar" → redirige al Login
-Botón secundario: "Soy proveedor → Postularme" → redirige al Formulario de Postulación
+## Pantallas Principales
 
-No tiene nav completo, solo la identidad visual de la UCU.
+1.  **Pantalla de Inicio** (`index.html`)
+    -   Página pública de bienvenida. Separa los flujos para encargados y proveedores.
 
-2. **Formulario de Postulación de Proveedores** (postulacion.html)
-Pantalla pública. El propio proveedor completa su información para solicitar ser registrado en el sistema.
-Los campos son idénticos al Formulario de Adición (pantalla 7).
-Campos:
+2.  **Login** (`login.html`)
+    -   Acceso para el equipo de compras. Para el prototipo, el acceso está hardcodeado.
 
-Datos de la empresa (nombre, contacto, email, teléfono, cobertura)
-Certificaciones disponibles (checkboxes con las conocidas + campo para adicionales)
-Adjuntar comprobantes en PDF
-Prácticas sostenibles (embalaje, energía renovable, política de devolución)
-Descripción comercial, desafíos y metas (opcionales)
+3.  **Formulario de Postulación de Proveedores** (`vista-proveedor/postulacion.html`)
+    -   Formulario público para que nuevos proveedores soliciten ser parte del sistema.
 
-Al enviar: la postulación queda en estado "pendiente" hasta ser revisada por el encargado (pantalla 8).
+4.  **Formulario para Añadir Productos (Proveedor)** (`vista-proveedor/agregar-producto-proveedor.html`)
+    -   Permite a un proveedor ya registrado (o en proceso) sugerir nuevos productos.
 
-3. **Login** (login.html)
-Pantalla de acceso para el equipo de compras de la UCU.
-El registro de cuentas no está contemplado en la herramienta — el equipo de IT de la universidad se encarga de gestionar las credenciales del personal autorizado. El acceso es usando el usuario institucional y su contraseña.
+5.  **Landing Page del Encargado** (`vista-encargado/landing.html`)
+    -   Dashboard principal para el encargado de compras tras iniciar sesión.
 
-Para el prototipo: usuario y contraseña hardcodeados, sin validación real.
+6.  **Listado de Proveedores** (`vista-encargado/lista-proveedores.html`)
+    -   Muestra todos los proveedores activos en el sistema.
 
-4. **Landing** (landing.html)
-Primera pantalla que ve el encargado tras autenticarse. Funciona como dashboard y punto de acceso al resto de la herramienta.
-Contenido:
+7.  **Detalle de Proveedor** (`vista-encargado/detalle-proveedor.html`)
+    -   Vista con toda la información de un proveedor específico.
 
-Saludo al usuario y ¿fecha actual?
-Accesos directos a todas las secciones: Listado de Proveedores, Añadir Proveedor, Revisión de Postulaciones, Ranking, Listado de Productos
-Acceso al archivo de detalles y pautas del sistema (el documento de protocolo de compras sostenibles)
-Intentar ver 2 versiones una con nav y otra sin nav o con nav distinto al clasico
+8.  **Agregar Proveedor (Encargado)** (`vista-encargado/agregar-proveedor.html`)
+    -   Formulario para que el encargado registre un proveedor manualmente.
 
-5. **Listado de Proveedores** (lista-de-proveedores.html)
-Vista general de todos los proveedores registrados en el sistema. Es la pantalla de trabajo principal del encargado.
-Contenido:
+9.  **Agregar Producto (Encargado)** (`vista-encargado/agregar-producto-encargado.html`)
+    -   Formulario para que el encargado añada productos directamente.
 
-Grilla de tarjetas (cards), una por proveedor, con auto-fill según cantidad
-Cada card muestra: nombre del proveedor y puntaje de sostenibilidad
-Cada card es clickeable y lleva al Detalle del Proveedor (pantalla 6)
-Botón "Ver Ranking" que redirige a la pantalla 9
+10. **Revisión de Postulaciones** (`vista-encargado/revision-postulaciones-totales.html`)
+    -   Muestra una lista de todas las postulaciones de proveedores pendientes.
+    -   **Vista Detallada:** `vista-encargado/revision-postulacion-unica.html`
 
-6. **Detalle de Proveedor** (detalles-proveedor.html)
-Información completa de un proveedor específico. Se accede desde el Listado (pantalla 5).
-Contenido:
+11. **Revisión de Productos** (`vista -encargado/revision-productos-totales.html`)
+    -   Muestra una lista de todos los productos sugeridos por proveedores que están pendientes de aprobación.
+    -   **Vista Detallada:** `vista-encargado/revision-producto-unico.html`
 
-Datos generales: nombre, contacto, email, teléfono, cobertura, fecha de registro
-Descripción comercial, desafíos y metas declaradas
-Puntaje de sostenibilidad con indicador visual de color
-Certificaciones registradas
-Criterios de sostenibilidad: embalaje, energía renovable, política de devolución
-Tabla de productos del proveedor con sus criterios individuales
-Botón "Editar información" — el encargado puede modificar cualquier campo, en especial agregar certificaciones obtenidas después del registro inicial
-Botón "Eliminar proveedor" — con confirmación antes de ejecutar
+12. **Ranking de Proveedores** (`vista-encargado/ranking.html`)
+    -   Tabla comparativa de proveedores, ordenados por su puntaje de sostenibilidad.
 
-7. **Añadir Proveedor** (añadir-proveedor.html)
-Formulario para que el encargado de compras registre manualmente un nuevo proveedor en la herramienta. A diferencia de la postulación (pantalla 2), acá el encargado valida y carga la información directamente.
-Campos idénticos a la postulación. Al guardar, el proveedor aparece inmediatamente en el listado.
+13. **Catálogo Global de Productos** (`vista-encargado/lista-productos.html`)
+    -   Muestra todos los productos aprobados de todos los proveedores.
 
-8. **Revisión de Postulaciones** (revision-Postulaciones.html)
-Apartado exclusivo para el encargado. Muestra las postulaciones enviadas por proveedores (pantalla 2) que están en estado "pendiente".
-Contenido:
+14. **Simulador de Compras** (`vista-encargado/compras.html`)
+    -   Herramienta para que el encargado arme un pedido simulado.
 
-Lista de postulaciones pendientes con nombre del proveedor y fecha de envío
-Al seleccionar una: vista completa de los datos declarados por el proveedor
-Visualización de los comprobantes PDF adjuntos
-Botón "Aprobar" → el proveedor pasa al estado activo y aparece en el listado
-Botón "Rechazar" → la postulación se descarta con opción de dejar un comentario
+---
 
-9. **Ranking de Proveedores** (ranking.html)
-Vista comparativa de todos los proveedores ordenados por puntaje de sostenibilidad. Se accede desde el Listado de Proveedores (pantalla 5).
-Contenido:
+## Notas y Cosas para Hacer
 
-Tabla con todos los proveedores ordenados de mayor a menor puntaje
-Columnas: nombre, puntaje (con colores de fondo), cobertura, acceso al detalle y acceso a productos
-Filtro por puntaje mínimo
-El sistema de cálculo del puntaje está pendiente — por ahora los valores están hardcodeados en datosPlanos.js
+### 
 
-10. **Listado de Productos** (lista-productos.html)
-Catálogo global de todos los productos de todos los proveedores registrados.
-Contenido:
+Cuando este pronto el documento de los criterios:
+- Agregar espacios de checlist Si/NO para ciertas cosas
+- Mantener los espacios para adjuntar los archivos de las cerfiticaciones.
 
-Tabla o grilla con todos los productos del sistema
-Columnas: nombre del producto, proveedor, precio, categoría, reciclable, reutilizable, % materiales reciclados, certificaciones
-Si dos proveedores distintos tienen un producto similar (ej: dos resmas A4), ambos aparecen como entradas separadas — la diferencia de precio y criterios es el valor de esta vista
-Filtros: por proveedor, por categoría, por reciclable/reutilizable
+Mientras tanto:
+- ¿Agregar esto a SupaBase...? 
+- Mejorar todos los estilos porque se ve medio generico 
 
-## Pantallas adicionales
-
-(Se construyen una vez que todas las principales estén terminadas y probadas)
-11. **Apartado de Compras** (compras.html)
-Permite al encargado armar un pedido simulado de productos.
-
-
-Vista similar al Listado de Productos (pantalla 10)
-Botón "Agregar al carrito" en cada producto con selector de cantidad
-Panel lateral o página de resumen con el carrito armado
-Botón "Confirmar pedido" que simula la compra (no hay cobro real, genera un resumen del pedido)
-
-
-**Notas mias:** 
-carpeta de assets para almacenar imagenes o elementos relevantes
-SupraBase va a ser la nueva base de datos, el cambio de los productos con certificaciones necesita que la bd sea relacional, SupraBases PostSQL, sirve de igual manera que FireBase.
-Implementar librearias CSS va a dejar la aplicacion mas bonita, es mas rapido pedirle a claude que perder tiempo decorando 
-
-SOBRE LOS FORMS DE POSTULACION Y ADICION DE PROVEEDOR
-Se hablo que seria mejor agregar los productos de los provedoores porque es mas facil aplicarles criterios a productos que a los proveedores en si. Tengo que revisar el documento para saber bien que criterios son.
-Cada producto deberia tener cantidad precio y blablabla
-
-**Notas Adicionales**
-
-Sugerencia de info de proveedor por ia
-- Nombre empresa
-- Contacto (persona)
-- Email
-- Teléfono
-- Certificaciones (checkboxes)
-- % Materiales reciclados
-- Embalaje sostenible (sí/no/parcial)
-- Energía renovable (sí/no/parcial)
-- Política de devolución (sí/no)
-- Cobertura (local/importado/ambos)
-- Descripción empresa (opcional)
-- Desafíos sostenibilidad (opcional)
-- Metas futuras (opcional)
 
