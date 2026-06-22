@@ -1,3 +1,7 @@
+# URL PARA VER EL SITIOOOOOOOO
+
+https://cherrysym.github.io/app-de-ti3-cambiar-nombre/
+
 # Aplicacion de Compras Sostenibles UCU — TI3 (Prototipo)
 
 **Herramienta web para evaluar y comparar proveedores de papelería según criterios de sostenibilidad**
@@ -73,5 +77,4 @@ Cuando este pronto el documento de los criterios:
 Mientras tanto:
 - ¿Agregar esto a SupaBase...? 
 - Mejorar todos los estilos porque se ve medio generico 
-
-
+- FUSIONAR LSA PAGINAS DE LISTA DE PRODUCTOS Y COMPRAS
