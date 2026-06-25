@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ranking de Proveedores - UCU</title>
     <link rel="stylesheet" href="../css/global-styles.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
       /* Estilos para el logo del Header */
       .logo {
@@ -318,7 +319,7 @@
             <td><span class="badge-score ${colorClase}">${p.puntaje} pts</span></td>
             <td>${coberturaFormateada}</td>
             <td><a href="detalle-proveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
-            <td><a href="lista-productos.html?id=${p.id}" class="btn-detail">Ver productos →</a></td>
+            <td><a href="compras.html?id=${p.id}" class="btn-detail">Ver productos →</a></td>
           `;
           // Agregar la fila terminada al cuerpo de la tabla
           tbody.appendChild(fila);

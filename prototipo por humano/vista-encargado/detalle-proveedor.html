@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalle del Proveedor - UCU</title>
     <link rel="stylesheet" href="../css/global-styles.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
       /* Estilos del Logo */
       .logo {
@@ -165,6 +166,7 @@
         font-weight: 700;
         font-size: 15px;
         white-space: nowrap;
+        display: inline-block;
       }
       /* El color de fondo de las insignias dependiendo el puntaje*/
       .bg-verde { background-color: #219653; }
@@ -244,6 +246,32 @@
         font-size: 14px;
       }
 
+      /* NUEVOS ESTILOS: Inputs del Modo Edición rápidos y limpios */
+      .edit-input {
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        color: #334155;
+        outline: none;
+        background-color: #ffffff;
+      }
+      .edit-input:focus {
+        border-color: #2f80ed;
+        box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.15);
+      }
+      .edit-score-input {
+        width: 80px;
+        padding: 6px 10px;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        color: #1e3264;
+      }
+
       /* Estilos del Footer */
       .footer-container {
         background-color: #1e3264;
@@ -300,7 +328,7 @@
     </header>
     
     <main class="detail-container">
-      <a href="lista-proveedores.html" class="btn-back" onclick="window.history.back(); return false;">
+      <a href="ranking.html" class="btn-back" onclick="window.history.back(); return false;">
         ← Volver atrás
       </a>
       <article class="detail-card" id="detail-card-content">
@@ -316,45 +344,45 @@
 
     <script src="../js/datosPlanos.js"></script>
     <script>
-      // 1. Obtener el ID del proveedor que viene en la URL (?id=lo-que-sea)
       const params = new URLSearchParams(window.location.search);
       const proveedorId = params.get("id");
-      
-      // Obtener el contenedor donde se va a inyectar el html con la información del proveedor
       const cardContainer = document.getElementById("detail-card-content");
 
-      // 2. Buscar el proveedor específico en la lista global por su id
-      const prov = (typeof PROVEEDORES !== 'undefined') ? PROVEEDORES.find(p => p.id === proveedorId) : null;
+      // Variable global temporal para poder editar en caliente en la pantalla
+      let prov = (typeof PROVEEDORES !== 'undefined') ? PROVEEDORES.find(p => p.id === proveedorId) : null;
+      let modoEdicion = false;
 
-      // Si el proveedor existe en los datos simulados, se construye la interfaz
-      if (prov) {
-        // Define el color de fondo para el puntaje 
+      function renderProveedor() {
+        if (!prov) {
+          cardContainer.innerHTML = `
+            <div class="error-message">
+              <h3>Error: Proveedor No Encontrado</h3>
+              <p>El identificador proporcionado no coincide con ningún registro de nuestro sistema.</p>
+              <a href="lista-proveedores.html" class="btn-back" style="margin-top: 20px;">Volver al listado principal</a>
+            </div>
+          `;
+          return;
+        }
+
         let colorClase = "bg-rojo"; 
-        if (prov.puntaje >= 75) colorClase = "bg-verde"; // Verde para puntajes 75 o más
-        else if (prov.puntaje >= 50) colorClase = "bg-amarillo"; // Amarillo para puntajes entre 50 y 74
+        if (prov.puntaje >= 75) colorClase = "bg-verde";
+        else if (prov.puntaje >= 50) colorClase = "bg-amarillo";
 
-        // Inicializa la variable que almacenará el bloque de código de certificaciones
         let certsHTML = "";
-        // Valida si el proveedor contiene una lista de certificaciones con elementos cargados
         if (prov.certificaciones && prov.certificaciones.length > 0) {
-          // Mapea el arreglo para transformar cada texto en una pastilla HTML y unirlas en un único String
           certsHTML = `<div class="cert-list">` + 
             prov.certificaciones.map(c => `<span class="cert-badge">✓ ${c}</span>`).join("") + 
             `</div>`;
         } else {
-          // Mensaje si no se registran certificados
           certsHTML = `<p class="no-certs">Este proveedor no cuenta con certificaciones ambientales registradas.</p>`;
         }
 
-        // CORRECCIÓN: Formatear textos evaluando primero si la propiedad existe y no está vacía
         const embalaje = prov.embalaje_sostenible ? prov.embalaje_sostenible.charAt(0).toUpperCase() + prov.embalaje_sostenible.slice(1) : "No especificado";
         const energia = prov.energia_renovable ? prov.energia_renovable.charAt(0).toUpperCase() + prov.energia_renovable.slice(1) : "No especificado";
         const cobertura = prov.cobertura ? prov.cobertura.charAt(0).toUpperCase() + prov.cobertura.slice(1) : "No especificada";
-        
-        // Evalúa el booleano de la política de devolución para transformarlo en texto explicativo
         const devolucion = prov.politica_devolucion ? "Sí (Cuenta con logística inversa)" : "No disponible";
 
-        // 3. Inyectar la plantilla HTML con los datos del proveedor
+        // Renderizado condicional basado en si estamos editando o visualizando
         cardContainer.innerHTML = `
           <div class="detail-header">
             <div>
@@ -363,20 +391,32 @@
             </div>
             <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: flex-end;">
               <a href="agregar-producto-encargado.html?proveedorId=${prov.id}" 
-                 style="text-decoration: none; padding: 8px 14px; background-color: #1e3264; color: white; border-radius: 6px; font-weight: 600; font-size: 14px; transition: background-color 0.2s;"
+                 id="btnAgregarProd"
+                 style="text-decoration: none; padding: 8px 14px; background-color: #1e3264; color: white; border-radius: 6px; font-weight: 600; font-size: 14px; transition: background-color 0.2s; ${modoEdicion ? 'display:none;' : ''}"
                  onmouseover="this.style.backgroundColor='#243b75'" 
                  onmouseout="this.style.backgroundColor='#1e3264'">
                 ➕ Agregar Producto
               </a>
               
-              <button class="btn-editar-simulado">Editar Información</button>
-              <span class="badge-score ${colorClase}">${prov.puntaje} Puntos</span>
+              <button class="btn-editar-simulado" id="btnEditarGuardar" onclick="toggleModoEdicion()">
+                ${modoEdicion ? "💾 Guardar Cambios" : "Editar Información"}
+              </button>
+
+              <div id="puntajeContenedor" style="display: flex; align-items: center; gap: 8px;">
+                ${modoEdicion 
+                  ? `<span style="font-size:12px; font-weight:bold; color:#1e3264;">Puntaje:</span><input type="number" id="inputPuntaje" class="edit-score-input" min="1" max="100" value="${prov.puntaje}">` 
+                  : `<span class="badge-score ${colorClase}">${prov.puntaje} Puntos</span>`
+                }
+              </div>
             </div>
           </div>
 
           <div class="info-section">
             <h3>Descripción Comercial</h3>
-            <p class="description-text">${prov.descripcion || "Sin descripción disponible."}</p>
+            ${modoEdicion 
+              ? `<textarea id="inputDescripcion" class="edit-input" style="height:80px; resize:vertical;">${prov.descripcion || ''}</textarea>` 
+              : `<p class="description-text">${prov.descripcion || "Sin descripción disponible."}</p>`
+            }
           </div>
 
           <div class="info-section">
@@ -384,19 +424,19 @@
             <div class="info-grid">
               <div class="info-item">
                 <label>Representante</label>
-                <span>${prov.contacto || "No asignado"}</span>
+                ${modoEdicion ? `<input type="text" id="inputContacto" class="edit-input" value="${prov.contacto || ''}">` : `<span>${prov.contacto || "No asignado"}</span>`}
               </div>
               <div class="info-item">
                 <label>Correo Electrónico</label>
-                <span>${prov.email || "No asignado"}</span>
+                ${modoEdicion ? `<input type="email" id="inputEmail" class="edit-input" value="${prov.email || ''}">` : `<span>${prov.email || "No asignado"}</span>`}
               </div>
               <div class="info-item">
                 <label>Teléfono</label>
-                <span>${prov.telefono || "No asignado"}</span>
+                ${modoEdicion ? `<input type="text" id="inputTelefono" class="edit-input" value="${prov.telefono || ''}">` : `<span>${prov.telefono || "No asignado"}</span>`}
               </div>
               <div class="info-item">
                 <label>Ámbito de Cobertura</label>
-                <span>${cobertura}</span>
+                ${modoEdicion ? `<input type="text" id="inputCobertura" class="edit-input" value="${prov.cobertura || ''}">` : `<span>${cobertura}</span>`}
               </div>
             </div>
           </div>
@@ -406,15 +446,23 @@
             <div class="info-grid" style="background-color: #f1f8ff; border-color: rgba(47, 128, 237, 0.1);">
               <div class="info-item">
                 <label>Embalaje Sostenible</label>
-                <span>${embalaje}</span>
+                ${modoEdicion ? `<input type="text" id="inputEmbalaje" class="edit-input" value="${prov.embalaje_sostenible || ''}">` : `<span>${embalaje}</span>`}
               </div>
               <div class="info-item">
                 <label>Uso de Energías Renovables</label>
-                <span>${energia}</span>
+                ${modoEdicion ? `<input type="text" id="inputEnergia" class="edit-input" value="${prov.energia_renovable || ''}">` : `<span>${energia}</span>`}
               </div>
               <div class="info-item">
                 <label>Política de Devolución</label>
-                <span>${devolucion}</span>
+                ${modoEdicion 
+                  ? `
+                    <select id="inputDevolucion" class="edit-input">
+                      <option value="true" ${prov.politica_devolucion ? 'selected' : ''}>Sí (Cuenta con logística inversa)</option>
+                      <option value="false" ${!prov.politica_devolucion ? 'selected' : ''}>No disponible</option>
+                    </select>
+                    ` 
+                  : `<span>${devolucion}</span>`
+                }
               </div>
             </div>
           </div>
@@ -427,28 +475,55 @@
           <div class="info-section" style="display: flex; gap: 20px; flex-wrap: wrap;">
             <div style="flex: 1; min-width: 280px;">
               <h3>Desafíos Actuales</h3>
-              <p class="description-text" style="font-size: 14px;">${prov.desafios || "No declarados."}</p>
+              ${modoEdicion ? `<textarea id="inputDesafios" class="edit-input" style="height:60px; resize:vertical;">${prov.desafios || ''}</textarea>` : `<p class="description-text" style="font-size: 14px;">${prov.desafios || "No declarados."}</p>`}
             </div>
             <div style="flex: 1; min-width: 280px;">
               <h3>Metas de Sostenibilidad</h3>
-              <p class="description-text" style="font-size: 14px;">${prov.metas || "No declaradas."}</p>
+              ${modoEdicion ? `<textarea id="inputMetas" class="edit-input" style="height:60px; resize:vertical;">${prov.metas || ''}</textarea>` : `<p class="description-text" style="font-size: 14px;">${prov.metas || "No declaradas."}</p>`}
             </div>
           </div>
         `;
-      } else {
-        // Si el ID de la URL no coincide con ninguno (Manejo de errores seguro)
-        cardContainer.innerHTML = `
-          <div class="error-message">
-            <h3>Error: Proveedor No Encontrado</h3>
-            <p>El identificador proporcionado no coincide con ningún registro de nuestro sistema o falló la carga de datos.</p>
-            <a href="lista-proveedores.html" class="btn-back" style="margin-top: 20px;">Volver al listado principal</a>
-          </div>
-        `;
       }
+
+      // MODIFICADO: Lógica interactiva para alternar inputs y simular guardado
+      function toggleModoEdicion() {
+        if (modoEdicion) {
+          // Fase Guardar: capturar valores digitados
+          const nuevoPuntaje = parseInt(document.getElementById("inputPuntaje").value);
+          
+          if (isNaN(nuevoPuntaje) || nuevoPuntaje < 1 || nuevoPuntaje > 100) {
+            alert("Por favor, asigne un puntaje manual válido entre 1 y 100.");
+            return;
+          }
+
+          // Actualizamos el objeto en memoria
+          prov.puntaje = nuevoPuntaje;
+          prov.descripcion = document.getElementById("inputDescripcion").value;
+          prov.contacto = document.getElementById("inputContacto").value;
+          prov.email = document.getElementById("inputEmail").value;
+          prov.telefono = document.getElementById("inputTelefono").value;
+          prov.cobertura = document.getElementById("inputCobertura").value;
+          prov.embalaje_sostenible = document.getElementById("inputEmbalaje").value;
+          prov.energia_renovable = document.getElementById("inputEnergia").value;
+          prov.politica_devolucion = document.getElementById("inputDevolucion").value === "true";
+          prov.desafios = document.getElementById("inputDesafios").value;
+          prov.metas = document.getElementById("inputMetas").value;
+
+          modoEdicion = false;
+          alert("Información actualizada correctamente");
+          renderProveedor();
+        } else {
+          // Fase Editar: activar modo inputs
+          modoEdicion = true;
+          renderProveedor();
+        }
+      }
+
+      // Inicializar la pantalla
+      document.addEventListener("DOMContentLoaded", renderProveedor);
     </script>
     
     <script>
-      // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
       function toggleMenu() {
         const menu = document.getElementById("menuDropdown");
         if (menu.style.display === "none" || menu.style.display === "") {
@@ -458,7 +533,6 @@
         }
       }
       
-      // CORRECCIÓN: Ajuste del selector del avatar para blindar el cierre automático
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
         const avatar = document.querySelector("header nav img");
