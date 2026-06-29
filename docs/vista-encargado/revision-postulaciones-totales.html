@@ -113,6 +113,7 @@
       color: #13213c;
       margin-bottom: 25px;
       font-size: 28px;
+      font-weight: 700;
     }
 
     /* Tarjeta de postulación COMPACTA para la lista general */
@@ -175,12 +176,13 @@
     }
 
     .badge {
-      background-color: #e2e8f0;
-      color: #334155;
-      padding: 3px 8px;
-      border-radius: 4px;
+      background-color: #e6f4ea;
+      color: #137333;
+      padding: 4px 10px;
+      border-radius: 6px;
       font-size: 11px;
       font-weight: 600;
+      border: 1px solid rgba(19, 115, 51, 0.1);
     }
 
     /* Zona de botones de acción unificada */
@@ -210,7 +212,6 @@
       transform: scale(0.98);
     }
 
-    /* Estilo del botón de redirección */
     .btn-review-detail {
       background-color: #1e3264;
       color: white;
@@ -238,8 +239,7 @@
   </style>
 </head>
 
-<body>
-  <script src="../js/datosPlanos.js"></script>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
 
   <header>
     <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo">
@@ -267,7 +267,9 @@
 
     <h2 class="page-title">Postulaciones Pendientes de Revisión</h2>
 
-    <div id="contenedor-postulaciones"></div>
+    <div id="contenedor-postulaciones">
+      <p style="color: #1e3264; font-style: italic;">Consultando base de datos en tiempo real...</p>
+    </div>
 
   </main>
 
@@ -277,90 +279,120 @@
     </div>
   </footer>
 
-  <script>
-    function toggleMenu() {
+  <script type="module">
+    import { supabaseClient } from '../js/conexion-bd.js';
+
+    // --- INTERFACES GLOBALES PARA LOS EVENTOS INLINE ---
+    window.toggleMenu = function() {
       const menu = document.getElementById("menuDropdown");
-      if (menu.style.display === "none" || menu.style.display === "") {
-        menu.style.display = "block";
-      } else {
-        menu.style.display = "none";
-      }
+      menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
     }
 
     window.onclick = function (event) {
       const menu = document.getElementById("menuDropdown");
       const avatar = document.querySelector(".user-profile-container img");
-
       if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
         menu.style.display = "none";
       }
     };
 
-    // PROCESAMIENTO DINÁMICO DE DATOSPLANOS.JS
-    document.addEventListener("DOMContentLoaded", function() {
-      const contenedor = document.getElementById("contenedor-postulaciones");
-      contenedor.innerHTML = ""; // Limpiamos residuos estáticos
-
-      if (typeof POSTULACIONES_PENDIENTES === 'undefined' || POSTULACIONES_PENDIENTES.length === 0) {
-        contenedor.innerHTML = `<p style="color: #64748b; font-style: italic;">No hay postulaciones pendientes de revisión en este momento.</p>`;
-        return;
-      }
-
-      // Recorremos el array de postulaciones pendientes
-      POSTULACIONES_PENDIENTES.forEach(post => {
-        // Formateamos las certificaciones en badges ecológicos
-        let certsHTML = "";
-        if (post.certificaciones && post.certificaciones.length > 0) {
-          post.certificaciones.forEach(c => {
-            certsHTML += `<span class="badge">${c}</span>`;
-          });
-        } else {
-          certsHTML = `<span style="color: #888; font-size: 12px; font-style: italic;">Ninguna</span>`;
-        }
-
-        // Calculamos la cantidad de productos que trae esta postulación
-        const cantProductos = post.productos ? post.productos.length : 0;
-
-        // Construimos el bloque HTML de la tarjeta de forma dinámica
-        const tarjeta = document.createElement("section");
-        tarjeta.className = "postulation-card";
-        tarjeta.innerHTML = `
-          <div class="postulation-header">
-            <div>
-              <h3>${post.nombre}</h3>
-              <div class="postulation-meta-top">
-                <strong>ID:</strong> ${post.id_postulacion} • <strong>Fecha Envío:</strong> ${post.fecha_envio}
-              </div>
-            </div>
-          </div>
-
-          <div class="postulation-grid">
-            <div class="detail-item"><strong>Contacto</strong>${post.contacto}</div>
-            <div class="detail-item"><strong>Logística</strong>${post.cobertura}</div>
-            <div class="detail-item">
-              <strong>Certificaciones</strong>
-              <div class="cert-badges">
-                ${certsHTML}
-              </div>
-            </div>
-            <div class="detail-item"><strong>Productos postulados</strong>${cantProductos} producto(s)</div>
-          </div>
-
-          <div class="action-group">
-            <button class="btn-action btn-review-detail" onclick="verDetallePostulacion('${post.id_postulacion}')">
-              Auditar Postulación Detallada →
-            </button>
-          </div>
-        `;
-        
-        contenedor.appendChild(tarjeta);
-      });
-    });
-
-    // Cambiamos la navegación para inyectar el ID correspondiente por parámetro URL
-    function verDetallePostulacion(idPostulacion) {
+    window.verDetallePostulacion = function(idPostulacion) {
       window.location.href = "revision-postulacion-unica.html?id=" + idPostulacion;
     }
+
+    // --- CARGA DINÁMICA DE POSTULACIONES DESDE SUPABASE ---
+    async function inicializarPostulaciones() {
+      const contenedor = document.getElementById("contenedor-postulaciones");
+
+      try {
+        // Traemos los registros tipo 'postulacion' con estado 'pendiente'
+        const { data: postulaciones, error } = await supabaseClient
+          .from('proveedores_ucu')
+          .select('id, id_codigo, nombre, contacto_persona, procedencia, tiene_iso14001, tiene_fsc, tiene_emas, fecha_registro')
+          .eq('tipo', 'postulacion')
+          .eq('estado', 'pendiente')
+          .order('fecha_registro', { ascending: true });
+
+        if (error) throw error;
+
+        if (!postulaciones || postulaciones.length === 0) {
+          contenedor.innerHTML = `<p style="color: #64748b; font-style: italic; padding: 20px 0;">No hay postulaciones pendientes de revisión en este momento.</p>`;
+          return;
+        }
+
+        contenedor.innerHTML = ""; // Limpiar mensaje de carga
+
+        for (const post of postulaciones) {
+          // 1. Armar badges de certificación basados en tus columnas booleanas reales
+          let certsHTML = "";
+          if (post.tiene_iso14001) certsHTML += `<span class="badge">ISO 14001</span> `;
+          if (post.tiene_fsc) certsHTML += `<span class="badge">FSC</span> `;
+          if (post.tiene_emas) certsHTML += `<span class="badge">EMAS</span> `;
+          
+          if (!certsHTML) {
+            certsHTML = `<span style="color: #888; font-size: 13px; font-style: italic;">Ninguna declarada</span>`;
+          }
+
+          // 2. Consultar de forma exacta cuántos productos propuso este postulante en la tabla secundaria
+          const { count: cantProductos, error: countError } = await supabaseClient
+            .from('productos_ucu')
+            .select('id', { count: 'exact', head: true })
+            .eq('proveedor_id', post.id);
+
+          const totalInsumos = countError ? 0 : cantProductos;
+
+          // 3. Formatear la fecha de procedencia de Postgres
+          let fechaFormateada = "Reciente";
+          if (post.fecha_registro) {
+            fechaFormateada = new Date(post.fecha_registro).toLocaleDateString('es-UY', { year: 'numeric', month: 'short', day: 'numeric' });
+          }
+
+          const procedenciaFormateada = post.procedencia 
+            ? post.procedencia.charAt(0).toUpperCase() + post.procedencia.slice(1) 
+            : "Nacional";
+
+          // 4. Crear la estructura en el DOM
+          const tarjeta = document.createElement("section");
+          tarjeta.className = "postulation-card";
+          tarjeta.innerHTML = `
+            <div class="postulation-header">
+              <div>
+                <h3>${post.nombre}</h3>
+                <div class="postulation-meta-top">
+                  <strong>Código:</strong> <code>${post.id_codigo}</code> • <strong>Recibida:</strong> ${fechaFormateada}
+                </div>
+              </div>
+            </div>
+
+            <div class="postulation-grid">
+              <div class="detail-item"><strong>Contacto</strong>${post.contacto_persona}</div>
+              <div class="detail-item"><strong>Procedencia</strong>${procedenciaFormateada}</div>
+              <div class="detail-item">
+                <strong>Certificaciones Ambientales</strong>
+                <div class="cert-badges">
+                  ${certsHTML}
+                </div>
+              </div>
+              <div class="detail-item"><strong>Insumos Propuestos</strong>${totalInsumos} producto(s)</div>
+            </div>
+
+            <div class="action-group">
+              <button class="btn-action btn-review-detail" onclick="verDetallePostulacion('${post.id}')">
+                Auditar Postulación Detallada →
+              </button>
+            </div>
+          `;
+          
+          contenedor.appendChild(tarjeta);
+        }
+
+      } catch (err) {
+        console.error("Error cargando postulaciones:", err);
+        contenedor.innerHTML = `<p style="color: #eb5757; font-weight: bold; padding: 20px 0;">Error al conectar con Supabase: ${err.message}</p>`;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", inicializarPostulaciones);
   </script>
 </body>
 </html>

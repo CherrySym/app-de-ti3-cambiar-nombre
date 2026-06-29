@@ -50,7 +50,6 @@
       color: #2f80ed;
     }
 
-    /* Perfil de usuario y Dropdown */
     .user-profile-container {
       position: relative;
       display: inline-block;
@@ -112,7 +111,6 @@
       padding: 0 20px;
     }
 
-    /* Link de Volver Atrás en el Body */
     .back-link-container {
       margin-bottom: 20px;
     }
@@ -260,7 +258,7 @@
     }
   </style>
 </head>
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
 
   <header>
     <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo">
@@ -317,7 +315,7 @@
 
       <div class="specs-grid">
         <div class="spec-item">
-          <strong>Certificaciónes Específica del Producto</strong>
+          <strong>Certificaciones Heredadas del Proveedor</strong>
           <div id="p-certificaciones-container">
             <span class="badge badge-no">Ninguna Declarada</span>
           </div>
@@ -325,8 +323,8 @@
       </div>
 
       <div class="action-panel">
-        <button class="btn-decision btn-reject" onclick="finalizarAuditoria('Rechazado')">Rechazar Producto</button>
-        <button class="btn-decision btn-approve" onclick="finalizarAuditoria('Aprobado e Incorporado')">Aprobar Producto</button>
+        <button class="btn-decision btn-reject" onclick="finalizarAuditoria('rechazado')">Rechazar Producto</button>
+        <button class="btn-decision btn-approve" onclick="finalizarAuditoria('aprobado')">Aprobar Producto</button>
       </div>
     </div>
   </main>
@@ -337,17 +335,17 @@
     </div>
   </footer>
 
-  <script src="../js/datosPlanos.js"></script>
+  <script type="module">
+    import { supabaseClient } from '../js/conexion-bd.js';
 
-  <script>
-    function toggleMenu() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const idProducto = urlParams.get('id');
+
+    // --- INTERFACES GLOBALES ---
+    window.toggleMenu = function() {
       const menu = document.getElementById("menuDropdown");
-      if (menu.style.display === "none" || menu.style.display === "") {
-        menu.style.display = "block";
-      } else {
-        menu.style.display = "none";
-      }
-    }
+      menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+    };
 
     window.onclick = function (event) {
       const menu = document.getElementById("menuDropdown");
@@ -357,95 +355,113 @@
       }
     };
 
-    let productoActual = null;
-
-    function cargarProductoUnico() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const idParam = urlParams.get('id');
-
-      if (!idParam) {
+    // --- CARGAR PRODUCTO ÚNICO ---
+    async function cargarProductoUnico() {
+      if (!idProducto) {
         mostrarError("No se especificó ningún ID de producto.");
         return;
       }
 
-      let encontrado = false;
+      try {
+        // Obtenemos el producto y adjuntamos las certificaciones e info del proveedor asignado
+        const { data: prod, error } = await supabaseClient
+          .from('productos_ucu')
+          .select(`
+            id,
+            nombre,
+            precio,
+            categoria,
+            mat_reciclados_pct,
+            es_reciclable,
+            es_reusable,
+            proveedores_ucu (
+              nombre,
+              tiene_iso14001,
+              tiene_fsc,
+              tiene_emas
+            )
+          `)
+          .eq('id', idProducto)
+          .single();
 
-      // 1. REVISAMOS PRIMERO EN PROVEEDORES EXISTENTES
-      if (typeof PROVEEDORES !== 'undefined') {
-        for (let prov of PROVEEDORES) {
-          if (prov.productos && Array.isArray(prov.productos)) {
-            let prod = prov.productos.find(p => String(p.id) === String(idParam));
-            if (prod) {
-              productoActual = prod;
-              mapearDatosInterfaz(prod, prov.nombre);
-              encontrado = true;
-              break;
-            }
-          }
-        }
-      }
+        if (error || !prod) throw new Error("El producto solicitado no fue encontrado.");
 
-      // 2. SI NO SE ENCONTRÓ AHÍ, REVISAMOS EN POSTULACIONES PENDIENTES
-      if (!encontrado && typeof POSTULACIONES_PENDIENTES !== 'undefined') {
-        for (let post of POSTULACIONES_PENDIENTES) {
-          if (post.productos && Array.isArray(post.productos)) {
-            // Mapeamos ids temporales idénticos a los generados en la lista general para hacer match
-            let prod = post.productos.find(p => {
-              const generadoId = p.id || "post-" + p.nombre.toLowerCase().replace(/ /g, "-");
-              return String(generadoId) === String(idParam);
-            });
-            
-            if (prod) {
-              productoActual = prod;
-              mapearDatosInterfaz(prod, `${post.nombre} (Postulante)`);
-              encontrado = true;
-              break;
-            }
-          }
-        }
-      }
-
-      if (!encontrado) {
-        mostrarError("El producto solicitado no fue encontrado en el sistema.");
-      }
-    }
-
-    // Procesa e inserta los datos de forma segura en las tarjetas del HTML
-    function mapearDatosInterfaz(prod, nombreOrigen) {
-      document.getElementById("p-nombre").innerText = prod.nombre;
-      document.getElementById("p-proveedor").innerText = nombreOrigen;
-      document.getElementById("p-precio").innerText = `$${prod.precio} UYU`;
-      document.getElementById("p-categoria").innerText = prod.categoria || "General";
-      
-      // Control de badges booleanos reales
-      document.getElementById("p-reciclable").innerHTML = prod.reciclable === true 
-        ? '<span class="badge badge-ok">SÍ APTO</span>' 
-        : '<span class="badge badge-no">NO APTO</span>';
+        // Mapear Textos e Interfaz General
+        document.getElementById("p-nombre").innerText = prod.nombre;
+        document.getElementById("p-proveedor").innerText = prod.proveedores_ucu?.nombre || "Proveedor Desconocido";
+        document.getElementById("p-precio").innerText = `$${prod.precio} UYU`;
+        document.getElementById("p-categoria").innerText = prod.categoria || "General";
         
-      document.getElementById("p-reutilizable").innerHTML = prod.reutilizable === true 
-        ? '<span class="badge badge-ok">SÍ APTO</span>' 
-        : '<span class="badge badge-no">NO APTO</span>';
+        // Badges booleanos del ciclo de vida reales
+        document.getElementById("p-reciclable").innerHTML = prod.es_reciclable
+          ? '<span class="badge badge-ok">SÍ APTO</span>' 
+          : '<span class="badge badge-no">NO APTO</span>';
+          
+        document.getElementById("p-reutilizable").innerHTML = prod.es_reusable
+          ? '<span class="badge badge-ok">SÍ APTO</span>' 
+          : '<span class="badge badge-no">NO APTO</span>';
 
-      // Corregida propiedad mat_reciclados_pct para pintar la barra dinámica
-      const pct = parseInt(prod.mat_reciclados_pct) || 0;
-      document.getElementById("p-porcentaje-txt").innerText = `${pct}%`;
-      document.getElementById("p-porcentaje-bar").style.width = `${pct}%`;
+        // Renderizado de la barra de porcentaje
+        const pct = prod.mat_reciclados_pct ?? 0;
+        document.getElementById("p-porcentaje-txt").innerText = `${pct}%`;
+        document.getElementById("p-porcentaje-bar").style.width = `${pct}%`;
 
-      // Iteración limpia del array de certificaciones
-      const certContainer = document.getElementById("p-certificaciones-container");
-      certContainer.innerHTML = ""; // Limpiar dummy data
-      
-      if (prod.certificaciones && prod.certificaciones.length > 0) {
-        prod.certificaciones.forEach(c => {
-          const badge = document.createElement("span");
-          badge.className = "badge badge-cert";
-          badge.innerText = c;
-          certContainer.appendChild(badge);
-        });
-      } else {
-        certContainer.innerHTML = '<span class="badge badge-no">Ninguna Declarada</span>';
+        // Renderizar certificaciones corporativas heredadas
+        const certContainer = document.getElementById("p-certificaciones-container");
+        certContainer.innerHTML = "";
+        
+        let tieneCerts = false;
+        const p = prod.proveedores_ucu;
+        if (p) {
+          if (p.tiene_iso14001) { certContainer.innerHTML += '<span class="badge badge-cert">ISO 14001</span>'; tieneCerts = true; }
+          if (p.tiene_fsc) { certContainer.innerHTML += '<span class="badge badge-cert">FSC</span>'; tieneCerts = true; }
+          if (p.tiene_emas) { certContainer.innerHTML += '<span class="badge badge-cert">EMAS</span>'; tieneCerts = true; }
+        }
+
+        if (!tieneCerts) {
+          certContainer.innerHTML = '<span class="badge badge-no">Ninguna Declarada</span>';
+        }
+
+      } catch (err) {
+        console.error(err);
+        mostrarError(err.message);
       }
     }
+
+    // --- ACCIÓN DE AUDITORÍA REAL EN BASE DE DATOS ---
+    window.finalizarAuditoria = function(nuevoEstado) {
+      if (!idProducto) return;
+
+      const mensajeConfirmacion = nuevoEstado === 'aprobado' 
+        ? "¿Desea aprobar este producto e incorporarlo al catálogo activo?" 
+        : "¿Está seguro de que desea rechazar este producto?";
+
+      if (!confirm(mensajeConfirmacion)) return;
+
+      // Deshabilitar botones para evitar dobles clics transaccionales
+      const botones = document.querySelectorAll(".btn-decision");
+      botones.forEach(btn => btn.disabled = true);
+
+      // Guardamos directamente en la columna 'estado' modificada de productos_ucu
+      supabaseClient
+        .from('productos_ucu')
+        .update({ estado: nuevoEstado })
+        .eq('id', idProducto)
+        .then(({ error }) => {
+          if (error) {
+            alert(`Error al actualizar estado en Supabase: ${error.message}`);
+            botones.forEach(btn => btn.disabled = false);
+          } else {
+            alert(`Operación procesada correctamente: El producto fue ${nuevoEstado.toUpperCase()}.`);
+            window.location.href = "revision-productos-totales.html";
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Excepción detectada al procesar la auditoría.");
+          botones.forEach(btn => btn.disabled = false);
+        });
+    };
 
     function mostrarError(mensaje) {
       const card = document.getElementById("detalle-card");
@@ -458,11 +474,6 @@
           </a>
         </div>
       `;
-    }
-
-    function finalizarAuditoria(resultado) {
-      alert('Operación procesada correctamente: ' + resultado);
-      window.location.href = "revision-productos-totales.html";
     }
 
     document.addEventListener("DOMContentLoaded", cargarProductoUnico);

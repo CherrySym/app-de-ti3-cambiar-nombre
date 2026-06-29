@@ -189,7 +189,7 @@
         font-size: 13px;
         display: inline-block;
       }
-      /* El color de fondo de las insignias dependiendo el puntaje (Paleta suavizada y profesional) */
+      /* El color de fondo de las insignias dependiendo el puntaje */
       .bg-verde { background-color: #219653; }
       .bg-amarillo { background-color: #f2c94c; color: #333333; }
       .bg-rojo { background-color: #eb5757; }
@@ -266,15 +266,21 @@
         <table>
           <thead>
             <tr>
+              <th>Código</th>
               <th>Proveedor</th>
               <th>Puntaje</th>
-              <th>Cobertura</th>
-              <th>Acciones</th>
+              <th>Procedencia</th>
+              <th>Detalles</th>
               <th>Productos</th>
             </tr>
           </thead>
           <tbody id="tabla-body">
-            </tbody>
+            <tr>
+              <td colspan="6" style="text-align: center; color: #666; padding: 30px;">
+                Cargando el ranking de proveedores...
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </main>
@@ -285,59 +291,15 @@
       </div>
     </footer>
 
-    <script src="../js/datosPlanos.js"></script>
-    
-    <script>
-      // Seleccionar el cuerpo de la tabla para cargarle los proveedores más adelante
+    <script type="module">
+      import { supabaseClient } from '../js/conexion-bd.js';
+
       const tbody = document.getElementById("tabla-body");
 
-      // VALIDACIÓN CRÍTICA: Validar si existen los datos antes de operar con el array
-      if (typeof PROVEEDORES !== 'undefined' && PROVEEDORES.length > 0) {
-        
-        /* Copiar la lista de proveedores de DatosPlanos.js y ordenar de mayor a menor puntaje */
-        const proveedoresOrdenados = [...PROVEEDORES].sort((a, b) => b.puntaje - a.puntaje);
-
-        // Recorrer la lista de proveedores ordenados y crear las filas de la tabla <tr> 
-        proveedoresOrdenados.forEach(p => {
-          const fila = document.createElement("tr");
-          
-          // Validación de qué color usar para la insignia del puntaje 
-          let colorClase = "bg-rojo"; 
-          if (p.puntaje >= 75) {
-            colorClase = "bg-verde"; 
-          } else if (p.puntaje >= 50) {
-            colorClase = "bg-amarillo"; 
-          }
-
-          // Formatear el string para que empiece con mayúscula
-          const coberturaFormateada = p.cobertura.charAt(0).toUpperCase() + p.cobertura.slice(1);
-
-          // Inyección de código HTML dinámico con las IDs correspondientes
-          fila.innerHTML = `
-            <td><strong>${p.nombre}</strong></td>
-            <td><span class="badge-score ${colorClase}">${p.puntaje} pts</span></td>
-            <td>${coberturaFormateada}</td>
-            <td><a href="detalle-proveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
-            <td><a href="lista-productos.html?id=${p.id}" class="btn-detail">Ver productos →</a></td>
-          `;
-          // Agregar la fila terminada al cuerpo de la tabla
-          tbody.appendChild(fila);
-        });
-      } else {
-        // Mensaje de resguardo elegante si falla el script externo
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="5" style="text-align: center; color: #555555; padding: 30px;">
-              No se encontraron proveedores cargados o falló datosPlanos.js.
-            </td>
-          </tr>
-        `;
-      }
-    </script>
-    
-    <script>
-      // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
-      function toggleMenu() {
+      // --- FUNCIONES DEL MENÚ DESPLEGABLE ---
+      // Para que onclick="toggleMenu()" funcione desde el HTML usando módulos,
+      // debemos asignarla explícitamente al objeto global window.
+      window.toggleMenu = function() {
         const menu = document.getElementById("menuDropdown");
         if (menu.style.display === "none" || menu.style.display === "") {
           menu.style.display = "block";
@@ -346,7 +308,6 @@
         }
       }
       
-      // CORRECCIÓN: Ajuste del selector del avatar para mantener la consistencia global del cierre de menú
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
         const avatar = document.querySelector("header nav img");
@@ -355,6 +316,71 @@
           menu.style.display = "none";
         }
       };
+
+      // --- CARGA DE DATOS DESDE SUPABASE ---
+      async function cargarRanking() {
+        try {
+          const { data: proveedores, error } = await supabaseClient
+            .from('proveedores_ucu')
+            .select('id, id_codigo, nombre, puntaje_total, procedencia')
+            .eq('tipo', 'proveedor')
+            .order('puntaje_total', { ascending: false });
+
+          if (error) throw error;
+
+          if (!proveedores || proveedores.length === 0) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="6" style="text-align: center; color: #555555; padding: 30px;">
+                  No hay proveedores registrados u homologados actualmente.
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          tbody.innerHTML = "";
+
+          proveedores.forEach(p => {
+            const fila = document.createElement("tr");
+            const puntajeReal = p.puntaje_total !== null ? parseFloat(p.puntaje_total) : 0;
+            
+            let colorClase = "bg-rojo"; 
+            if (puntajeReal >= 75) {
+              colorClase = "bg-verde"; 
+            } else if (puntajeReal >= 50) {
+              colorClase = "bg-amarillo"; 
+            }
+
+            const procedenciaFormateada = p.procedencia 
+              ? p.procedencia.charAt(0).toUpperCase() + p.procedencia.slice(1) 
+              : "Nacional";
+
+            fila.innerHTML = `
+              <td style="color: #666; font-size: 13px;"><code>${p.id_codigo}</code></td>
+              <td><strong>${p.nombre}</strong></td>
+              <td><span class="badge-score ${colorClase}">${puntajeReal.toFixed(1)} pts</span></td>
+              <td>${procedenciaFormateada}</td>
+              <td><a href="detalle-proveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
+              <td><a href="compras.html?id=${p.id}" class="btn-detail">Ver productos →</a></td>
+            `;
+            tbody.appendChild(fila);
+          });
+
+        } catch (err) {
+          console.error("Error al obtener proveedores de Supabase:", err);
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align: center; color: #eb5757; padding: 30px; font-weight: 600;">
+                Ocurrió un error al conectar con el servidor de la base de datos 'proveedores_ucu'.
+              </td>
+            </tr>
+          `;
+        }
+      }
+
+      // Ejecutar la carga cuando el árbol DOM esté listo
+      document.addEventListener("DOMContentLoaded", cargarRanking);
     </script>
   </body>
 </html>

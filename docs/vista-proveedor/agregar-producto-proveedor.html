@@ -19,7 +19,6 @@
       min-height: 100vh;
     }
 
-    /* Contenedor del Formulario */
     .form-container {
       flex: 1;
       max-width: 600px;
@@ -28,7 +27,6 @@
       padding: 0 20px;
     }
 
-    /* Botón Volver posicionado arriba de la tarjeta */
     .btn-back-container {
       margin-bottom: 15px;
       text-align: left;
@@ -72,7 +70,6 @@
       margin-bottom: 25px;
     }
 
-    /* Identificador del Proveedor */
     .provider-badge-info {
       background-color: #f1f5f9;
       border-left: 4px solid #1e3264;
@@ -84,7 +81,6 @@
       margin-bottom: 20px;
     }
 
-    /* Grupos de campos */
     .form-group {
       display: flex;
       flex-direction: column;
@@ -112,14 +108,12 @@
       border-color: #1e3264;
     }
 
-    /* Fila con dos campos */
     .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 15px;
     }
 
-    /* Checkboxes */
     .checkbox-group {
       display: flex;
       flex-wrap: wrap;
@@ -142,7 +136,6 @@
       cursor: pointer;
     }
 
-    /* Botón de Enviar */
     .btn-submit {
       width: 100%;
       background-color: #1e3264;
@@ -161,7 +154,6 @@
       background-color: #173a73;
     }
 
-    /* Estiliza el botón interno de los inputs tipo file */
     .form-control::file-selector-button {
       background: rgba(30, 50, 100, 0.1);
       color: #1e3264;
@@ -174,7 +166,6 @@
       transition: all 0.2s ease;
     }
 
-    /* Footer */
     .footer-container {
       background-color: #1e3264;
       padding: 20px 0;
@@ -190,12 +181,9 @@
     }
   </style>
 </head>
-<body>
-
-  <script src="../js/datosPlanos.js"></script>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f4f6f9;">
 
   <main class="form-container">
-    
     <div class="btn-back-container">
       <a href="../index.html" class="btn-back">← Volver al Inicio</a>
     </div>
@@ -208,8 +196,7 @@
         Cargando cuenta de proveedor...
       </div>
 
-      <form id="formProducto" onsubmit="simularEnvioProducto(event)">
-        
+      <form id="formProducto" onsubmit="enviarProductoReal(event)">
         <div class="form-group">
           <label for="prodNombre">Nombre del Producto *</label>
           <input type="text" id="prodNombre" class="form-control" placeholder="Ej: Caja de Cartón Corrugado A4" required>
@@ -218,7 +205,7 @@
         <div class="form-row">
           <div class="form-group">
             <label for="prodPrecio">Precio (UYU) *</label>
-            <input type="number" id="prodPrecio" class="form-control" placeholder="Monto en pesos" min="1" required>
+            <input type="number" id="prodPrecio" class="form-control" placeholder="Monto en pesos" min="1" step="0.01" required>
           </div>
           <div class="form-group">
             <label for="prodCategoria">Categoría *</label>
@@ -232,8 +219,8 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Atributos Ecológicos:</label>
+        <fieldset class="form-group" style="border: none; padding: 0; margin: 0 0 20px 0;">
+          <legend style="font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 6px;">Atributos Ecológicos:</legend>
           <div class="checkbox-group">
             <label class="checkbox-label">
               <input type="checkbox" id="prodReciclable"> ¿Es Reciclable?
@@ -242,29 +229,29 @@
               <input type="checkbox" id="prodReutilizable"> ¿Es Reutilizable?
             </label>
           </div>
-        </div>
+        </fieldset>
 
         <div class="form-group">
           <label for="prodPct">% Materiales Reciclados</label>
           <input type="number" id="prodPct" class="form-control" placeholder="0 a 100" min="0" max="100" value="0">
         </div>
 
-        <div class="form-group">
-          <label>Certificaciones del Producto:</label>
+        <fieldset class="form-group" style="border: none; padding: 0; margin: 0 0 20px 0;">
+          <legend style="font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 6px;">Certificaciones del Producto:</legend>
           <div class="checkbox-group">
             <label class="checkbox-label"><input type="checkbox" name="prodCertificaciones" value="FSC"> FSC</label>
             <label class="checkbox-label"><input type="checkbox" name="prodCertificaciones" value="ISO14001"> ISO 14001</label>
             <label class="checkbox-label"><input type="checkbox" name="prodCertificaciones" value="B-Corp"> B-Corp</label>
             <label class="checkbox-label"><input type="checkbox" name="prodCertificaciones" value="Ecolabel"> Ecolabel</label>
           </div>
-        </div>
+        </fieldset>
 
         <div class="form-group">
           <label for="prodPdf">Certificados del Producto (PDF):</label>
           <input type="file" id="prodPdf" accept=".pdf" class="form-control">
         </div>
 
-        <button type="submit" class="btn-submit">Enviar Producto a Revisión</button>
+        <button type="submit" id="btnSubmitForm" class="btn-submit">Enviar Producto a Revisión</button>
       </form>
     </div>
   </main>
@@ -275,78 +262,95 @@
     </div>
   </footer>
 
- <script>
+  <script type="module">
+    // CORRECCIÓN CLAVE: Migrado a type="module" e importación nativa
+    import { supabaseClient } from '../js/conexion-bd.js';
+
+    let uuidProveedorActivo = null;
     let nombreProveedorActivo = "Proveedor Registrado";
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", async function() {
       const urlParams = new URLSearchParams(window.location.search);
-      const provId = urlParams.get('prov');
-
+      const provCodigo = urlParams.get('prov');
       const infoBox = document.getElementById("infoProveedor");
 
-      if (!provId) {
-        infoBox.innerHTML = `⚠️ <strong>Modo Incógnito:</strong> No se detectó código de verificación.`;
+      if (!provCodigo) {
+        infoBox.innerHTML = `<strong>Modo Incógnito:</strong> No se detectó código de verificación.`;
         infoBox.style.borderColor = "#dc3545";
         return;
       }
 
-      if (typeof PROVEEDORES !== 'undefined') {
-        const proveedor = PROVEEDORES.find(p => p.codigo && p.codigo.toUpperCase() === provId.toUpperCase());
-        
-        if (proveedor) {
-          nombreProveedorActivo = proveedor.nombre;
-          infoBox.innerHTML = ` <strong>Proveedor:</strong> ${proveedor.nombre} <span style="color:#64748b;">(${proveedor.codigo})</span>`;
+      try {
+        const { data: proveedor, error } = await supabaseClient
+          .from('proveedores_ucu')
+          .select('id, nombre, id_codigo')
+          .eq('id_codigo', provCodigo.toUpperCase())
+          .single();
+
+        if (error || !proveedor) {
+          infoBox.innerHTML = `<strong>Código Inválido:</strong> El código ${provCodigo} no pertenece a ningún proveedor aprobado.`;
+          infoBox.style.borderColor = "#dc3545";
         } else {
-          infoBox.innerHTML = ` <strong>Código Temporal:</strong> En sesión como corporativo ID: ${provId}`;
+          uuidProveedorActivo = proveedor.id; 
+          nombreProveedorActivo = proveedor.nombre;
+          infoBox.innerHTML = `<strong>Proveedor:</strong> ${proveedor.nombre} <span style="color:#64748b;">(${proveedor.id_codigo})</span>`;
         }
-      } else {
-        infoBox.innerHTML = ` <strong>Código Activo:</strong> ID de Proveedor: ${provId}`;
+      } catch (err) {
+        console.error("Error al cargar la información del proveedor:", err);
+        infoBox.innerHTML = `<strong>Error:</strong> Error al conectar con el servidor de base de datos.`;
       }
     });
 
-    function simularEnvioProducto(event) {
+    // CORRECCIÓN CLAVE: Se expone la función al objeto global window para mapear con onsubmit
+    window.enviarProductoReal = async function(event) {
       event.preventDefault();
       
-      const nombre = document.getElementById("prodNombre").value;
-      const precio = document.getElementById("prodPrecio").value;
-      const categoria = document.getElementById("prodCategoria").value;
-      const esReciclable = document.getElementById("prodReciclable").checked ? "SÍ" : "NO";
-      const esReutilizable = document.getElementById("prodReutilizable").checked ? "SÍ" : "NO";
-      const pct = document.getElementById("prodPct").value;
-
-      // Capturar certificaciones seleccionadas en el checklist
-      const checkboxesCert = document.getElementsByName("prodCertificaciones");
-      let certificacionesSeleccionadas = [];
-      checkboxesCert.forEach(cb => {
-        if (cb.checked) {
-          certificacionesSeleccionadas.push(cb.value);
-        }
-      });
-      const certsTexto = certificacionesSeleccionadas.length > 0 ? certificacionesSeleccionadas.join(", ") : "Ninguna";
-
-      // Capturar archivo adjunto
-      const pdfInput = document.getElementById("prodPdf");
-      let nombreArchivoPdf = "Ninguno";
-      if (pdfInput.files && pdfInput.files.length > 0) {
-        nombreArchivoPdf = pdfInput.files[0].name;
+      if (!uuidProveedorActivo) {
+        alert("Error: No puedes registrar productos sin una sesión de proveedor válida.");
+        return;
       }
 
-      let resumen = `¡Propuesta enviada con éxito por ${nombreProveedorActivo}!\n\n` +
-                    `El nuevo artículo pasará por la auditoría de sostenibilidad antes de impactar en el catálogo global de la UCU.\n\n` +
-                    `• Insumo: ${nombre}\n` +
-                    `• Precio: $${precio} UYU\n` +
-                    `• Categoría: ${categoria}\n` +
-                    `• Reciclable: ${esReciclable}\n` +
-                    `• Reutilizable: ${esReutilizable}\n` +
-                    `• Materia Prima Reciclada: ${pct}%\n` +
-                    `• Aval Técnico (Certs): [${certsTexto}]\n` +
-                    `• Archivo Ficha Adjunta: ${nombreArchivoPdf}`;
+      const btnSubmit = document.getElementById("btnSubmitForm");
+      btnSubmit.disabled = true;
+      btnSubmit.textContent = "Transmitiendo datos...";
 
-      alert(resumen);
-      
-      document.getElementById("formProducto").reset();
-      window.location.href = "../index.html";
-    }
-</script>
+      const nombre = document.getElementById("prodNombre").value.trim();
+      const precio = parseFloat(document.getElementById("prodPrecio").value);
+      const categoria = document.getElementById("prodCategoria").value;
+      const esReciclable = document.getElementById("prodReciclable").checked;
+      const esReusable = document.getElementById("prodReutilizable").checked;
+      const pctMatReciclado = parseInt(document.getElementById("prodPct").value) || 0;
+
+      try {
+        // AJUSTE CRÍTICO: Sobrescribimos el default insertando explícitamente el estado 'pendiente'
+        const { error } = await supabaseClient
+          .from('productos_ucu')
+          .insert([
+            {
+              proveedor_id: uuidProveedorActivo, 
+              nombre: nombre,
+              categoria: categoria,
+              precio: precio,
+              mat_reciclados_pct: pctMatReciclado,
+              es_reciclable: esReciclable,
+              es_reusable: esReusable,
+              estado: 'pendiente' 
+            }
+          ]);
+
+        if (error) throw error;
+
+        alert(`¡Producto "${nombre}" enviado con éxito a la cola de auditoría del Encargado de Compras!`);
+        document.getElementById("formProducto").reset();
+        window.location.href = "../index.html";
+
+      } catch (err) {
+        console.error("Error de Supabase al insertar producto:", err);
+        alert("Hubo un problema al guardar el producto en la base de datos: " + err.message);
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = "Enviar Producto a Revisión";
+      }
+    };
+  </script>
 </body>
 </html>

@@ -122,6 +122,7 @@
       color: #13213c;
       margin: 0;
       font-size: 28px;
+      font-weight: 700;
     }
 
     .counter-badge {
@@ -162,7 +163,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .product-card:hover {
@@ -211,7 +212,6 @@
       font-weight: 600;
     }
 
-    /* Botón de Redirección Único */
     .card-actions {
       display: block;
     }
@@ -236,7 +236,6 @@
       background-color: #13213c;
     }
 
-    /* Link de Volver Atrás */
     .back-link-container {
       margin-bottom: 20px;
     }
@@ -272,7 +271,7 @@
     }
   </style>
 </head>
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
 
   <header>
     <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo">
@@ -300,7 +299,7 @@
 
     <div class="page-header-zone">
       <h2 class="page-title">Productos Esperando Aprobación</h2>
-      <span class="counter-badge" id="card-counter">0 revisiones pendientes</span>
+      <span class="counter-badge" id="card-counter">Consultando catálogo...</span>
     </div>
 
     <div id="empty-msg" class="empty-state">
@@ -317,17 +316,14 @@
     </div>
   </footer>
 
-  <script src="../js/datosPlanos.js"></script>
-  
-  <script>
-    function toggleMenu() {
+  <script type="module">
+    import { supabaseClient } from '../js/conexion-bd.js';
+
+    // --- INTERFACES GLOBALES PARA MENÚ ---
+    window.toggleMenu = function() {
       const menu = document.getElementById("menuDropdown");
-      if (menu.style.display === "none" || menu.style.display === "") {
-        menu.style.display = "block";
-      } else {
-        menu.style.display = "none";
-      }
-    }
+      menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+    };
 
     window.onclick = function (event) {
       const menu = document.getElementById("menuDropdown");
@@ -337,80 +333,74 @@
       }
     };
 
-    // Función corregida para renderizar los productos dinámicamente desde datosPlanos.js
-    function cargarProductosPendientes() {
+    // --- CARGA DINÁMICA DE PRODUCTOS PENDIENTES ---
+    async function cargarProductosPendientes() {
       const grid = document.getElementById("grid-productos");
       const emptyMsg = document.getElementById("empty-msg");
       const counter = document.getElementById("card-counter");
       
       grid.innerHTML = "";
-      let totalPendientes = 0;
 
-      // 1. RECORREMOS PRODUCTOS DE PROVEEDORES EXISTENTES (Filtramos los que inician con 'test-')
-      if (typeof PROVEEDORES !== 'undefined') {
-        PROVEEDORES.forEach(prov => {
-          if (prov.productos && Array.isArray(prov.productos)) {
-            prov.productos.forEach(prod => {
-              if (prod.id && prod.id.startsWith("test-")) {
-                totalPendientes++;
-                inyectarTarjetaProducto(grid, prod, prov.nombre);
-              }
-            });
-          }
-        });
-      }
+      try {
+        // Ahora filtramos directamente por el campo 'estado' de la tabla 'productos_ucu'
+        const { data: productos, error } = await supabaseClient
+          .from('productos_ucu')
+          .select(`
+            id,
+            nombre,
+            precio,
+            categoria,
+            mat_reciclados_pct,
+            proveedores_ucu (
+              nombre
+            )
+          `)
+          .eq('estado', 'pendiente');
 
-      // 2. RECORREMOS PRODUCTOS DE LAS POSTULACIONES PENDIENTES
-      if (typeof POSTULACIONES_PENDIENTES !== 'undefined') {
-        POSTULACIONES_PENDIENTES.forEach(postulacion => {
-          if (postulacion.productos && Array.isArray(postulacion.productos)) {
-            postulacion.productos.forEach(prod => {
-              totalPendientes++;
-              
-              // Si el producto de la postulación no posee id de fábrica, simulamos uno temporal
-              const prodId = prod.id || "post-" + prod.nombre.toLowerCase().replace(/ /g, "-");
-              const prodConId = { ...prod, id: prodId };
-              
-              inyectarTarjetaProducto(grid, prodConId, `${postulacion.nombre} (Postulante)`);
-            });
-          }
-        });
-      }
+        if (error) throw error;
 
-      // Actualizar la interfaz general según el estado final del contador
-      counter.innerText = `${totalPendientes} revision/es${totalPendientes !== 1 ? 's' : ''} pendiente/s${totalPendientes !== 1 ? 's' : ''}`;
-      
-      if (totalPendientes === 0) {
-        emptyMsg.style.display = "block";
-        grid.style.display = "none";
-      } else {
+        const totalPendientes = productos ? productos.length : 0;
+        counter.innerText = `${totalPendientes} revisión${totalPendientes !== 1 ? 'es' : ''} pendiente${totalPendientes !== 1 ? 's' : ''}`;
+
+        if (totalPendientes === 0) {
+          emptyMsg.style.display = "block";
+          grid.style.display = "none";
+          return;
+        }
+
         emptyMsg.style.display = "none";
         grid.style.display = "grid";
+
+        // Renderizado e inyección de tarjetas de productos al estilo "datosPlanos.js"
+        productos.forEach(prod => {
+          const origenNombre = prod.proveedores_ucu?.nombre || "Postulante / Proveedor";
+          
+          const card = document.createElement("div");
+          card.className = "product-card";
+          card.innerHTML = `
+            <div class="card-header">
+              <h3 class="product-name">${prod.nombre}</h3>
+              <span class="provider-source">Sugerido por: <strong>${origenNombre}</strong></span>
+            </div>
+            <div class="tech-details">
+              <div class="detail-item"><span class="detail-label">Precio:</span><span class="detail-value">$${prod.precio} UYU</span></div>
+              <div class="detail-item"><span class="detail-label">Categoría:</span><span class="detail-value" style="text-transform: capitalize;">${prod.categoria || 'General'}</span></div>
+              <div class="detail-item"><span class="detail-label">Material Reciclado:</span><span class="detail-value">${prod.mat_reciclados_pct ?? 0}%</span></div>
+            </div>
+            <div class="card-actions">
+              <a href="revision-producto-unico.html?id=${prod.id}" class="btn-action-view">Verificar Especificaciones Técnicas →</a>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+      } catch (err) {
+        console.error("Error cargando la lista de auditoría:", err);
+        counter.innerText = "Error de conexión";
+        grid.innerHTML = `<div style="color: #dc3545; font-weight: bold; padding: 20px; grid-column: 1/-1; text-align: center;">Error al conectar con Supabase: ${err.message}</div>`;
       }
     }
 
-    // Función reutilizable para estructurar la tarjeta inyectada
-    function inyectarTarjetaProducto(contenedor, prod, nombreOrigen) {
-      const card = document.createElement("div");
-      card.className = "product-card";
-      card.innerHTML = `
-        <div class="card-header">
-          <h3 class="product-name">${prod.nombre}</h3>
-          <span class="provider-source">Postulado por: <strong>${nombreOrigen}</strong></span>
-        </div>
-        <div class="tech-details">
-          <div class="detail-item"><span class="detail-label">Precio:</span><span class="detail-value">$${prod.precio} UYU</span></div>
-          <div class="detail-item"><span class="detail-label">Categoría:</span><span class="detail-value">${prod.categoria || 'General'}</span></div>
-          <div class="detail-item"><span class="detail-label">Material Reciclado:</span><span class="detail-value">${prod.mat_reciclados_pct}%</span></div>
-        </div>
-        <div class="card-actions">
-          <a href="revision-producto-unico.html?id=${prod.id}" class="btn-action-view">Verificar Especificaciones Técnicas →</a>
-        </div>
-      `;
-      contenedor.appendChild(card);
-    }
-
-    // Inicializar la carga al renderizar la página
     document.addEventListener("DOMContentLoaded", cargarProductosPendientes);
   </script>
 </body>
