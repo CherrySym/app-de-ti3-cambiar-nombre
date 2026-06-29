@@ -5,6 +5,11 @@
   
 */
 
+-- 0. LIMPIEZA DE TABLAS PREVIAS (Para poder correr el script de cero sin errores)
+drop table if exists productos_ucu cascade;
+drop table if exists proveedores_ucu cascade;
+drop sequence if exists seq_codigo_proveedor;
+drop sequence if exists seq_codigo_producto;
 
 -- 1. SECUENCIAS PARA AUTOGENERAR CÓDIGOS HUMANAMENTE LEGIBLES
 -- Esto lleva la cuenta por nosotros (ej: 1, 2, 3...)
@@ -21,13 +26,15 @@ create table proveedores_ucu (
   tipo text not null check (tipo in ('proveedor', 'postulacion')),
   estado text default 'pendiente' check (estado in ('pendiente', 'aprobada', 'rechazada')),
   
-  -- Identificación
+  -- Identificación y Procedencia
   nombre text not null,
+  contacto_persona text not null,
+  procedencia text not null check (procedencia in ('nacional', 'internacional')), -- Identifica si es local o extranjero
   descripcion text,
   fecha_registro date default current_date,
 
   -- Criterios Generales (15%) - Formulario
-  rut text,                      
+  rut text,  -- Ahora es opcional en la BD para permitir proveddores internacionales (el frontend obliga solo si es nacional)
   es_mayorista boolean,          
   sitio_web text,                
   email text not null,           
@@ -54,7 +61,7 @@ create table productos_ucu (
   codigo_producto text default 'PRD-' || to_char(nextval('seq_codigo_producto'), 'FM0000') unique not null,
   
   nombre text not null,
-  categoria text,                          
+  categoria text,                                           
   precio numeric(10, 2) not null, 
 
   -- Ciclo de Vida

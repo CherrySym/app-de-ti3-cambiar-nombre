@@ -5,10 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Gestión de Proveedores UCU</title>
     <link rel="stylesheet" href="./css/global-styles.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
     <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
       /* Estilos específicos y exclusivos para la tarjeta de login */
       .login-container {
         display: flex;
@@ -71,7 +80,7 @@
         font-size: 14px;
       }
 
-      /* Inputs estilizados (la fuente ya la hereda gracias al global) */
+      /* Inputs estilizados */
       .form-input {
         padding: 12px;
         border: 1px solid rgba(19, 33, 60, 0.2);
@@ -127,9 +136,9 @@
         text-decoration: underline;
       }
 
-      /* Estilos del Footer contenedor (el margin-top auto ya es global) */
+      /* Estilos del Footer contenedor */
       .footer-container {
-        background-color: #1E3264; 
+        background-color: #1e3264; 
         padding: 20px 0; 
         width: 100%;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -144,25 +153,25 @@
     </style>
   </head>
 
-  <body>
+  <body style="background: url('./assets/fondo-ucu.jpeg') no-repeat center top fixed; background-size: cover;">
     <main class="login-container">
       <section class="login-card">
         <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo"/>
         <h3 class="card-title">Gestión de Proveedores</h3>
         <h4 class="card-subtitle">Iniciar Sesión</h4>
         
-        <form action="./vista-encargado/landing.html" class="login-form" method="GET">
+        <form action="./vista-encargado/landing.html" class="login-form">
           <div class="form-group">
             <label for="username">Usuario:</label>
-            <input type="text" id="username" name="username" class="form-input" placeholder="Ej: mika.schaffell"/>
+            <input type="text" id="username" name="username" class="form-input" placeholder="Ej: Mika.Schaffel" required />
           </div>
 
           <div class="form-group">
             <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" class="form-input" placeholder="Contraseña"/>
+            <input type="password" id="password" name="password" class="form-input" placeholder="Contraseña" required />
           </div>
 
-          <input type="submit" value="Ingresar" class="btn-submit" />
+          <button type="submit" class="btn-submit">Ingresar</button>
         </form>
 
         <a href="index.html" class="back-link">← Volver al inicio</a>

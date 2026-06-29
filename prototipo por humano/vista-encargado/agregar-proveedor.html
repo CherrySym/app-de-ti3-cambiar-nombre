@@ -332,10 +332,7 @@
         <div style="margin-bottom: 20px">
           <a
             href="lista-proveedores.html"
-            onclick="
-              window.history.back();
-              return false;
-            "
+            onclick="window.history.back(); return false;"
             style="
               text-decoration: none;
               color: #1e3264;
@@ -350,10 +347,7 @@
         </div>
         <h2>Registrar Nuevo Proveedor</h2>
 
-        <form
-          action="lista-proveedores.html"
-          onsubmit="alert('¡Proveedor registrado correctamente!')"
-        >
+        <form id="formProveedorEncargado" onsubmit="procesarEnvioProveedor(event)">
           <div class="form-row">
             <div class="form-group">
               <label for="nombre">Nombre de la Empresa:</label>
@@ -366,10 +360,10 @@
               />
             </div>
             <div class="form-group">
-              <label for="contacto">Persona de Contacto:</label>
+              <label for="contacto_persona">Persona de Contacto:</label>
               <input
                 type="text"
-                id="contacto"
+                id="contacto_persona"
                 required
                 class="form-input"
                 placeholder="Ej: Valentina Rocha"
@@ -402,33 +396,17 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label for="cobertura">Cobertura de Logística:</label>
-              <select id="cobertura" class="form-select">
-                <option value="local">Local (Nacional)</option>
-                <option value="importado">Importado (Internacional)</option>
-                <option value="ambos">Ambos</option>
+              <label for="procedencia">Procedencia del Proveedor:</label>
+              <select id="procedencia" class="form-select">
+                <option value="nacional">Nacional (Local)</option>
+                <option value="internacional">Internacional (Importado)</option>
               </select>
             </div>
-          </div> 
-          <div class="form-row">
             <div class="form-group">
-              <label for="embalaje_sostenible"
-                >¿Utiliza Embalaje Sostenible?:</label
-              >
+              <label for="embalaje_sostenible">¿Utiliza Embalaje Sostenible?:</label>
               <select id="embalaje_sostenible" class="form-select">
                 <option value="si">Sí</option>
                 <option value="no">No</option>
-                <option value="parcial">Parcial</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="energia_renovable"
-                >¿Utiliza Energía Renovable?:</label
-              >
-              <select id="energia_renovable" class="form-select">
-                <option value="si">Sí</option>
-                <option value="no">No</option>
-                <option value="parcial">Parcial</option>
               </select>
             </div>
           </div>
@@ -436,27 +414,20 @@
           <div class="form-group">
             <label>Certificaciones de la Empresa:</label>
             <div class="checkbox-group">
-              <label class="checkbox-label"
-                ><input
-                  type="checkbox"
-                  name="certificaciones"
-                  value="ISO14001"
-                />
-                ISO 14001</label
-              >
-              <label class="checkbox-label"
-                ><input type="checkbox" name="certificaciones" value="FSC" />
-                FSC</label
-              >
-              <label class="checkbox-label"
-                ><input type="checkbox" name="certificaciones" value="EMAS" />
-                EMAS</label
-              >
+              <label class="checkbox-label">
+                <input type="checkbox" name="certificaciones" value="ISO14001" /> ISO 14001
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="certificaciones" value="FSC" /> FSC
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="certificaciones" value="EMAS" /> EMAS
+              </label>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="pdf_certificados">Adjuntar Certificaciónes (Formato PDF):</label>
+            <label for="pdf_certificados">Adjuntar Certificaciones (Formato PDF):</label>
             <input
               type="file"
               id="pdf_certificados"
@@ -474,26 +445,7 @@
             ></textarea>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="desafios">Desafíos de Sostenibilidad:</label>
-              <textarea
-                id="desafios"
-                class="form-textarea"
-                placeholder="¿Qué dificultades enfrenta la empresa actualmente?"
-              ></textarea>
-            </div>
-            <div class="form-group">
-              <label for="metas">Metas a Futuro:</label>
-              <textarea
-                id="metas"
-                class="form-textarea"
-                placeholder="Ej: Reducir packaging plástico al 50% para 2027"
-              ></textarea>
-            </div>
-          </div>
-
-          <button type="submit" class="btn-submit-prov">
+          <button type="submit" id="btnSubmitProv" class="btn-submit-prov">
             Guardar Proveedor
           </button>
         </form>
@@ -506,29 +458,79 @@
       </div>
     </footer>
 
-    <script>
-      // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
-      function toggleMenu() {
-        const menu = document.getElementById("menuDropdown");
-        if (menu.style.display === "none" || menu.style.display === "") {
-          menu.style.display = "block";
-        } else {
-          menu.style.display = "none";
-        }
-      }
+    <script type="module">
+      import { supabaseClient } from '../js/conexion-bd.js';
 
-      // Función para ocultar el menú desplegable si se hace clic fuera de él
+      window.toggleMenu = function() {
+        const menu = document.getElementById("menuDropdown");
+        menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+      };
+
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
         const avatar = document.querySelector(".user-profile-container img");
-
-        if (
-          menu &&
-          menu.style.display === "block" &&
-          event.target !== avatar &&
-          !menu.contains(event.target)
-        ) {
+        if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
           menu.style.display = "none";
+        }
+      };
+
+      // CORRECCIÓN CLAVE: Asignamos la función al objeto window para que el onsubmit en el HTML la reconozca
+      window.procesarEnvioProveedor = async function(event) {
+        event.preventDefault();
+
+        const btnSubmit = document.getElementById("btnSubmitProv");
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = "Guardando proveedor...";
+
+        const nombre = document.getElementById("nombre").value.trim();
+        const contactoPersona = document.getElementById("contacto_persona").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const telefono = document.getElementById("telefono").value.trim();
+        const procedencia = document.getElementById("procedencia").value;
+        const descripcion = document.getElementById("descripcion").value.trim();
+
+        const embalajeSostenibleValor = document.getElementById("embalaje_sostenible").value === "si";
+
+        const checkboxes = document.querySelectorAll('input[name="certificaciones"]:checked');
+        const valoresCheckboxes = Array.from(checkboxes).map(cb => cb.value);
+        
+        const tieneISO = valoresCheckboxes.includes("ISO14001");
+        const tieneFSC = valoresCheckboxes.includes("FSC");
+        const tieneEMAS = valoresCheckboxes.includes("EMAS");
+
+        try {
+          const { error } = await supabaseClient
+            .from('proveedores_ucu')
+            .insert([
+              {
+                tipo: 'proveedor',
+                estado: 'aprobada', 
+                nombre: nombre,
+                contacto_persona: contactoPersona,
+                email: email,
+                telefono: telefono,
+                descripcion: descripcion,
+                procedencia: procedencia,
+                embalaje_sostenible: embalajeSostenibleValor,
+                tiene_iso14001: tieneISO,
+                tiene_fsc: tieneFSC,
+                tiene_emas: tieneEMAS
+              }
+            ]);
+
+          if (error) throw error;
+
+          alert(`¡El proveedor "${nombre}" se ha registrado con éxito y ya se encuentra activo en el sistema!`);
+          document.getElementById("formProveedorEncargado").reset();
+          
+          window.location.href = "landing.html";
+
+        } catch (err) {
+          console.error("Error al insertar proveedor:", err);
+          alert(`Error al guardar en Supabase: ${err.message}`);
+        } finally {
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = "Guardar Proveedor";
         }
       };
     </script>

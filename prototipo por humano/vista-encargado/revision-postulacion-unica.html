@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Revisión de Postulación - UCU</title>
   <link rel="stylesheet" href="../css/global-styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -18,7 +17,6 @@
       flex-direction: column;
       min-height: 100vh;
     }
-    /* Header y Nav global de Encargado */
     header {
       background-color: #1e3264;
       padding: 15px 30px;
@@ -111,10 +109,9 @@
       background-color: #fff5f5;
     }
 
-    /* MODIFICADO: Layout de Revisión Elástico (Espaciado mejorado) */
     .review-container {
       flex: 1;
-      max-width: 1350px; /* Expandido para aprovechar mejor pantallas anchas */
+      max-width: 1350px;
       width: 100%;
       margin: 40px auto;
       padding: 0 30px;
@@ -122,7 +119,7 @@
 
     .review-layout {
       display: flex;
-      gap: 40px; /* Más separación entre paneles */
+      gap: 40px;
       align-items: flex-start;
     }
 
@@ -133,12 +130,12 @@
     }
 
     .left-panel {
-      flex: 3.5; /* Ocupa más espacio central */
+      flex: 3.5;
       width: 100%;
     }
 
     .right-panel {
-      flex: 1.2; /* Ajustado para empujar al borde derecho sin apretar el texto */
+      flex: 1.2;
       width: 100%;
       position: sticky;
       top: 20px;
@@ -163,7 +160,6 @@
       color: #2f80ed;
     }
 
-    /* Bloques de Información */
     .audit-master-card {
       background: white;
       border-radius: 16px;
@@ -172,7 +168,6 @@
       padding: 40px;
     }
 
-    /* Tarjeta Flotante de Criterios */
     .sticky-card {
       background: white;
       border-radius: 12px;
@@ -234,7 +229,6 @@
       padding-bottom: 6px;
     }
 
-    /* Grillas e información corporativa */
     .corporate-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -271,7 +265,6 @@
       line-height: 1.5;
     }
 
-    /* Badges de Criterios ESG */
     .badge {
       padding: 5px 10px;
       border-radius: 6px;
@@ -280,10 +273,8 @@
       display: inline-block;
     }
     .badge-si { background-color: #dcfce7; color: #166534; }
-    .badge-parcial { background-color: #fef9c3; color: #854d0e; }
     .badge-no { background-color: #fee2e2; color: #991b1b; }
 
-    /* Tabla de Catálogo Propuesto */
     .products-table-wrapper {
       width: 100%;
       overflow-x: auto;
@@ -331,7 +322,6 @@
       height: 100%;
     }
 
-    /* MODIFICADO: Contenedor del Control de Puntaje Manual animado y limpio */
     .score-input-card {
       background-color: #f0fdf4;
       border: 1px solid #bbf7d0;
@@ -366,7 +356,6 @@
       box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
     }
 
-    /* Panel de Decisiones Finales */
     .decision-zone {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -397,7 +386,6 @@
     .btn-reject { background-color: #ea580c; color: white; }
     .btn-reject:hover { background-color: #c2410c; }
 
-    /* Footer */
     .footer-container {
       background-color: #1e3264;
       padding: 20px 0;
@@ -413,17 +401,15 @@
     }
   </style>
 </head>
-<body>
-
-  <script src="../js/datosPlanos.js"></script>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
 
   <header>
     <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo">
     <nav>
       <ul>
         <li><a href="landing.html">Inicio</a></li>
-        <li><a href="lista-proveedores.html">Lista de Proveedores</a></li>
-        <li><a href="compras.html">Simulador/Catálogo</a></li>
+        <li><a href="ranking.html">Ranking</a></li>
+        <li><a href="compras.html">Simulador</a></li>
       </ul>
       <div class="user-profile-container">
         <img src="../assets/icono generico de usuario.png" alt="Perfil" onclick="toggleMenu()" style="width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: block;">
@@ -453,7 +439,7 @@
           
           <h2 class="section-main-title" id="comp-name">Cargando...</h2>
           <div class="meta-subtitle">
-            Id: <strong id="post-id">-</strong> | Recibido el: <span id="post-date">-</span>
+            Código: <strong id="post-id">-</strong> | Recibido el: <span id="post-date">-</span>
           </div>
 
           <div class="block-title">Datos Generales y Contacto</div>
@@ -461,7 +447,7 @@
             <div class="info-tile"><strong>Representante Comercial</strong><span id="comp-contact">-</span></div>
             <div class="info-tile"><strong>Correo Electrónico</strong><span id="comp-email">-</span></div>
             <div class="info-tile"><strong>Teléfono de Contacto</strong><span id="comp-phone">-</span></div>
-            <div class="info-tile"><strong>Alcance de Cobertura</strong><span id="comp-coverage" style="text-transform: capitalize;">-</span></div>
+            <div class="info-tile"><strong>Procedencia</strong><span id="comp-coverage" style="text-transform: capitalize;">-</span></div>
           </div>
 
           <div style="margin-top: 20px;">
@@ -469,19 +455,23 @@
             <div class="description-box" id="comp-desc">-</div>
           </div>
 
-          <div class="block-title">Criterios de Sostenibilidad Corporativa (ESG)</div>
+          <div class="block-title">Criterios Ambientales Auditados</div>
           <div class="corporate-grid">
             <div class="info-tile">
               <strong>Embalaje Sostenible</strong>
               <span class="badge" id="badge-packaging">-</span>
             </div>
             <div class="info-tile">
-              <strong>Uso de Energía Renovable</strong>
-              <span class="badge" id="badge-energy">-</span>
+              <strong>Certificación ISO 14001</strong>
+              <span class="badge" id="badge-iso">-</span>
             </div>
             <div class="info-tile">
-              <strong>Política de Devolución Activa</strong>
-              <span id="comp-returns">-</span>
+              <strong>Certificación FSC</strong>
+              <span class="badge" id="badge-fsc">-</span>
+            </div>
+            <div class="info-tile">
+              <strong>Registro EMAS</strong>
+              <span class="badge" id="badge-emas">-</span>
             </div>
           </div>
 
@@ -495,25 +485,25 @@
                   <th>Precio</th>
                   <th>Criterios Ecológicos</th>
                   <th>Materia Prima Reciclada</th>
-                  <th>Certificaciones</th>
                 </tr>
               </thead>
               <tbody id="tabla-productos-body">
+                <tr><td colspan="5" style="text-align: center; color: #64748b;">Cargando catálogo propuesto...</td></tr>
               </tbody>
             </table>
           </div>
           
           <div id="scoreSection" class="score-input-card">
-            <label for="postPuntajeManual">Dale un Puntaje correspondiendte para el Proveedor:</label>
+            <label for="postPuntajeManual">Asigne el Puntaje de Homologación Final:</label>
             <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-              <input type="number" id="postPuntajeManual" class="control-score" min="1" max="100" value="85">
-              <span style="font-size: 14px; color: #475569; font-weight: 500;">puntos (Escala 1 al 100)</span>
+              <input type="number" id="postPuntajeManual" class="control-score" min="0" max="100" value="85">
+              <span style="font-size: 14px; color: #475569; font-weight: 500;">puntos (Escala 0 al 100)</span>
             </div>
           </div>
 
           <div class="decision-zone" id="mainDecisionZone">
             <button class="btn-decision btn-reject" onclick="procesarRechazo()">Rechazar Postulación</button>
-            <button class="btn-decision btn-approve" id="btnApproveMain" onclick="solicitarPuntaje()">Aprobar Postulación y Darle un Puntaje</button>
+            <button class="btn-decision btn-approve" id="btnApproveMain" onclick="solicitarPuntaje()">Aprobar Postulación e Integrar al Ranking</button>
           </div>
 
         </div>
@@ -521,12 +511,12 @@
 
       <aside class="right-panel">
         <div class="sticky-card">
-          <h3>Documento de Criterios</h3>
-          <p style="font-size: 13px; color: #64748b; margin: 0; line-height: 1.4;">
-               Revisa la postulación según el documento de criterios.</p>
-          <ul class="sticky-list">
-            <li><a href="#" onclick="alert('Esto tiene que redirigir al documento de criterios :3'); return false;">Ver Documento de Criterios</a></li>
-          </ul>
+          <h3>Documentos Adjuntos</h3>
+          <p style="font-size: 13px; color: #64748b; margin: 0; line-height: 1.4;" id="doc-status-text">
+            No se cargaron archivos PDF para esta postulación.
+          </p>
+          <ul class="sticky-list" id="sticky-list-docs" style="display: none;">
+            </ul>
         </div>
       </aside>
 
@@ -539,8 +529,16 @@
     </div>
   </footer>
 
-  <script>
-    function toggleMenu() {
+  <script type="module">
+    import { supabaseClient } from '../js/conexion-bd.js';
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const postulacionId = urlParams.get('id');
+
+    let postGlobal = null;
+
+    // --- INTERFACES GLOBALES ---
+    window.toggleMenu = function() {
       const menu = document.getElementById("menuDropdown");
       menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
     }
@@ -553,128 +551,177 @@
       }
     };
 
-    document.addEventListener("DOMContentLoaded", function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const postulacionId = urlParams.get('id');
+    window.solicitarPuntaje = function() {
+      const scoreSection = document.getElementById("scoreSection");
+      const btnApproveMain = document.getElementById("btnApproveMain");
 
+      if (scoreSection.style.display === "flex") {
+        confirmarAprobacionFinal();
+      } else {
+        scoreSection.style.display = "flex";
+        btnApproveMain.innerText = "Confirmar Aprobación"; 
+        scoreSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    window.procesarRechazo = async function() {
+      if (!confirm("¿Está seguro de que desea rechazar esta postulación?")) return;
+      
+      try {
+        const { error } = await supabaseClient
+          .from('proveedores_ucu')
+          .update({ estado: 'rechazada' })
+          .eq('id', postulacionId);
+
+        if (error) throw error;
+
+        alert("La postulación ha sido calificada como: Rechazada.");
+        window.location.href = "revision-postulaciones-totales.html";
+      } catch (err) {
+        console.error(err);
+        alert("Error al procesar el rechazo: " + err.message);
+      }
+    }
+
+    async function confirmarAprobacionFinal() {
+      const puntajeManual = parseFloat(document.getElementById("postPuntajeManual").value);
+      
+      if (isNaN(puntajeManual) || puntajeManual < 0 || puntajeManual > 100) {
+        alert("Error: Asigne un puntaje válido entre 0 y 100 antes de confirmar la aprobación.");
+        return;
+      }
+
+      try {
+        // Al aprobar se cambia el tipo a 'proveedor' y estado a 'aprobada'
+        const { error } = await supabaseClient
+          .from('proveedores_ucu')
+          .update({
+            tipo: 'proveedor',
+            estado: 'aprobada',
+            puntaje_total: puntajeManual
+          })
+          .eq('id', postulacionId);
+
+        if (error) throw error;
+
+        alert(`La postulación ha sido promovida a Proveedor Activo con ${puntajeManual} pts.`);
+        window.location.href = "revision-postulaciones-totales.html";
+      } catch (err) {
+        console.error(err);
+        alert("Error al guardar la aprobación: " + err.message);
+      }
+    }
+
+    // --- CARGA DE DATOS ---
+    async function cargarPostulacionUnica() {
       if (!postulacionId) {
         alert("Falta el identificador de la postulación.");
         window.location.href = "revision-postulaciones-totales.html";
         return;
       }
 
-      const postulacion = POSTULACIONES_PENDIENTES.find(p => p.id_postulacion === postulacionId);
+      try {
+        // 1. Obtener la postulación principal
+        const { data: post, error } = await supabaseClient
+          .from('proveedores_ucu')
+          .select('*')
+          .eq('id', postulacionId)
+          .single();
 
-      if (postulacion) {
-        document.getElementById("comp-name").innerText = postulacion.nombre;
-        document.getElementById("post-id").innerText = postulacion.id_postulacion;
-        document.getElementById("post-date").innerText = postulacion.fecha_envio;
-        document.getElementById("comp-contact").innerText = postulacion.contacto;
-        document.getElementById("comp-email").innerText = postulacion.email;
-        document.getElementById("comp-phone").innerText = postulacion.telefono;
-        document.getElementById("comp-coverage").innerText = postulacion.cobertura;
-        document.getElementById("comp-desc").innerText = postulacion.descripcion;
+        if (error || !post) throw new Error("La postulación no existe en el sistema.");
 
-        configurarBadgeCorporativo("badge-packaging", postulacion.embalaje_sostenible);
-        configurarBadgeCorporativo("badge-energy", postulacion.energia_renovable);
-        
-        document.getElementById("comp-returns").innerText = postulacion.politica_devolucion 
-          ? "Sí, posee logística inversa" 
-          : "No posee políticas de devolución";
+        postGlobal = post;
+
+        // Inyectar textos generales
+        document.getElementById("comp-name").innerText = post.nombre;
+        document.getElementById("post-id").innerText = post.id_codigo;
+        document.getElementById("comp-contact").innerText = post.contacto_persona;
+        document.getElementById("comp-email").innerText = post.email;
+        document.getElementById("comp-phone").innerText = post.telefono || "No especificado";
+        document.getElementById("comp-coverage").innerText = post.procedencia;
+        document.getElementById("comp-desc").innerText = post.descripcion || "Sin descripción disponible.";
+
+        if (post.fecha_registro) {
+          document.getElementById("post-date").innerText = new Date(post.fecha_registro).toLocaleDateString('es-UY', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        // Configurar badges ambientales con las columnas reales de tu base de datos
+        configurarBadge("badge-packaging", post.embalaje_sostenible);
+        configurarBadge("badge-iso", post.tiene_iso14001);
+        configurarBadge("badge-fsc", post.tiene_fsc);
+        configurarBadge("badge-emas", post.tiene_emas);
+
+        // Renderizar links de documentos de certificación si existen
+        if (post.urls_certificaciones && post.urls_certificaciones.length > 0) {
+          document.getElementById("doc-status-text").innerText = "Certificados cargados por el postulante:";
+          const docList = document.getElementById("sticky-list-docs");
+          docList.innerHTML = "";
+          post.urls_certificaciones.forEach((url, i) => {
+            docList.innerHTML += `<li><a href="${url}" target="_blank">📄 Documento de Certificación ${i + 1} 🔗</a></li>`;
+          });
+          docList.style.display = "flex";
+        }
+
+        // 2. Obtener el catálogo de productos asociados
+        const { data: productos, error: prodError } = await supabaseClient
+          .from('productos_ucu')
+          .select('*')
+          .eq('proveedor_id', postulacionId);
+
+        if (prodError) throw prodError;
 
         const tbody = document.getElementById("tabla-productos-body");
         tbody.innerHTML = "";
 
-        if (postulacion.productos && postulacion.productos.length > 0) {
-          postulacion.productos.forEach(prod => {
+        if (productos && productos.length > 0) {
+          productos.forEach(prod => {
             let criteriosHTML = "";
-            if (prod.reciclable) {
+            if (prod.es_reciclable) {
               criteriosHTML += `<span class="badge badge-si" style="padding: 2px 6px; font-size: 11px; margin-right: 4px; display: inline-block;">Reciclable</span>`;
             }
-            if (prod.reutilizable) {
+            if (prod.es_reusable) {
               criteriosHTML += `<span class="badge badge-si" style="padding: 2px 6px; font-size: 11px; background-color: #e0f2fe; color: #0369a1; display: inline-block;">Reutilizable</span>`;
             }
-            if (!prod.reciclable && !prod.reutilizable) {
+            if (!prod.es_reciclable && !prod.es_reusable) {
               criteriosHTML += `<span class="badge badge-no" style="padding: 2px 6px; font-size: 11px; display: inline-block;">Estándar</span>`;
             }
-
-            const certsTexto = prod.certificaciones && prod.certificaciones.length > 0 
-              ? prod.certificaciones.join(", ") 
-              : "Ninguna";
 
             const fila = document.createElement("tr");
             fila.innerHTML = `
               <td><strong>${prod.nombre}</strong></td>
-              <td style="text-transform: capitalize;">${prod.categoria}</td>
+              <td style="text-transform: capitalize;">${prod.categoria || 'Papelería'}</td>
               <td><strong>$${prod.precio} UYU</strong></td>
               <td>${criteriosHTML}</td>
               <td>
                 <div style="display: flex; align-items: center; gap: 8px;">
-                  <span>${prod.mat_reciclados_pct}%</span>
+                  <span>${prod.mat_reciclados_pct || 0}%</span>
                   <div class="table-bar-container">
-                    <div class="table-bar-fill" style="width: ${prod.mat_reciclados_pct}%;"></div>
+                    <div class="table-bar-fill" style="width: ${prod.mat_reciclados_pct || 0}%;"></div>
                   </div>
                 </div>
               </td>
-              <td><span style="font-size: 12px; color: #64748b;">${certsTexto}</span></td>
             `;
             tbody.appendChild(fila);
           });
         } else {
-          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #64748b; font-style: italic;">Esta postulación no incluye productos en su catálogo.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #64748b; font-style: italic;">Esta postulación no incluye productos en su catálogo.</td></tr>`;
         }
 
-      } else {
-        alert("La postulación especificada no existe en el sistema.");
+      } catch (err) {
+        console.error(err);
+        alert("Ocurrió un error: " + err.message);
         window.location.href = "revision-postulaciones-totales.html";
       }
-    });
+    }
 
-    function configurarBadgeCorporativo(elementId, valor) {
+    function configurarBadge(elementId, valorBoolean) {
       const el = document.getElementById(elementId);
       if (!el) return;
-      
-      const v = valor.toLowerCase();
-      el.innerText = v === "si" ? "SI" : v.toUpperCase();
-      el.className = "badge";
-      
-      if (v === "si") el.classList.add("badge-si");
-      else if (v === "parcial") el.classList.add("badge-parcial");
-      else el.classList.add("badge-no");
+      el.innerText = valorBoolean ? "SÍ" : "NO";
+      el.className = "badge " + (valorBoolean ? "badge-si" : "badge-no");
     }
 
-    // MODIFICADO: Lógica de cambio dinámico del botón principal
-    function solicitarPuntaje() {
-      const scoreSection = document.getElementById("scoreSection");
-      const btnApproveMain = document.getElementById("btnApproveMain");
-
-      // Si el campo de puntaje ya está visible, funciona como el botón de guardar final
-      if (scoreSection.style.display === "flex") {
-        confirmarAprobacionFinal();
-      } else {
-        // Primera fase: muestra el input de puntaje y transforma el botón principal
-        scoreSection.style.display = "flex";
-        btnApproveMain.innerText = "Aprobar Proveedor"; 
-        scoreSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
-    }
-
-    function confirmarAprobacionFinal() {
-      const puntajeManual = document.getElementById("postPuntajeManual").value;
-      
-      if (puntajeManual < 1 || puntajeManual > 100 || puntajeManual === "") {
-        alert("Error: Asigne un puntaje válido entre 1 y 100 antes de confirmar la aprobación.");
-        return;
-      }
-
-      alert(`La postulación ha sido calificada como: Aprobada.\n\nPuntaje de Sostenibilidad asignado y registrado: ${puntajeManual} pts.`);
-      window.location.href = "revision-postulaciones-totales.html";
-    }
-
-    function procesarRechazo() {
-      alert("La postulación ha sido calificada como: Rechazada.\n\nNo se asignaron puntajes en el registro.");
-      window.location.href = "revision-postulaciones-totales.html";
-    }
+    document.addEventListener("DOMContentLoaded", cargarPostulacionUnica);
   </script>
 </body>
 </html>

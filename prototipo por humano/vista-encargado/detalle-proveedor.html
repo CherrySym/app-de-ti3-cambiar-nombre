@@ -5,53 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalle del Proveedor - UCU</title>
     <link rel="stylesheet" href="../css/global-styles.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
       /* Estilos del Logo */
       .logo {
         display: block;
         height: 40px;
         width: auto;
-        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco */
+        filter: brightness(0) invert(1);
       }
       /* Estilos del Header */
       header {
         background-color: #1e3264;
         padding: 15px 30px;
         display: flex;
-        justify-content: space-between; /* Título a la izquierda, Menú a la derecha */
-        align-items: center; /* Centra verticalmente los textos */
+        justify-content: space-between;
+        align-items: center;
         color: white;
       }
-      /* Estilos para que los enlaces y el avatar del nav estén en la misma línea */
       header nav {
         display: flex;
         align-items: center;
         gap: 25px;
       }
-      /* Estilos del menu de enlaces */
       header nav ul {
-        list-style: none; /* Le quita los puntos a la lista */
+        list-style: none;
         margin: 0;
         padding: 0;
-        display: flex; /* Hace que los <li> se pongan uno al lado del otro */
-        gap: 20px; /* Separa los enlaces entre sí */
+        display: flex;
+        gap: 20px;
       }
-      /* Estilos de los enlaces */
       header nav ul li a {
-        text-decoration: none; /* Le quita el subrayado */
+        text-decoration: none;
         color: #ffffff;
         font-weight: 500;
       }
-      /* Cambio de color al pasar el mouse por los enlaces del nav */
       header nav ul li a:hover {
         color: #2f80ed;
       }
-      /* Estilos para el contenedor del menu flotante que aparece al hacer click en el icono de usuario */
+      /* Menu flotante del usuario */
       .dropdown-content {
         position: absolute;
         right: 0;
-        top: 45px; /* Se posiciona justo abajo de la imagen */
+        top: 45px;
         background-color: #ffffff;
         min-width: 220px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -59,29 +54,24 @@
         padding: 12px 0;
         z-index: 1000;
       }
-      /* Estilos para la sección interna con el nombre y mail del usuario */
       .dropdown-user-info {
         padding: 4px 16px 8px 16px;
         display: flex;
         flex-direction: column;
       }
-      /* Texto en negrita para el nombre del usuario */
       .dropdown-user-info strong {
         font-size: 14px;
         color: #13213c;
       }
-      /* Texto gris y más chico para el correo */
       .dropdown-user-info span {
         font-size: 12px;
         color: #555555;
       }
-      /* Línea divisoria del menú desplegable */
       .dropdown-content hr {
         border: 0;
         border-top: 1px solid #eeeeee;
         margin: 8px 0;
       }
-      /* Estilos para el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link {
         color: #dc3545;
         padding: 8px 16px;
@@ -90,11 +80,11 @@
         font-size: 14px;
         font-weight: 500;
       }
-      /* Cambio de color al pasar el mouse por el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link:hover {
         background-color: #fff5f5;
       }
-      /* Estilos del contenedor de detalles */
+      
+      /* Contenedor de detalles */
       .detail-container {
         flex: 1;
         max-width: 800px;
@@ -102,8 +92,6 @@
         padding: 0 20px;
         width: 100%;
       }
-
-      /* Estilos del botón para volver atrás */
       .btn-back {
         display: inline-flex;
         align-items: center;
@@ -113,12 +101,9 @@
         font-weight: 600;
         gap: 5px;
       }
-      /* Cambio de color al pasar el mouse por el boton de "Volver Atrás" */
       .btn-back:hover {
         color: #2f80ed;
       }
-
-      /* Estilos de la tarjeta de detalles*/
       .detail-card {
         background-color: #ffffff;
         padding: 40px;
@@ -126,7 +111,6 @@
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
       }
-      /* Estilos del encabezado de la tarjeta */
       .detail-header {
         display: flex;
         justify-content: space-between;
@@ -135,14 +119,12 @@
         padding-bottom: 20px;
         margin-bottom: 25px;
       }
-      /* Estilos para el nombre del proveedor */
       .detail-header h2 {
         font-size: 28px;
         color: #13213c;
         margin: 0 0 8px 0;
         font-weight: 700;
       }
-      /* Estilos del botón "Editar información" */ 
       .btn-editar-simulado {
         padding: 8px 14px;
         border: 1px solid #cccccc;
@@ -151,14 +133,11 @@
         color: #333333;
         font-weight: 500;
         cursor: pointer;
-        transition: background-color 0.2s, transform 0.1s;
+        transition: background-color 0.2s;
       }
-
-      /* Cambio de color al pasar el mouse por el boton de "Editar información" */
       .btn-editar-simulado:hover {
         background-color: #e2e2e2;
       }
-      /* Estilos de las insignias de puntaje */
       .badge-score {
         color: white;
         padding: 6px 14px;
@@ -168,16 +147,13 @@
         white-space: nowrap;
         display: inline-block;
       }
-      /* El color de fondo de las insignias dependiendo el puntaje*/
       .bg-verde { background-color: #219653; }
       .bg-amarillo { background-color: #f2c94c; color: #333333; }
       .bg-rojo { background-color: #eb5757; }
 
-      /* Estilos para separar los bloques de secciones */ 
       .info-section {
         margin-bottom: 30px;
       }
-      /* Estilos de los títulos de las secciones  */
       .info-section h3 {
         font-size: 14px;
         color: #1e3264;
@@ -188,8 +164,6 @@
         padding-left: 10px;
         font-weight: 700;
       }
-
-      /* Estilos de la grilla para datos de contacto */
       .info-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -199,7 +173,6 @@
         border-radius: 8px;
         border: 1px solid #eee;
       }
-      /* Estilos para las etiquetas dentro de las grillas de información */
       .info-item label {
         display: block;
         font-size: 11px;
@@ -209,27 +182,22 @@
         margin-bottom: 4px;
         letter-spacing: 0.5px;
       }
-      /* Estilos para los textos con los datos reales dentro de las grillas */
       .info-item span {
         font-size: 15px;
         color: #333333;
         font-weight: 500;
       }
-      /* Estilos para los textos  */
       .description-text {
         font-size: 15px;
         line-height: 1.6;
         color: #4f4f4f;
       }
-
-      /* Estilos para el bloque de Certificaciones */
       .cert-list {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
         margin-top: 10px;
       }
-      /* Estilos para las cositas individuales de certificación (Mejorado paleta verde ecológica) */
       .cert-badge {
         background-color: #e6f4ea;
         color: #137333;
@@ -239,14 +207,13 @@
         font-weight: 600;
         border: 1px solid rgba(19, 115, 51, 0.1);
       }
-      /* Texto gris en cursiva cuando no se encuentran certificaciones */
       .no-certs {
         color: #888888;
         font-style: italic;
         font-size: 14px;
       }
 
-      /* NUEVOS ESTILOS: Inputs del Modo Edición rápidos y limpios */
+      /* Inputs de Edición */
       .edit-input {
         width: 100%;
         padding: 8px 12px;
@@ -256,6 +223,7 @@
         color: #334155;
         outline: none;
         background-color: #ffffff;
+        box-sizing: border-box;
       }
       .edit-input:focus {
         border-color: #2f80ed;
@@ -271,28 +239,23 @@
         border-radius: 6px;
         color: #1e3264;
       }
-
-      /* Estilos del Footer */
+      .error-message {
+        text-align: center;
+        padding: 40px;
+        color: #eb5757;
+        font-size: 18px;
+      }
       .footer-container {
         background-color: #1e3264;
         padding: 20px 0;
         width: 100%;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
-      /* Estilos para el logo del footer */
       .logo-footer {
         display: block;
         margin: auto;
-        height: 30px; 
+        height: 30px;
         filter: brightness(0) invert(1);
-      }
-
-      /* Estilos para el estado de error si no encuentra proveedor */
-      .error-message {
-        text-align: center;
-        padding: 40px;
-        color: #eb5757;
-        font-size: 18px;
       }
     </style>
   </head>
@@ -328,7 +291,7 @@
     </header>
     
     <main class="detail-container">
-      <a href="ranking.html" class="btn-back" onclick="window.history.back(); return false;">
+      <a href="ranking.html" class="btn-back">
         ← Volver atrás
       </a>
       <article class="detail-card" id="detail-card-content">
@@ -342,52 +305,108 @@
       </div>
     </footer>
 
-    <script src="../js/datosPlanos.js"></script>
-    <script>
+    <script type="module">
+      import { supabaseClient } from '../js/conexion-bd.js';
+
       const params = new URLSearchParams(window.location.search);
       const proveedorId = params.get("id");
       const cardContainer = document.getElementById("detail-card-content");
 
-      // Variable global temporal para poder editar en caliente en la pantalla
-      let prov = (typeof PROVEEDORES !== 'undefined') ? PROVEEDORES.find(p => p.id === proveedorId) : null;
+      let prov = null;
       let modoEdicion = false;
 
-      function renderProveedor() {
-        if (!prov) {
-          cardContainer.innerHTML = `
-            <div class="error-message">
-              <h3>Error: Proveedor No Encontrado</h3>
-              <p>El identificador proporcionado no coincide con ningún registro de nuestro sistema.</p>
-              <a href="lista-proveedores.html" class="btn-back" style="margin-top: 20px;">Volver al listado principal</a>
-            </div>
-          `;
+      // --- ASIGNAR MENÚ DESPLEGABLE GLOBAL PARA LOS MÓDULOS ---
+      window.toggleMenu = function() {
+        const menu = document.getElementById("menuDropdown");
+        menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+      }
+      
+      window.onclick = function (event) {
+        const menu = document.getElementById("menuDropdown");
+        const avatar = document.querySelector("header nav img");
+        if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
+          menu.style.display = "none";
+        }
+      };
+
+      // --- CARGAR PROVEEDOR ---
+      async function obtenerProveedor() {
+        if (!proveedorId) {
+          renderError("No se proporcionó un ID de proveedor válido.");
           return;
         }
 
-        let colorClase = "bg-rojo"; 
-        if (prov.puntaje >= 75) colorClase = "bg-verde";
-        else if (prov.puntaje >= 50) colorClase = "bg-amarillo";
+        try {
+          const { data, error } = await supabaseClient
+            .from('proveedores_ucu')
+            .select('*')
+            .eq('id', proveedorId)
+            .single();
 
-        let certsHTML = "";
-        if (prov.certificaciones && prov.certificaciones.length > 0) {
-          certsHTML = `<div class="cert-list">` + 
-            prov.certificaciones.map(c => `<span class="cert-badge">✓ ${c}</span>`).join("") + 
-            `</div>`;
-        } else {
-          certsHTML = `<p class="no-certs">Este proveedor no cuenta con certificaciones ambientales registradas.</p>`;
+          if (error || !data) {
+            renderError("El identificador proporcionado no coincide con ningún registro.");
+            return;
+          }
+
+          prov = data;
+          renderProveedor();
+        } catch (err) {
+          console.error(err);
+          renderError("Ocurrió un error al conectar con la base de datos.");
+        }
+      }
+
+      function renderError(mensaje) {
+        cardContainer.innerHTML = `
+          <div class="error-message">
+            <h3>Error al cargar</h3>
+            <p>${mensaje}</p>
+            <a href="ranking.html" class="btn-back" style="margin-top: 20px;">Volver al listado principal</a>
+          </div>
+        `;
+      }
+
+      function renderProveedor() {
+        const puntajeActual = prov.puntaje_total || 0;
+
+        let colorClase = "bg-rojo"; 
+        if (puntajeActual >= 75) colorClase = "bg-verde";
+        else if (puntajeActual >= 50) colorClase = "bg-amarillo";
+
+        let certsHTML = `<div class="cert-list">`;
+        let tieneCerts = false;
+
+        if (prov.tiene_iso14001) { certsHTML += `<span class="cert-badge">✓ ISO 14001</span>`; tieneCerts = true; }
+        if (prov.tiene_fsc) { certsHTML += `<span class="cert-badge">✓ Certificación FSC</span>`; tieneCerts = true; }
+        if (prov.tiene_emas) { certsHTML += `<span class="cert-badge">✓ Registro EMAS</span>`; tieneCerts = true; }
+        
+        if (prov.urls_certificaciones && prov.urls_certificaciones.length > 0) {
+          prov.urls_certificaciones.forEach((url, index) => {
+            certsHTML += `<span class="cert-badge"><a href="${url}" target="_blank" style="color: inherit; text-decoration: underline;">Doc ${index + 1} 🔗</a></span>`;
+            tieneCerts = true;
+          });
         }
 
-        const embalaje = prov.embalaje_sostenible ? prov.embalaje_sostenible.charAt(0).toUpperCase() + prov.embalaje_sostenible.slice(1) : "No especificado";
-        const energia = prov.energia_renovable ? prov.energia_renovable.charAt(0).toUpperCase() + prov.energia_renovable.slice(1) : "No especificado";
-        const cobertura = prov.cobertura ? prov.cobertura.charAt(0).toUpperCase() + prov.cobertura.slice(1) : "No especificada";
-        const devolucion = prov.politica_devolucion ? "Sí (Cuenta con logística inversa)" : "No disponible";
+        certsHTML += `</div>`;
 
-        // Renderizado condicional basado en si estamos editando o visualizando
+        if (!tieneCerts) {
+          certsHTML = `<p class="no-certs">Este proveedor no cuenta con certificaciones ambientales activas.</p>`;
+        }
+
+        const procedenciaTexto = prov.procedencia ? prov.procedencia.toUpperCase() : "No especificado";
+        const mayoristaTexto = prov.es_mayorista ? "Sí (Distribuidor Mayorista)" : "No (Minorista / Venta Directa)";
+        const embalajeTexto = prov.embalaje_sostenible ? "Sí (Implementado)" : "No disponible";
+
+        let fechaFormateada = "No disponible";
+        if (prov.fecha_registro) {
+          fechaFormateada = new Date(prov.fecha_registro).toLocaleDateString('es-UY', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
         cardContainer.innerHTML = `
           <div class="detail-header">
             <div>
               <h2>${prov.nombre}</h2>
-              <p style="color: #666; margin: 0; font-size: 14px;">Registrado el: ${prov.fecha_registro || 'No disponible'}</p>
+              <p style="color: #666; margin: 0; font-size: 14px;">Código: <strong>${prov.id_codigo}</strong> | Registrado el: ${fechaFormateada}</p>
             </div>
             <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: flex-end;">
               <a href="agregar-producto-encargado.html?proveedorId=${prov.id}" 
@@ -398,14 +417,14 @@
                 ➕ Agregar Producto
               </a>
               
-              <button class="btn-editar-simulado" id="btnEditarGuardar" onclick="toggleModoEdicion()">
+              <button class="btn-editar-simulado" id="btnEditarGuardar">
                 ${modoEdicion ? "💾 Guardar Cambios" : "Editar Información"}
               </button>
 
               <div id="puntajeContenedor" style="display: flex; align-items: center; gap: 8px;">
                 ${modoEdicion 
-                  ? `<span style="font-size:12px; font-weight:bold; color:#1e3264;">Puntaje:</span><input type="number" id="inputPuntaje" class="edit-score-input" min="1" max="100" value="${prov.puntaje}">` 
-                  : `<span class="badge-score ${colorClase}">${prov.puntaje} Puntos</span>`
+                  ? `<span style="font-size:12px; font-weight:bold; color:#1e3264;">Puntaje:</span><input type="number" id="inputPuntaje" class="edit-score-input" min="0" max="100" value="${puntajeActual}">` 
+                  : `<span class="badge-score ${colorClase}">${puntajeActual} Puntos</span>`
                 }
               </div>
             </div>
@@ -420,11 +439,11 @@
           </div>
 
           <div class="info-section">
-            <h3>Información de Contacto</h3>
+            <h3>Información de Contacto y Operación</h3>
             <div class="info-grid">
               <div class="info-item">
                 <label>Representante</label>
-                ${modoEdicion ? `<input type="text" id="inputContacto" class="edit-input" value="${prov.contacto || ''}">` : `<span>${prov.contacto || "No asignado"}</span>`}
+                ${modoEdicion ? `<input type="text" id="inputContacto" class="edit-input" value="${prov.contacto_persona || ''}">` : `<span>${prov.contacto_persona || "No asignado"}</span>`}
               </div>
               <div class="info-item">
                 <label>Correo Electrónico</label>
@@ -435,8 +454,36 @@
                 ${modoEdicion ? `<input type="text" id="inputTelefono" class="edit-input" value="${prov.telefono || ''}">` : `<span>${prov.telefono || "No asignado"}</span>`}
               </div>
               <div class="info-item">
-                <label>Ámbito de Cobertura</label>
-                ${modoEdicion ? `<input type="text" id="inputCobertura" class="edit-input" value="${prov.cobertura || ''}">` : `<span>${cobertura}</span>`}
+                <label>Procedencia</label>
+                ${modoEdicion 
+                  ? `
+                    <select id="inputProcedencia" class="edit-input">
+                      <option value="nacional" ${prov.procedencia === 'nacional' ? 'selected' : ''}>Nacional</option>
+                      <option value="internacional" ${prov.procedencia === 'internacional' ? 'selected' : ''}>Internacional</option>
+                    </select>
+                    `
+                  : `<span>${procedenciaTexto}</span>`
+                }
+              </div>
+              <div class="info-item">
+                <label>RUT / Identificación</label>
+                ${modoEdicion ? `<input type="text" id="inputRut" class="edit-input" value="${prov.rut || ''}">` : `<span>${prov.rut || "No disponible"}</span>`}
+              </div>
+              <div class="info-item">
+                <label>Tipo de Comercio</label>
+                ${modoEdicion 
+                  ? `
+                    <select id="inputMayorista" class="edit-input">
+                      <option value="true" ${prov.es_mayorista ? 'selected' : ''}>Mayorista</option>
+                      <option value="false" ${!prov.es_mayorista ? 'selected' : ''}>Minorista / Directo</option>
+                    </select>
+                    `
+                  : `<span>${mayoristaTexto}</span>`
+                }
+              </div>
+              <div class="info-item" style="grid-column: span 2;">
+                <label>Sitio Web</label>
+                ${modoEdicion ? `<input type="text" id="inputSitioWeb" class="edit-input" value="${prov.sitio_web || ''}">` : `<span>${prov.sitio_web ? `<a href="${prov.sitio_web}" target="_blank">${prov.sitio_web}</a>` : "No disponible"}</span>`}
               </div>
             </div>
           </div>
@@ -446,23 +493,19 @@
             <div class="info-grid" style="background-color: #f1f8ff; border-color: rgba(47, 128, 237, 0.1);">
               <div class="info-item">
                 <label>Embalaje Sostenible</label>
-                ${modoEdicion ? `<input type="text" id="inputEmbalaje" class="edit-input" value="${prov.embalaje_sostenible || ''}">` : `<span>${embalaje}</span>`}
-              </div>
-              <div class="info-item">
-                <label>Uso de Energías Renovables</label>
-                ${modoEdicion ? `<input type="text" id="inputEnergia" class="edit-input" value="${prov.energia_renovable || ''}">` : `<span>${energia}</span>`}
-              </div>
-              <div class="info-item">
-                <label>Política de Devolución</label>
                 ${modoEdicion 
                   ? `
-                    <select id="inputDevolucion" class="edit-input">
-                      <option value="true" ${prov.politica_devolucion ? 'selected' : ''}>Sí (Cuenta con logística inversa)</option>
-                      <option value="false" ${!prov.politica_devolucion ? 'selected' : ''}>No disponible</option>
+                    <select id="inputEmbalaje" class="edit-input">
+                      <option value="true" ${prov.embalaje_sostenible ? 'selected' : ''}>Sí (Implementado)</option>
+                      <option value="false" ${!prov.embalaje_sostenible ? 'selected' : ''}>No disponible</option>
                     </select>
                     ` 
-                  : `<span>${devolucion}</span>`
+                  : `<span>${embalajeTexto}</span>`
                 }
+              </div>
+              <div class="info-item">
+                <label>Estado en Sistema</label>
+                <span>${(prov.estado || 'pendiente').toUpperCase()} (${prov.tipo || 'postulacion'})</span>
               </div>
             </div>
           </div>
@@ -471,76 +514,63 @@
             <h3>Certificaciones Oficiales</h3>
             ${certsHTML}
           </div>
-
-          <div class="info-section" style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <div style="flex: 1; min-width: 280px;">
-              <h3>Desafíos Actuales</h3>
-              ${modoEdicion ? `<textarea id="inputDesafios" class="edit-input" style="height:60px; resize:vertical;">${prov.desafios || ''}</textarea>` : `<p class="description-text" style="font-size: 14px;">${prov.desafios || "No declarados."}</p>`}
-            </div>
-            <div style="flex: 1; min-width: 280px;">
-              <h3>Metas de Sostenibilidad</h3>
-              ${modoEdicion ? `<textarea id="inputMetas" class="edit-input" style="height:60px; resize:vertical;">${prov.metas || ''}</textarea>` : `<p class="description-text" style="font-size: 14px;">${prov.metas || "No declaradas."}</p>`}
-            </div>
-          </div>
         `;
+
+        // RE-VINCULAMOS EL EVENTO AQUÍ ADENTRO SIEMPRE QUE SE RENDERIZA
+        document.getElementById("btnEditarGuardar").addEventListener("click", toggleModoEdicion);
       }
 
-      // MODIFICADO: Lógica interactiva para alternar inputs y simular guardado
-      function toggleModoEdicion() {
+      async function toggleModoEdicion() {
         if (modoEdicion) {
-          // Fase Guardar: capturar valores digitados
-          const nuevoPuntaje = parseInt(document.getElementById("inputPuntaje").value);
+          const nuevoPuntaje = parseFloat(document.getElementById("inputPuntaje").value);
           
-          if (isNaN(nuevoPuntaje) || nuevoPuntaje < 1 || nuevoPuntaje > 100) {
-            alert("Por favor, asigne un puntaje manual válido entre 1 y 100.");
+          if (isNaN(nuevoPuntaje) || nuevoPuntaje < 0 || nuevoPuntaje > 100) {
+            alert("Por favor, asigne un puntaje manual válido entre 0 y 100.");
             return;
           }
 
-          // Actualizamos el objeto en memoria
-          prov.puntaje = nuevoPuntaje;
-          prov.descripcion = document.getElementById("inputDescripcion").value;
-          prov.contacto = document.getElementById("inputContacto").value;
-          prov.email = document.getElementById("inputEmail").value;
-          prov.telefono = document.getElementById("inputTelefono").value;
-          prov.cobertura = document.getElementById("inputCobertura").value;
-          prov.embalaje_sostenible = document.getElementById("inputEmbalaje").value;
-          prov.energia_renovable = document.getElementById("inputEnergia").value;
-          prov.politica_devolucion = document.getElementById("inputDevolucion").value === "true";
-          prov.desafios = document.getElementById("inputDesafios").value;
-          prov.metas = document.getElementById("inputMetas").value;
+          const btn = document.getElementById("btnEditarGuardar");
+          btn.innerText = "⏳ Guardando...";
+          btn.disabled = true;
 
-          modoEdicion = false;
-          alert("Información actualizada correctamente");
-          renderProveedor();
+          const actualizaciones = {
+            puntaje_total: nuevoPuntaje,
+            descripcion: document.getElementById("inputDescripcion").value,
+            contacto_persona: document.getElementById("inputContacto").value,
+            email: document.getElementById("inputEmail").value,
+            telefono: document.getElementById("inputTelefono").value,
+            procedencia: document.getElementById("inputProcedencia").value,
+            rut: document.getElementById("inputRut").value || null,
+            es_mayorista: document.getElementById("inputMayorista").value === "true",
+            sitio_web: document.getElementById("inputSitioWeb").value || null,
+            embalaje_sostenible: document.getElementById("inputEmbalaje").value === "true"
+          };
+
+          try {
+            const { error } = await supabaseClient
+              .from('proveedores_ucu')
+              .update(actualizaciones)
+              .eq('id', proveedorId);
+
+            if (error) throw error;
+
+            prov = { ...prov, ...actualizaciones };
+            modoEdicion = false;
+            alert("Información actualizada correctamente en Supabase.");
+            renderProveedor();
+          } catch (err) {
+            console.error(err);
+            alert("Error al intentar guardar los cambios.");
+            btn.innerText = "💾 Guardar Cambios";
+            btn.disabled = false;
+          }
         } else {
-          // Fase Editar: activar modo inputs
           modoEdicion = true;
           renderProveedor();
         }
       }
 
-      // Inicializar la pantalla
-      document.addEventListener("DOMContentLoaded", renderProveedor);
-    </script>
-    
-    <script>
-      function toggleMenu() {
-        const menu = document.getElementById("menuDropdown");
-        if (menu.style.display === "none" || menu.style.display === "") {
-          menu.style.display = "block";
-        } else {
-          menu.style.display = "none";
-        }
-      }
-      
-      window.onclick = function (event) {
-        const menu = document.getElementById("menuDropdown");
-        const avatar = document.querySelector("header nav img");
-
-        if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
-          menu.style.display = "none";
-        }
-      };
+      document.addEventListener("DOMContentLoaded", obtenerProveedor);
     </script>
   </body>
 </html>

@@ -1,3 +1,10 @@
+/*
+
+ ESTE ARCHIVO CORRE EN EL SITIO WEB DE SUPABASE NO EN MI MAQUINA LOCAL, ESTA ACA COMO
+  REFERENCIA PARA SABER QUE COSAS TIENE LA BASE DE DATOS, QUE CORRE Y TODO LO RELACIONADO.
+  
+*/
+
 -- ========================================================
 -- SCRIPT DE RESET Y DATOS SEMILLA (SEED) 
 -- ========================================================
@@ -20,12 +27,13 @@ begin
 
   -- ====================================================================================
   -- INSTANCIA 1: Postulación Pendiente (Para probar el panel del Encargado y la asignación manual)
+  -- NOTA NUEVA: Configurado como proveedor NACIONAL (requiere RUT).
   -- ====================================================================================
   insert into proveedores_ucu (
-    tipo, estado, nombre, descripcion, rut, es_mayorista, sitio_web, email, telefono,
+    tipo, estado, nombre, procedencia, descripcion, rut, es_mayorista, sitio_web, email, telefono,
     tiene_iso14001, tiene_fsc, tiene_emas, embalaje_sostenible, urls_certificaciones, puntaje_total
   ) values (
-    'postulacion', 'pendiente', 'OfiCenter Uruguay', 
+    'postulacion', 'pendiente', 'OfiCenter Uruguay', 'nacional',
     'Distribuidora mayorista de artículos de papelería e insumos para oficinas.',
     '219999990015', true, 'https://oficenter.com.uy', 'ventas@oficenter.com.uy', '099123456',
     true, true, false, false, 
@@ -43,12 +51,13 @@ begin
 
   -- ====================================================================================
   -- INSTANCIA 2: Proveedor Aprobado (Para poblar compras.html y probar filtros de ciclo de vida)
+  -- NOTA NUEVA: Configurado como proveedor NACIONAL (cuenta con RUT uruguayo activo).
   -- ====================================================================================
   insert into proveedores_ucu (
-    tipo, estado, nombre, descripcion, rut, es_mayorista, sitio_web, email, telefono,
+    tipo, estado, nombre, procedencia, descripcion, rut, es_mayorista, sitio_web, email, telefono,
     tiene_iso14001, tiene_fsc, tiene_emas, embalaje_sostenible, urls_certificaciones, puntaje_total
   ) values (
-    'proveedor', 'aprobada', 'EcoPapel S.A.', 
+    'proveedor', 'aprobada', 'EcoPapel S.A.', 'nacional',
     'Fábrica nacional de cuadernos y resmas utilizando procesos 100% ecológicos.',
     '218888880012', true, 'https://ecopapel.uy', 'contacto@ecopapel.uy', '29001122',
     true, true, true, true, 
@@ -68,12 +77,13 @@ begin
   -- INSTANCIA 3: Postulación Rechazada (Para probar vistas de desestimados o históricos)
   -- ====================================================================================
   insert into proveedores_ucu (
-    tipo, estado, nombre, descripcion, rut, es_mayorista, sitio_web, email, telefono,
+    tipo, estado, nombre, procedencia, descripcion, rut, es_mayorista, sitio_web, email, telefono,
     tiene_iso14001, tiene_fsc, tiene_emas, embalaje_sostenible, urls_certificaciones, puntaje_total
   ) values (
-    'postulacion', 'rechazada', 'Papelería El Caribe', 
-    'Kiosco y papelería minorista de barrio.',
-    '120345670011', false, null, 'elcaribe@gmail.com', '094777888',
+    'postulacion', 'rechazada', 'Caribe Office International', 'internacional', 
+    'Distribuidora minorista regional con base fuera de Uruguay.',
+    null, -- Proveedor internacional no cuenta con RUT impositivo local
+    false, null, 'elcaribe@gmail.com', '094777888',
     false, false, false, false, 
     null,
     30.00
