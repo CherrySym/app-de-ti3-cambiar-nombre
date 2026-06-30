@@ -103,7 +103,7 @@
       }
       /* Estilos para el contenedor del título de bienvenida */
       .welcome-block {
-        margin-bottom: 35px;
+        margin-bottom: 25px;
       }
       /* Estilos del título de bienvenida */
       .welcome-block h2 {
@@ -116,6 +116,47 @@
         color: #4b4a48;
         font-size: 15px;
       }
+      
+      /* NUEVO SECTOR: Banner destacado para el documento de criterios */
+      .criterios-banner {
+        background-color: #eef4fa;
+        border-left: 5px solid #007bff;
+        padding: 20px;
+        border-radius: 4px;
+        margin-bottom: 35px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      }
+      .criterios-info h4 {
+        margin: 0 0 5px 0;
+        color: #1e3264;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .criterios-info p {
+        margin: 0;
+        color: #555;
+        font-size: 14px;
+      }
+      .btn-criterios {
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 14px;
+        white-space: nowrap;
+        transition: background-color 0.2s;
+        display: inline-block;
+      }
+      .btn-criterios:hover {
+        background-color: #0056b3;
+      }
+
       /* Grilla contenedora de las tarjetas de navegación */
       .dashboard-grid {
         display: flex;
@@ -218,6 +259,16 @@
         </p>
       </section>
 
+      <section class="criterios-banner">
+        <div class="criterios-info">
+          <h4>Lista de Criterios Oficiales</h4>
+          <p>Visualiza y descarga las tablas de ponderación y los coeficientes de evaluación asignados a los proveedores.</p>
+        </div>
+        <div>
+          <a href="#" id="linkCriterios" target="_blank" class="btn-criterios">Ver Documento</a>
+        </div>
+      </section>
+
       <section class="dashboard-grid">
         <div class="menu-card">
           <div class="card-content">
@@ -228,9 +279,7 @@
               vigentes para aplicarle un puntaje de sostenibilidad.
             </p>
           </div>
-          <a href="agregar-proveedor.html" class="btn-dashboard"
-            >Abrir Formulario</a
-          >
+          <a href="agregar-proveedor.html" class="btn-dashboard">Abrir Formulario</a>
         </div>
 
         <div class="menu-card">
@@ -254,9 +303,7 @@
               sus certificaciones antes de aprobar la postulacion.
             </p>
           </div>
-          <a href="revision-postulaciones-totales.html" class="btn-dashboard"
-            >Revisar Postulaciones</a
-          >
+          <a href="revision-postulaciones-totales.html" class="btn-dashboard">Revisar Postulaciones</a>
         </div>
 
         <div class="menu-card">
@@ -267,9 +314,7 @@
               catalogo. Revisa su informacion y valida sus caracteristicas
             </p>
           </div>
-          <a href="revision-productos-totales.html" class="btn-dashboard"
-            >Revisar nuevos productos</a
-          >
+          <a href="revision-productos-totales.html" class="btn-dashboard">Revisar nuevos productos</a>
         </div>
 
         <div class="menu-card">
@@ -281,9 +326,7 @@
               los documentos requeridos.
             </p>
           </div>
-          <a href="agregar-producto-encargado.html" class="btn-dashboard"
-            >Agregar Productos</a
-          >
+          <a href="agregar-producto-encargado.html" class="btn-dashboard">Agregar Productos</a>
         </div>
 
         <div class="menu-card">
@@ -303,7 +346,31 @@
         <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
       </div>
     </footer>
+
     <script>
+      // 1. CONFIGURACIÓN DE SUPABASE
+      const SUPABASE_URL = "https://kiklddnidlxiusrcbvxf.supabase.co";
+      const SUPABASE_ANON_KEY = "sb_publishable_e4RnXv8pq2LQ3aCiqQcsKg_meWrIIWP";
+      const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // Función para obtener la URL pública del archivo de criterios en el Storage
+      function cargarUrlCriterios() {
+        // 'Criterios' es el nombre del bucket que debés crear en Supabase Storage
+        // 'criterios.pdf' es el nombre con el que subas el archivo allí
+        const { data } = _supabase.storage
+          .from('Criterios')
+          .getPublicUrl('Criterios.pdf');
+
+        if (data && data.publicUrl) {
+          document.getElementById('linkCriterios').href = data.publicUrl;
+        }
+      }
+
+      // Ejecutar la función al cargar la página
+      window.onload = function() {
+        cargarUrlCriterios();
+      };
+
       // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
       function toggleMenu() {
         const menu = document.getElementById("menuDropdown");
@@ -313,7 +380,8 @@
           menu.style.display = "none";
         }
       }
-      // Función para ocultar el menú desplegable si se hace clic fuera de él (me gusta que haga eso)
+      
+      // Función para ocultar el menú desplegable si se hace clic fuera de él
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
         const avatar = document.querySelector("nav div img");
