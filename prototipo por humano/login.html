@@ -1,187 +1,214 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Gestión de Proveedores UCU</title>
-    <link rel="stylesheet" href="./css/global-styles.css"/>
-    <style>
-      * {
-        box-sizing: border-box;
-      }
+ <head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>Login - Gestión de Proveedores UCU</title>
+ <link rel="stylesheet" href="./css/global-styles.css"/>
+ <style>
+ * {
+ box-sizing: border-box;
+ }
 
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
+ body {
+ margin: 0;
+ font-family: Arial, sans-serif;
+ display: flex;
+ flex-direction: column;
+ min-height: 100vh;
+ }
 
-      /* Estilos específicos y exclusivos para la tarjeta de login */
-      .login-container {
-        display: flex;
-        flex: 1; /* Se estira en el espacio vertical que deja libre el body global */
-        justify-content: center;
-        align-items: center;
-        padding: 40px 20px;
-      }
+ /* Estilos específicos y exclusivos para la tarjeta de login */
+ .login-container {
+ display: flex;
+ flex: 1; /* Se estira en el espacio vertical que deja libre el body global */
+ justify-content: center;
+ align-items: center;
+ padding: 40px 20px;
+ }
 
-      /* Tarjeta de inicio de sesión con desenfoque institucional */
-      .login-card {
-        background: rgba(255, 255, 255, 0.96);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        padding: 35px 30px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        width: 100%;
-        max-width: 400px;
-        border-radius: 16px;
-        border: 1px solid rgba(19, 33, 60, 0.1);
-      }
+ /* Tarjeta de inicio de sesión con desenfoque institucional */
+ .login-card {
+ background: rgba(255, 255, 255, 0.96);
+ backdrop-filter: blur(10px);
+ -webkit-backdrop-filter: blur(10px);
+ padding: 35px 30px;
+ box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+ width: 100%;
+ max-width: 400px;
+ border-radius: 16px;
+ border: 1px solid rgba(19, 33, 60, 0.1);
+ }
 
-      /* Estilos para el logo de la UCU centrado */
-      .logo {
-        display: block;
-        margin: 0 auto 15px auto;
-        height: 45px;
-        width: auto;
-      }
+ /* Estilos para el logo de la UCU centrado */
+ .logo {
+ display: block;
+ margin: 0 auto 15px auto;
+ height: 45px;
+ width: auto;
+ }
 
-      /* Títulos internos de la tarjeta */
-      .card-title {
-        text-align: center;
-        font-size: 24px;
-        font-weight: 700;
-        color: #13213c;
-        margin: 5px 0;
-      }
+ /* Títulos internos de la tarjeta */
+ .card-title {
+ text-align: center;
+ font-size: 24px;
+ font-weight: 700;
+ color: #13213c;
+ margin: 5px 0;
+ }
 
-      .card-subtitle {
-        text-align: center;
-        font-size: 16px;
-        font-weight: 400;
-        color: #666;
-        margin-top: 0;
-        margin-bottom: 25px; 
-      }
+ .card-subtitle {
+ text-align: center;
+ font-size: 16px;
+ font-weight: 400;
+ color: #666;
+ margin-top: 0;
+ margin-bottom: 25px; 
+ }
 
-      /* Separación de los campos del formulario */
-      .form-group {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 20px; 
-      }
+ /* Separación de los campos del formulario */
+ .form-group {
+ display: flex;
+ flex-direction: column;
+ margin-bottom: 20px; 
+ }
 
-      .form-group label {
-        margin-bottom: 8px;
-        font-weight: 600;
-        color: #13213c;
-        font-size: 14px;
-      }
+ .form-group label {
+ margin-bottom: 8px;
+ font-weight: 600;
+ color: #13213c;
+ font-size: 14px;
+ }
 
-      /* Inputs estilizados */
-      .form-input {
-        padding: 12px;
-        border: 1px solid rgba(19, 33, 60, 0.2);
-        border-radius: 8px;
-        font-size: 15px;
-        outline: none;
-        transition: border-color 0.2s, box-shadow 0.2s;
-      }
+ /* Inputs estilizados */
+ .form-input {
+ padding: 12px;
+ border: 1px solid rgba(19, 33, 60, 0.2);
+ border-radius: 8px;
+ font-size: 15px;
+ outline: none;
+ transition: border-color 0.2s, box-shadow 0.2s;
+ }
 
-      .form-input:focus {
-        border-color: #2f80ed;
-        box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.15);
-      }
+ .form-input:focus {
+ border-color: #2f80ed;
+ box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.15);
+ }
 
-      /* Botón de ingreso con azul institucional */
-      .btn-submit {
-        width: 100%;
-        padding: 14px;
-        background: linear-gradient(135deg, #1e3264 0%, #13213c 100%);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 600;
-        box-shadow: 0 4px 15px rgba(30, 50, 100, 0.3);
-        transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
-        margin-top: 10px;
-      }
+ /* Botón de ingreso con azul institucional */
+ .btn-submit {
+ width: 100%;
+ padding: 14px;
+ background: linear-gradient(135deg, #1e3264 0%, #13213c 100%);
+ color: white;
+ border: none;
+ border-radius: 8px;
+ cursor: pointer;
+ font-size: 16px;
+ font-weight: 600;
+ box-shadow: 0 4px 15px rgba(30, 50, 100, 0.3);
+ transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+ margin-top: 10px;
+ }
 
-      .btn-submit:hover {
-        transform: translateY(-2px);
-        background: linear-gradient(135deg, #243b75 0%, #1a2c52 100%);
-        box-shadow: 0 6px 20px rgba(30, 50, 100, 0.4);
-      }
+ .btn-submit:disabled {
+ background: #cccccc;
+ cursor: not-allowed;
+ box-shadow: none;
+ }
 
-      .btn-submit:active {
-        transform: translateY(0);
-      }
+ .btn-submit:hover:not(:disabled) {
+ transform: translateY(-2px);
+ background: linear-gradient(135deg, #243b75 0%, #1a2c52 100%);
+ box-shadow: 0 6px 20px rgba(30, 50, 100, 0.4);
+ }
 
-      /* Enlace de retorno */
-      .back-link {
-        display: block;
-        text-align: center;
-        margin-top: 20px;
-        color: #1e3264;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 600;
-      }
+ .btn-submit:active:not(:disabled) {
+ transform: translateY(0);
+ }
 
-      .back-link:hover {
-        text-decoration: underline;
-      }
+ /* Enlace de retorno */
+ .back-link {
+ display: block;
+ text-align: center;
+ margin-top: 20px;
+ color: #1e3264;
+ text-decoration: none;
+ font-size: 14px;
+ font-weight: 600;
+ }
 
-      /* Estilos del Footer contenedor */
-      .footer-container {
-        background-color: #1e3264; 
-        padding: 20px 0; 
-        width: 100%;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
+ .back-link:hover {
+ text-decoration: underline;
+ }
 
-      .logo-footer {
-        display: block;
-        margin: auto;
-        height: 30px;
-        filter: brightness(0) invert(1);
-      }
-    </style>
-  </head>
+ /* Estilos del Footer contenedor */
+ .footer-container {
+ background-color: #1e3264; 
+ padding: 20px 0; 
+ width: 100%;
+ border-top: 1px solid rgba(255, 255, 255, 0.1);
+ }
 
-  <body style="background: url('./assets/fondo-ucu.jpeg') no-repeat center top fixed; background-size: cover;">
-    <main class="login-container">
-      <section class="login-card">
-        <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo"/>
-        <h3 class="card-title">Gestión de Proveedores</h3>
-        <h4 class="card-subtitle">Iniciar Sesión</h4>
-        
-        <form action="./vista-encargado/landing.html" class="login-form">
-          <div class="form-group">
-            <label for="username">Usuario:</label>
-            <input type="text" id="username" name="username" class="form-input" placeholder="Ej: Mika.Schaffel" required />
-          </div>
+ .logo-footer {
+ display: block;
+ margin: auto;
+ height: 30px;
+ filter: brightness(0) invert(1);
+ }
+ </style>
+ </head>
 
-          <div class="form-group">
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" class="form-input" placeholder="Contraseña" required />
-          </div>
+ <body style="background: url('./assets/fondo-ucu.jpeg') no-repeat center top fixed; background-size: cover;">
+ <main class="login-container">
+ <section class="login-card">
+ <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo"/>
+ <h3 class="card-title">Gestión de Proveedores</h3>
+ <h4 class="card-subtitle">Iniciar Sesión</h4> 
 
-          <button type="submit" class="btn-submit">Ingresar</button>
-        </form>
+ <form id="loginForm" class="login-form">
+ <div class="form-group">
+ <label for="username">Usuario:</label>
+ <input type="text" id="username" name="username" class="form-input" placeholder="Ej: Mika.Schaffel" required />
+ </div>
 
-        <a href="index.html" class="back-link">← Volver al inicio</a>
-      </section>
-    </main>
+ <div class="form-group">
+ <label for="password">Contraseña:</label>
+ <input type="password" id="password" name="password" class="form-input" placeholder="Contraseña" required />
+ </div>
 
-    <footer>
-      <div class="footer-container">
-        <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo-footer"/>
-      </div>
-    </footer>
-  </body>
+ <button type="submit" id="btnSubmit" class="btn-submit">Ingresar</button>
+ </form>
+
+ <a href="index.html" class="back-link">← Volver al inicio</a>
+ </section>
+ </main>
+
+ <footer>
+ <div class="footer-container">
+ <img src="./assets/logo ucu.png" alt="Logo UCU" class="logo-footer"/>
+ </div>
+ </footer>
+
+ <script>
+ document.getElementById("loginForm").addEventListener("submit", function(e) {
+ e.preventDefault();
+ 
+ const usernameInput = document.getElementById("username").value.trim();
+ const btnSubmit = document.getElementById("btnSubmit");
+
+  // guardar el usuario 
+ sessionStorage.setItem("usuarioUCU", usernameInput);
+
+ // simulacion de carga
+ btnSubmit.disabled = true;
+ btnSubmit.innerText = "Conectando con Portal UCU...";
+
+ // delay intencional
+ setTimeout(() => {
+ window.location.href = "./vista-encargado/landing.html";
+ }, 800);
+ });
+ </script>
+ </body>
 </html>
