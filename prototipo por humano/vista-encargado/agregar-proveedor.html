@@ -7,9 +7,19 @@
     <link rel="stylesheet" href="../css/global-styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-      /* Configuración base para el Layout Elástico e Institucional */
       * {
         box-sizing: border-box;
+      }
+
+      body {
+        background: url("../assets/fondo-ucu.jpeg") no-repeat center top fixed;
+        background-size: cover;
+        background-color: #e4dccf; /* Color base estable de fondo */
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
 
       .logo {
@@ -73,11 +83,12 @@
         padding: 4px 16px 8px 16px;
         display: flex;
         flex-direction: column;
+        text-align: left;
       }
 
       .dropdown-user-info strong {
         font-size: 14px;
-        color: #13213c;
+        color: #1e3264;
       }
 
       .dropdown-user-info span {
@@ -122,10 +133,11 @@
         width: 100%;
         max-width: 750px;
         box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+        text-align: left;
       }
 
       .form-card h2 {
-        color: #13213c;
+        color: #1e3264;
         font-size: 28px;
         margin-top: 10px;
         margin-bottom: 25px;
@@ -154,6 +166,13 @@
         font-size: 14px;
       }
 
+      /* Clase específica para el asterisco obligatorio rojo */
+      .required-asterisk {
+        color: #dc3545;
+        font-weight: bold;
+        margin-left: 2px;
+      }
+
       .form-input,
       .form-select,
       .form-textarea {
@@ -165,15 +184,17 @@
         color: #333333;
         outline: none;
         font-family: Arial, sans-serif;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
         width: 100%;
       }
 
       .form-input:focus,
       .form-select:focus,
       .form-textarea:focus {
-        border-color: #2f80ed;
-        box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.15);
+        border-color: #1e3264;
+        box-shadow: 0 0 0 3px rgba(30, 50, 100, 0.15);
       }
 
       .form-textarea {
@@ -194,7 +215,8 @@
         gap: 8px;
         font-weight: 500 !important;
         cursor: pointer;
-        color: #4f5e7b;
+        color: #13213c;
+        font-size: 14px;
       }
 
       .checkbox-label input {
@@ -204,8 +226,8 @@
       }
 
       .form-input::file-selector-button {
-        background: rgba(47, 128, 237, 0.1);
-        color: #2f80ed;
+        background: rgba(30, 50, 100, 0.1);
+        color: #1e3264;
         border: none;
         padding: 6px 12px;
         border-radius: 999px;
@@ -214,11 +236,7 @@
         cursor: pointer;
         transition: all 0.2s ease;
       }
-      .form-input::file-selector-button:hover {
-        background: rgba(47, 128, 237, 0.2);
-      }
 
-      /* ESTILOS NUEVOS: Lista de archivos PDF seleccionados */
       .lista-archivos {
         margin-top: 10px;
         display: flex;
@@ -263,7 +281,10 @@
         cursor: pointer;
         width: 100%;
         box-shadow: 0 4px 15px rgba(30, 50, 100, 0.3);
-        transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+        transition:
+          transform 0.2s,
+          background-color 0.2s,
+          box-shadow 0.2s;
         margin-top: 10px;
       }
 
@@ -273,8 +294,25 @@
         box-shadow: 0 6px 20px rgba(30, 50, 100, 0.4);
       }
 
-      .btn-submit-prov:active {
-        transform: translateY(0);
+      .btn-back {
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        background-color: #1e3264;
+        color: #ffffff;
+        border: 2px solid #1e3264;
+        transition: all 0.2s ease-in-out;
+        font-size: 14px;
+      }
+
+      .btn-back:hover {
+        background-color: #ffffff;
+        color: #1e3264;
+        border-color: #1e3264;
       }
 
       .footer-container {
@@ -289,6 +327,10 @@
         margin: auto;
         height: 30px;
         filter: brightness(0) invert(1);
+      }
+
+      .hidden {
+        display: none !important;
       }
 
       @media (max-width: 600px) {
@@ -319,11 +361,16 @@
           />
           <div id="menuDropdown" class="dropdown-content" style="display: none">
             <div class="dropdown-user-info">
-              <strong>Encargado de Compras</strong>
-              <span>compras@correo.ucu.edu.uy</span>
+              <strong id="perfilUsuario">Encargado de Compras</strong>
+              <span id="perfilEmail">compras@correo.ucu.edu.uy</span>
             </div>
             <hr />
-            <a href="../login.html" class="logout-link">Cerrar Sesión</a>
+            <a
+              href="../login.html"
+              onclick="sessionStorage.clear()"
+              class="logout-link"
+              >Cerrar Sesión</a
+            >
           </div>
         </div>
       </nav>
@@ -332,87 +379,145 @@
     <main class="form-container">
       <section class="form-card">
         <div style="margin-bottom: 20px">
-          <a
-            href="lista-proveedores.html"
-            onclick="window.history.back(); return false;"
-            style="
-              text-decoration: none;
-              color: #1e3264;
-              font-weight: 600;
-              display: inline-flex;
-              align-items: center;
-              gap: 5px;
-            "
-          >
-            &larr; Volver atrás
-          </a>
+          <!-- PREVENCIÓN DE BUCLE: Enlace directo al panel de control -->
+          <a href="landing.html" class="btn-back"> &larr; Volver al Panel </a>
         </div>
         <h2>Registrar Nuevo Proveedor</h2>
 
-        <form id="formProveedorEncargado" onsubmit="procesarEnvioProveedor(event)">
+        <form
+          id="formProveedorEncargado"
+          onsubmit="procesarEnvioProveedor(event)"
+        >
           <div class="form-row">
             <div class="form-group">
-              <label for="nombre">Nombre de la Empresa:</label>
+              <label for="nombre"
+                >Nombre de la Empresa:
+                <span class="required-asterisk">*</span></label
+              >
               <input
                 type="text"
                 id="nombre"
                 required
                 class="form-input"
                 placeholder="Ej: EcoProveedores UY Ltda."
-                maxlength="80"
+                maxlength="50"
               />
             </div>
             <div class="form-group">
-              <label for="contacto_persona">Persona de Contacto:</label>
+              <label for="contacto_persona"
+                >Persona de Contacto:
+                <span class="required-asterisk">*</span></label
+              >
               <input
                 type="text"
                 id="contacto_persona"
                 required
                 class="form-input"
                 placeholder="Ej: Valentina Rocha"
-                maxlength="70"
+                maxlength="45"
               />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="email">Correo Electrónico:</label>
+              <label for="email"
+                >Correo Electrónico:
+                <span class="required-asterisk">*</span></label
+              >
               <input
                 type="email"
                 id="email"
                 required
                 class="form-input"
                 placeholder="contacto@empresa.com.uy"
-                maxlength="100"
+                maxlength="60"
               />
             </div>
             <div class="form-group">
-              <label for="telefono">Teléfono de Contacto:</label>
+              <label for="telefono"
+                >Teléfono de Contacto:
+                <span class="required-asterisk">*</span></label
+              >
               <input
                 type="tel"
                 id="telefono"
                 required
                 class="form-input"
                 placeholder="Ej: +598 2 410 8800"
-                maxlength="25"
+                maxlength="20"
               />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="procedencia">Procedencia del Proveedor:</label>
-              <select id="procedencia" class="form-select">
+              <label for="procedencia"
+                >Tipo de Empresa:
+                <span class="required-asterisk">*</span></label
+              >
+              <select
+                id="procedencia"
+                class="form-select"
+                onchange="alternarCampoRut()"
+              >
+                <option value="" disabled selected>Seleccione...</option>
                 <option value="nacional">Nacional (Local)</option>
                 <option value="internacional">Internacional (Importado)</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="embalaje_sostenible">¿Utiliza Embalaje Sostenible?:</label>
-              <select id="embalaje_sostenible" class="form-select">
-                <option value="si">Sí</option>
-                <option value="no">No</option>
+              <label for="sitio_web">Sitio Web:</label>
+              <input
+                type="url"
+                id="sitio_web"
+                class="form-input"
+                placeholder="https://www.empresa.com.uy"
+                maxlength="200"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" id="grupoRut">
+              <label for="rut"
+                >RUT de la Empresa:
+                <span class="required-asterisk">*</span></label
+              >
+              <input
+                type="text"
+                id="rut"
+                required
+                class="form-input"
+                placeholder="Ej: 21XXXXXX001X"
+                maxlength="30"
+              />
+            </div>
+            <div class="form-group">
+              <label for="es_mayorista"
+                >¿Es un comercio Mayorista?
+                <span class="required-asterisk">*</span></label
+              >
+              <select id="es_mayorista" required class="form-select">
+                <option value="" disabled selected>Seleccione...</option>
+                <option value="true">Sí, vende al por mayor</option>
+                <option value="false">No, venta minorista / particular</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="embalaje_sostenible"
+                >¿Utiliza Embalaje Sostenible?:
+                <span class="required-asterisk">*</span></label
+              >
+              <select id="embalaje_sostenible" required class="form-select">
+                <option value="" disabled selected>Seleccione...</option>
+                <option value="true">
+                  Sí, cuenta con empaque biodegradable/reciclado
+                </option>
+                <option value="false">No utiliza empaques sostenibles</option>
               </select>
             </div>
           </div>
@@ -421,21 +526,24 @@
             <label>Certificaciones de la Empresa:</label>
             <div class="checkbox-group">
               <label class="checkbox-label">
-                <input type="checkbox" name="certificaciones" value="ISO14001" /> ISO 14001
+                <input type="checkbox" id="tiene_iso14001" value="ISO14001" />
+                ISO 14001
               </label>
               <label class="checkbox-label">
-                <input type="checkbox" name="certificaciones" value="EMAS" /> EMAS
+                <input type="checkbox" id="tiene_emas" value="EMAS" /> EMAS
               </label>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="pdf_certificados">Adjuntar Certificaciones (Formato PDF):</label>
+            <label for="pdf_certificados"
+              >Adjuntar Comprobantes de Certificación (PDF):
+</label
+            >
             <input
               type="file"
               id="pdf_certificados"
               accept=".pdf"
-              multiple
               class="form-input"
               onchange="manejarSeleccionArchivos(this)"
             />
@@ -447,13 +555,57 @@
             <textarea
               id="descripcion"
               class="form-textarea"
-              placeholder="Breve reseña sobre la empresa y sus materiales..."
-              maxlength="500"
+              placeholder="Breve reseña sobre la empresa y sus productos..."
+              maxlength="1000"
             ></textarea>
           </div>
 
+          <div class="form-row">
+            <div
+              class="form-group"
+              style="
+                background-color: #f8fafc;
+                border: 1px solid rgba(30, 50, 100, 0.15);
+                padding: 20px;
+                border-radius: 12px;
+                margin-bottom: 20px;
+              "
+            >
+              <label
+                for="puntaje_total"
+                style="color: #1e3264; font-weight: bold; font-size: 15px"
+                >Puntaje de Sostenibilidad (0 - 100)
+                <span class="required-asterisk">*</span></label
+              >
+              <span
+                style="
+                  font-size: 12px;
+                  color: #64748b;
+                  margin-top: -4px;
+                  margin-bottom: 12px;
+                  display: block;
+                  line-height: 1.4;
+                "
+              >
+                Asigne el puntaje del proveedor en base a la suma
+                de criterios (RUT, mayorista, ISO 14001, EMAS, embalaje
+                sostenible y precio) cumplidos descritos en el documento de criterios.
+              </span>
+              <input
+                type="number"
+                id="puntaje_total"
+                required
+                min="0"
+                max="100"
+                step="0.01"
+                class="form-input"
+                placeholder="Ej: 82"
+              />
+            </div>
+          </div>
+
           <button type="submit" id="btnSubmitProv" class="btn-submit-prov">
-            Guardar Proveedor
+            Registras Proveedor en la Red
           </button>
         </form>
       </section>
@@ -466,51 +618,90 @@
     </footer>
 
     <script type="module">
-      import { supabaseClient } from '../js/conexion-bd.js';
+      import { supabaseClient } from "../js/conexion-bd.js";
 
-      // Arreglo global intermedio para guardar la lista real de archivos limpios y validados
       let listaArchivosGlobal = [];
 
-      window.toggleMenu = function() {
+      window.toggleMenu = function () {
         const menu = document.getElementById("menuDropdown");
-        menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+        menu.style.display =
+          menu.style.display === "none" || menu.style.display === ""
+            ? "block"
+            : "none";
       };
 
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
         const avatar = document.querySelector(".user-profile-container img");
-        if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
+        if (
+          menu &&
+          menu.style.display === "block" &&
+          event.target !== avatar &&
+          !menu.contains(event.target)
+        ) {
           menu.style.display = "none";
         }
       };
 
-      // NUEVA FUNCIÓN: Filtra en tiempo real extensiones inválidas y gestiona múltiples archivos
-      window.manejarSeleccionArchivos = function(input) {
-        const contenedor = document.getElementById("listaArchivosContenedor");
+      document.addEventListener("DOMContentLoaded", () => {
+        // Cargar información del usuario del sessionStorage
+        const usuarioLogueado = sessionStorage.getItem("usuarioUCU");
+        if (usuarioLogueado) {
+          const partes = usuarioLogueado.split(".");
+          const nombreCompleto = partes
+            .map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+            .join(" ");
+          const profileName = document.getElementById("perfilUsuario");
+          const profileEmail = document.getElementById("perfilEmail");
+          if (profileName) profileName.innerText = nombreCompleto;
+          if (profileEmail)
+            profileEmail.innerText = `${usuarioLogueado.toLowerCase()}@correo.ucu.edu.uy`;
+        }
+      });
+
+      // Alternar RUT de acuerdo a procedencia
+      window.alternarCampoRut = function () {
+        const valorSeleccionado = document.getElementById("procedencia").value;
+        const grupoRut = document.getElementById("grupoRut");
+        const inputRut = document.getElementById("rut");
+
+        if (valorSeleccionado === "nacional") {
+          grupoRut.classList.remove("hidden");
+          inputRut.required = true;
+        } else {
+          grupoRut.classList.add("hidden");
+          inputRut.required = false;
+          inputRut.value = "";
+        }
+      };
+
+      // Filtra extensiones y almacena archivos múltiples en memoria
+      window.manejarSeleccionArchivos = function (input) {
         const archivosSeleccionados = Array.from(input.files);
 
-        archivosSeleccionados.forEach(archivo => {
+        archivosSeleccionados.forEach((archivo) => {
           const nombreArchivo = archivo.name.toLowerCase();
-          
-          // CONTROL DE INSTANTE: Si no termina en .pdf, se rechaza y limpia al momento
-          if (!nombreArchivo.endsWith('.pdf')) {
-            alert(`El archivo "${archivo.name}" fue rechazado. Solo se permiten documentos PDF.`);
-            return; 
+
+          if (!nombreArchivo.endsWith(".pdf")) {
+            alert(
+              `El archivo "${archivo.name}" fue rechazado. Solo se permiten documentos PDF.`,
+            );
+            return;
           }
 
-          // Evitar duplicados en la lista visual/global
-          if (!listaArchivosGlobal.some(f => f.name === archivo.name && f.size === archivo.size)) {
+          if (
+            !listaArchivosGlobal.some(
+              (f) => f.name === archivo.name && f.size === archivo.size,
+            )
+          ) {
             listaArchivosGlobal.push(archivo);
           }
         });
 
-        // Limpiamos el input nativo para que el usuario pueda volver a dar click y elegir el mismo si quiere
-        input.value = "";
-        
+        input.value = ""; // Limpiar el input para permitir volver a elegir
         actualizarListaVisual();
       };
 
-      // NUEVA FUNCIÓN: Renderiza los ítems en pantalla con la cruz roja para eliminar
       function actualizarListaVisual() {
         const contenedor = document.getElementById("listaArchivosContenedor");
         contenedor.innerHTML = "";
@@ -519,20 +710,19 @@
           const item = document.createElement("div");
           item.className = "archivo-item";
           item.innerHTML = `
-            <span>📄 ${archivo.name}</span>
-            <button type="button" class="btn-quitar-archivo" onclick="removerArchivoDelArreglo(${index})">&times;</button>
-          `;
+ <span>📄 ${archivo.name}</span>
+ <button type="button" class="btn-quitar-archivo" onclick="removerArchivoDelArreglo(${index})">&times;</button>
+ `;
           contenedor.appendChild(item);
         });
       }
 
-      // NUEVA FUNCIÓN: Permite sacar un archivo usando la cruz roja
-      window.removerArchivoDelArreglo = function(index) {
+      window.removerArchivoDelArreglo = function (index) {
         listaArchivosGlobal.splice(index, 1);
         actualizarListaVisual();
       };
 
-      window.procesarEnvioProveedor = async function(event) {
+      window.procesarEnvioProveedor = async function (event) {
         event.preventDefault();
 
         const btnSubmit = document.getElementById("btnSubmitProv");
@@ -540,57 +730,113 @@
         btnSubmit.textContent = "Guardando proveedor...";
 
         const nombre = document.getElementById("nombre").value.trim();
-        const contactoPersona = document.getElementById("contacto_persona").value.trim();
+        const contactoPersona = document
+          .getElementById("contacto_persona")
+          .value.trim();
         const email = document.getElementById("email").value.trim();
         const telefono = document.getElementById("telefono").value.trim();
         const procedencia = document.getElementById("procedencia").value;
-        const descripcion = document.getElementById("descripcion").value.trim();
+        const sitioWeb =
+          document.getElementById("sitio_web").value.trim() || null;
+        const descripcion =
+          document.getElementById("descripcion").value.trim() || null;
 
-        const embalajeSostenibleValor = document.getElementById("embalaje_sostenible").value === "si";
+        const esMayorista =
+          document.getElementById("es_mayorista").value === "true";
+        const embalajeSostenibleValor =
+          document.getElementById("embalaje_sostenible").value === "si" ||
+          document.getElementById("embalaje_sostenible").value === "true";
+        const tieneISO = document.getElementById("tiene_iso14001").checked;
+        const tieneEMAS = document.getElementById("tiene_emas").checked;
 
-        const checkboxes = document.querySelectorAll('input[name="certificaciones"]:checked');
-        const valoresCheckboxes = Array.from(checkboxes).map(cb => cb.value);
-        
-        const tieneISO = valoresCheckboxes.includes("ISO14001");
-        const tieneEMAS = valoresCheckboxes.includes("EMAS");
+        const rut =
+          procedencia === "nacional"
+            ? document.getElementById("rut").value.trim()
+            : null;
+        const puntajeTotal = parseFloat(
+          document.getElementById("puntaje_total").value,
+        );
 
-        // Nota de arquitectura: Aquí ya tienes 'listaArchivosGlobal' lista con puros PDFs reales en binario por si luego necesitas subirlos a un Storage bucket de Supabase.
+        if (isNaN(puntajeTotal) || puntajeTotal < 0 || puntajeTotal > 100) {
+          alert(
+            "Error de Puntuación: El puntaje total de sostenibilidad debe comprenderse estrictamente entre 0 y 100.",
+          );
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = "Guardar Proveedor en la Red";
+          return;
+        }
+
+        const arrayUrlsCertificaciones = [];
 
         try {
+          // PASO 1: Subir archivos PDF seleccionados a bucket de proveedores 'Certificaciones PROV'
+          if (listaArchivosGlobal.length > 0) {
+            btnSubmit.textContent = "Subiendo certificados de empresa...";
+            for (const file of listaArchivosGlobal) {
+              const nombreUnico = `${Date.now()}_emp_${file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
+
+              const { error: uploadError } = await supabaseClient.storage
+                .from("Certificaciones PROV")
+                .upload(nombreUnico, file);
+
+              if (uploadError) {
+                throw new Error(
+                  "Error en bucket de proveedores: " + uploadError.message,
+                );
+              }
+
+              const { data: urlData } = supabaseClient.storage
+                .from("Certificaciones PROV")
+                .getPublicUrl(nombreUnico);
+
+              arrayUrlsCertificaciones.push(urlData.publicUrl);
+            }
+          }
+
+          btnSubmit.textContent = "Guardando registro...";
+
+          // PASO 2: Inserción directa en la tabla 'proveedores_ucu'
+          // Al ser creado por el encargado, se guarda con tipo 'proveedor' y estado 'aprobada'
           const { error } = await supabaseClient
-            .from('proveedores_ucu')
+            .from("proveedores_ucu")
             .insert([
               {
-                tipo: 'proveedor',
-                estado: 'aprobada', 
+                tipo: "proveedor",
+                estado: "aprobada",
                 nombre: nombre,
                 contacto_persona: contactoPersona,
                 email: email,
                 telefono: telefono,
-                descripcion: descripcion,
                 procedencia: procedencia,
+                sitio_web: sitioWeb,
+                rut: rut,
+                es_mayorista: esMayorista,
                 embalaje_sostenible: embalajeSostenibleValor,
                 tiene_iso14001: tieneISO,
-                tiene_fsc: false, // Residuo completamente mitigado. Listo para tu cambio de BD estructurado.
-                tiene_emas: tieneEMAS
-              }
+                tiene_emas: tieneEMAS,
+                urls_certificaciones: arrayUrlsCertificaciones,
+                puntaje_total: puntajeTotal,
+                descripcion: descripcion,
+              },
             ]);
 
           if (error) throw error;
 
-          alert(`¡El proveedor "${nombre}" se ha registrado con éxito y ya se encuentra activo en el sistema!`);
+          alert(
+            `¡El proveedor "${nombre}" se ha registrado con éxito con un puntaje de ${puntajeTotal}% y ya se encuentra activo en el sistema!`,
+          );
           document.getElementById("formProveedorEncargado").reset();
           listaArchivosGlobal = [];
           actualizarListaVisual();
-          
-          window.location.href = "landing.html";
 
+          // Redirección directa y segura
+          window.location.href = "landing.html";
         } catch (err) {
-          console.error("Error al insertar proveedor:", err);
+          console.error("Error al registrar proveedor:", err);
           alert(`Error al guardar en Supabase: ${err.message}`);
         } finally {
           btnSubmit.disabled = false;
-          btnSubmit.textContent = "Guardar Proveedor";
+          btnSubmit.textContent = "Guardar Proveedor en la Red";
         }
       };
     </script>
