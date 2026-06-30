@@ -1,54 +1,42 @@
-/*
-
- ESTE ARCHIVO CORRE EN EL SITIO WEB DE SUPABASE NO EN MI MAQUINA LOCAL, ESTA ACA COMO
-  REFERENCIA PARA SABER QUE COSAS TIENE LA BASE DE DATOS, QUE CORRE Y TODO LO RELACIONADO.
-  
-*/
-
--- 0. LIMPIEZA DE TABLAS PREVIAS (Para poder correr el script de cero sin errores)
+-- 0. LIMPIEZA DE TABLAS PREVIAS 
 drop table if exists productos_ucu cascade;
 drop table if exists proveedores_ucu cascade;
 drop sequence if exists seq_codigo_proveedor;
 drop sequence if exists seq_codigo_producto;
 
--- 1. SECUENCIAS PARA AUTOGENERAR CÓDIGOS HUMANAMENTE LEGIBLES
--- Esto lleva la cuenta por nosotros (ej: 1, 2, 3...)
+-- 1. SECUENCIAS
 create sequence if not exists seq_codigo_proveedor start 1;
 create sequence if not exists seq_codigo_producto start 1;
 
 -- 2. TABLA PRINCIPAL: Proveedores y Postulaciones
 create table proveedores_ucu (
   id uuid default gen_random_uuid() primary key,
-  
-  -- Genera autoincremental tipo 'PRV-0001' por defecto al insertar
-  id_codigo text default 'PRV-' || to_char(nextval('seq_codigo_proveedor'), 'FM0000') unique not null, 
-  
+  id_codigo text default 'PROV-' || to_char(nextval('seq_codigo_proveedor'), 'FM0000') unique not null, 
   tipo text not null check (tipo in ('proveedor', 'postulacion')),
   estado text default 'pendiente' check (estado in ('pendiente', 'aprobada', 'rechazada')),
   
-  -- Identificación y Procedencia
-  nombre text not null,
-  contacto_persona text not null,
-  procedencia text not null check (procedencia in ('nacional', 'internacional')), -- Identifica si es local o extranjero
-  descripcion text,
+  -- Identificación y Procedencia (Corregido char_length)
+  nombre text not null check (char_length(nombre) <= 50),
+  contacto_persona text not null check (char_length(contacto_persona) <= 45),
+  sitio_web text check (char_length(sitio_web) <= 200),                
+  email text not null check (char_length(email) <= 60),            
+  telefono text check (char_length(telefono) <= 20), -- Cambiado a TEXT para evitar overflows y permitir +, espacios o guiones
+  procedencia text not null check (procedencia in ('nacional', 'internacional')), 
+  descripcion text check (char_length(descripcion) <= 1000), -- Corregido para que evalúe descripcion y no nombre
   fecha_registro date default current_date,
 
-  -- Criterios Generales (15%) - Formulario
-  rut text,  -- Ahora es opcional en la BD para permitir proveddores internacionales (el frontend obliga solo si es nacional)
+  -- Criterios Generales (15%)
+  rut text check (char_length(rut) <= 30),          
   es_mayorista boolean,          
-  sitio_web text,                
-  email text not null,           
-  telefono text,                 
-
-  -- Criterios Ambientales (50%) - La Checklist para el Encargado
+  
+  -- Criterios Ambientales (50%)
   tiene_iso14001 boolean default false,
   tiene_fsc boolean default false,
   tiene_emas boolean default false,
   embalaje_sostenible boolean default false, 
-  
   urls_certificaciones text[],   
   
-  -- Puntuación (100% MANUAL, a criterio del encargado)
+  -- Puntuación
   puntaje_total numeric(5,2) check (puntaje_total between 0 and 100)
 );
 
@@ -56,16 +44,15 @@ create table proveedores_ucu (
 create table productos_ucu (
   id uuid default gen_random_uuid() primary key,
   proveedor_id uuid references proveedores_ucu(id) on delete cascade,
+  codigo_producto text default 'PROD-' || to_char(nextval('seq_codigo_producto'), 'FM0000') unique not null,
   
-  -- Genera autoincremental tipo 'PRD-0001' al insertar
-  codigo_producto text default 'PRD-' || to_char(nextval('seq_codigo_producto'), 'FM0000') unique not null,
+  nombre text not null check (char_length(nombre) <= 75),
+  categoria text,                                                          
+  precio numeric(10, 2) not null check (precio > 0 and precio < 99999), 
   
-  nombre text not null,
-  categoria text,                                           
-  precio numeric(10, 2) not null, 
-
   -- Ciclo de Vida
   mat_reciclados_pct integer check (mat_reciclados_pct between 0 and 100),
   es_reciclable boolean default false,
-  es_reusable boolean default false
+  es_reusable boolean default false,
+  estado text default 'aprobado' check (estado in ('pendiente', 'aprobado', 'rechazado'))
 );

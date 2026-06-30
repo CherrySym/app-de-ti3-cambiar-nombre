@@ -239,7 +239,7 @@
           </div>
           <div class="form-group">
             <label for="telefono">Teléfono de Contacto *</label>
-            <input type="tel" id="telefono" required class="form-input" placeholder="Ej: +598 2 500 1111" maxlength="20">
+            <input type="text" id="telefono" required class="form-input" placeholder="Ej: +598 2 500 1111" maxlength="20">
           </div>
         </div>
 
@@ -298,14 +298,14 @@
         <div class="form-row">
           <div class="form-group">
             <label for="pdf_certificados">Adjuntar Comprobantes de Certificación (PDF):</label>
-            <input type="file" id="pdf_certificados" accept=".pdf" class="form-input" maxlength="25">
+            <input type="file" id="pdf_certificados" accept=".pdf" class="form-input">
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label for="descripcion">Descripción Comercial:</label>
-            <textarea id="descripcion" class="form-textarea" placeholder="Breve resumen de la trayectoria e insumos que provee la empresa..." maxlength="500"></textarea>
+            <textarea id="descripcion" class="form-textarea" placeholder="Breve resumen de la trayectoria e insumos que provee la empresa..." maxlength="1000"></textarea>
           </div>
         </div>
 
@@ -324,7 +324,7 @@
             </div>
             <div class="form-group">
               <label for="prodPrecio">Precio Sugerido (UYU)</label>
-              <input type="number" id="prodPrecio" class="form-input" placeholder="Monto en pesos" min="1" step="0.01" max="99999" maxlength="7"> <!--no puedo limitar la longitud del precio-->
+              <input type="number" id="prodPrecio" class="form-input" placeholder="Monto en pesos" min="0.01" step="0.01" max="99998.99">
             </div>
           </div>
 
@@ -341,23 +341,23 @@
             </div>
             <div class="form-group">
               <label for="prodPct">% Material Reciclado</label>
-              <input type="number" id="prodPct" class="form-input" placeholder="0 a 100" min="0" max="100" value="0" maxlength="3"> <!--no puedo limitar la longitud del porcentaje-->
+              <input type="number" id="prodPct" class="form-input" placeholder="0 a 100" min="0" max="100" value="0">
             </div>
           </div>
 
           <div class="form-row">
             <fieldset class="form-group" style="border: none; padding: 0; margin: 0 0 20px 0;">
-              <legend style="font-weight: 600; color: #334155; margin-bottom: 8px; font-size: 14px;">Atributos Ecológicos del Producto:</legend>
+              <legend style="font-weight: 600; color: #334155; margin-bottom: 8px; font-size: 14px;">Propiedades Sostentables del Producto:</legend>
               <div class="checkbox-group">
                 <label class="checkbox-label"><input type="checkbox" id="prodReciclable"> ¿Es Reciclable?</label>
-                <label class="checkbox-label"><input type="checkbox" id="prodReutilizable"> ¿Es Reusable?</label>
+                <label class="checkbox-label"><input type="checkbox" id="prodReutilizable"> ¿Es Reutilizable?</label>
               </div>
             </fieldset>
           </div>
 
           <button type="button" onclick="agregarProductoLista()" style="background: #ffffff; color: #1e3264; border: 1px solid #1e3264; padding: 10px 20px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer; width: auto; margin-top: 5px;">
             + Agregar Producto a la Lista
-          </button> <!-- este boton es el que tiene que validad que los campos esten validos y no esten fuera de rango o incorrectos (sacar la funcion del boton terimnar postulacion y enviar y meterla aca (solo esa parte de validaco ))-->
+          </button>
         </div>
 
         <div id="vistaPreviaProductos" style="margin-bottom: 25px; display: none;">
@@ -400,28 +400,44 @@
 
     window.agregarProductoLista = function() {
       const nombre = document.getElementById("prodNombre").value.trim();
-      const precio = document.getElementById("prodPrecio").value;
+      const precioRaw = document.getElementById("prodPrecio").value;
       const category = document.getElementById("prodCategoria").value;
-      const pct = document.getElementById("prodPct").value;
+      const pctRaw = document.getElementById("prodPct").value;
       const reciclable = document.getElementById("prodReciclable").checked;
       const reusable = document.getElementById("prodReutilizable").checked;
 
-      if (!nombre || !precio || !category) {
+      // 1. VALIDACIÓN DE CAMPOS REQUERIDOS
+      if (!nombre || !precioRaw || !category) {
         alert("Por favor complete Nombre, Precio y Categoría del producto antes de agregarlo.");
+        return;
+      }
+
+      const precio = parseFloat(precioRaw);
+      const pct = parseInt(pctRaw) || 0;
+
+      // 2. VALIDACIÓN DE RANGOS NUMÉRICOS (EVITA SOBREFLUJOS SQL)
+      if (precio <= 0 || precio >= 99999) {
+        alert("Error de Rango: El precio del producto no es válido.");
+        return;
+      }
+
+      if (pct < 0 || pct > 100) {
+        alert("Error de Rango: El porcentaje de material reciclado debe estar entre 0 y 100.");
         return;
       }
 
       const nuevoProducto = {
         nombre: nombre,
-        precio: parseFloat(precio),
+        precio: precio,
         categoria: category,
-        mat_reciclados_pct: parseInt(pct) || 0,
+        mat_reciclados_pct: pct,
         es_reciclable: reciclable,
         es_reusable: reusable
       };
 
       productosAgregados.push(nuevoProducto);
 
+      // Limpieza de inputs
       document.getElementById("prodNombre").value = "";
       document.getElementById("prodPrecio").value = "";
       document.getElementById("prodCategoria").value = "";
@@ -499,7 +515,6 @@
       const tieneEmas = document.getElementById("tiene_emas").checked;
 
       try {
-        // CORRECCIÓN: 'contacto_persona' alineado estrictamente al esquema SQL
         const { data: nuevoProveedor, error: errorProv } = await supabaseClient
           .from('proveedores_ucu')
           .insert([
@@ -529,7 +544,6 @@
 
         const nuevoProveedorId = nuevoProveedor.id;
 
-        // AJUSTE: Mapeo inyectando explícitamente estado 'pendiente' a los productos propuestos
         const productosAInsertar = productosAgregados.map(p => ({
           proveedor_id: nuevoProveedorId,
           nombre: p.nombre,

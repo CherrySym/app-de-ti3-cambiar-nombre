@@ -170,6 +170,30 @@
         box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.15);
       }
 
+      /* Estilos para el contenedor de Checkboxes */
+      .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        margin: 5px 0;
+      }
+
+      .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        color: #13213c;
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .checkbox-label input {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
+
       .btn-submit-prod {
         background: linear-gradient(135deg, #1e3264 0%, #13213c 100%);
         color: white;
@@ -255,7 +279,7 @@
               gap: 5px;
             "
           >
-            ← Volver atrás
+            &larr; Volver atrás
           </a>
         </div>
         <h2>Agregar Nuevo Producto Sostenible</h2>
@@ -277,11 +301,11 @@
           <div class="form-row">
             <div class="form-group">
               <label for="nombreProducto">Nombre del Producto:</label>
-              <input type="text" id="nombreProducto" required class="form-input" placeholder="Ej: Bolígrafos de Bambú Biodegradables" />
+              <input type="text" id="nombreProducto" required class="form-input" placeholder="Ej: Bolígrafos de Bambú Biodegradables" maxlength="75" />
             </div>
             <div class="form-group">
               <label for="precioProducto">Precio Unitario (UYU):</label>
-              <input type="number" id="precioProducto" required min="1" step="0.01" class="form-input" placeholder="Ej: 150" />
+              <input type="number" id="precioProducto" required min="0.01" step="0.01" max="99998.99" class="form-input" placeholder="Ej: 150" />
             </div>
           </div>
 
@@ -301,22 +325,17 @@
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="reciclable">¿Es Reciclable?:</label>
-              <select id="reciclable" class="form-select">
-                <option value="true">Sí</option>
-                <option value="false">No</option>
-              </select>
+          <fieldset class="form-group" style="border: none; padding: 0; margin: 0 0 20px 0;">
+            <legend style="font-weight: 600; color: #13213c; margin-bottom: 8px; font-size: 14px;">Propiedades Sostentables:</legend>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="reciclable" /> ¿Es Reciclable?
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="reutilizable" /> ¿Es Reutilizable?
+              </label>
             </div>
-            <div class="form-group">
-              <label for="reutilizable">¿Es Reusable?:</label>
-              <select id="reutilizable" class="form-select">
-                <option value="false">No</option>
-                <option value="true">Sí</option>
-              </select>
-            </div>
-          </div>
+          </fieldset>
 
           <button type="submit" id="btnSubmit" class="btn-submit-prod">
             Registrar Producto en el Catálogo
@@ -382,6 +401,7 @@
           } else {
             const { data: proveedores, error } = await supabaseClient
               .from('proveedores_ucu')
+              .select('id, Scientific:nombre') // Nota: Si 'Scientific:' causa problemas, déjalo solo como 'nombre'
               .select('id, nombre')
               .eq('estado', 'aprobada')
               .order('nombre', { ascending: true });
@@ -403,7 +423,7 @@
           }
         } catch (err) {
           console.error("Error inicializando proveedores:", err);
-          textoProv.innerHTML = `❌ Error al inicializar el formulario: ${err.message}`;
+          textoProv.innerHTML = `Error al inicializar el formulario: ${err.message}`;
           textoProv.style.backgroundColor = "#fee2e2";
           textoProv.style.color = "#991b1b";
           textoProv.style.borderColor = "#fca5a5";
@@ -416,26 +436,39 @@
       window.procesarEnvioProducto = async function(event) {
         event.preventDefault();
         
-        const btnSubmit = document.getElementById("btnSubmit");
-        btnSubmit.disabled = true;
-        btnSubmit.textContent = "Registrando insumo...";
-
         const selectProv = document.getElementById("selectProveedorAsignado");
         const proveedorId = idProveedorFinal || selectProv.value;
 
         if (!proveedorId) {
           alert("Por favor, seleccione un proveedor válido.");
-          btnSubmit.disabled = false;
-          btnSubmit.textContent = "Registrar Producto en el Catálogo";
           return;
         }
 
         const nombre = document.getElementById("nombreProducto").value.trim();
-        const precio = parseFloat(document.getElementById("precioProducto").value);
+        const precioRaw = document.getElementById("precioProducto").value;
         const categoria = document.getElementById("categoriaProducto").value;
-        const pctReciclado = parseInt(document.getElementById("pctReciclado").value, 10);
-        const esReciclable = document.getElementById("reciclable").value === "true";
-        const esReusable = document.getElementById("reutilizable").value === "true";
+        const pctRaw = document.getElementById("pctReciclado").value;
+        
+        // CAMBIO: Ahora lee la propiedad .checked en lugar de .value string
+        const esReciclable = document.getElementById("reciclable").checked;
+        const esReusable = document.getElementById("reutilizable").checked;
+
+        const precio = parseFloat(precioRaw);
+        const pctReciclado = parseInt(pctRaw, 10) || 0;
+
+        if (precio <= 0 || precio >= 99999) {
+          alert("Error de Rango: El precio del insumo debe ser mayor a 0 y menor a 99,999 UYU.");
+          return;
+        }
+
+        if (pctReciclado < 0 || pctReciclado > 100) {
+          alert("Error de Rango: El porcentaje de material reciclado debe estar comprendido estrictamente entre 0 y 100.");
+          return;
+        }
+
+        const btnSubmit = document.getElementById("btnSubmit");
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = "Registrando insumo...";
 
         try {
           const { error } = await supabaseClient

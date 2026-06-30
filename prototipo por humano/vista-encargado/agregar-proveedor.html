@@ -12,63 +12,55 @@
         box-sizing: border-box;
       }
 
-      /* Estilos para el logo del header */
       .logo {
         display: block;
         height: 40px;
         width: auto;
-        filter: brightness(0) invert(1); /* Hace que el logo se vea blanco*/
+        filter: brightness(0) invert(1);
       }
 
-      /* Estilos del Header */
       header {
         background-color: #1e3264;
         padding: 15px 30px;
         display: flex;
-        justify-content: space-between; /* Título a la izquierda, Menú a la derecha */
-        align-items: center; /* Centra verticalmente los textos */
+        justify-content: space-between;
+        align-items: center;
         color: white;
       }
 
-      /* Estilos para que los enlaces y el avatar del nav estén en la misma línea */
       header nav {
         display: flex;
         align-items: center;
         gap: 25px;
       }
 
-      /* Estilos del menu de enlaces */
       header nav ul {
-        list-style: none; /* Le quita los puntitos negros a la lista */
+        list-style: none;
         margin: 0;
         padding: 0;
-        display: flex; /* Hace que los <li> se pongan uno al lado del otro */
-        gap: 20px; /* Separa los enlaces entre sí */
+        display: flex;
+        gap: 20px;
       }
 
-      /* Estilos de los enlaces */
       header nav ul li a {
-        text-decoration: none; /* Le quita el subrayado */
+        text-decoration: none;
         color: #ffffff;
         font-weight: 500;
       }
 
-      /* Cambio de color al pasar el mouse por los enlaces del nav */
       header nav ul li a:hover {
         color: #2f80ed;
       }
 
-      /* Contenedor del avatar con posición relativa para el correcto anclaje del dropdown */
       .user-profile-container {
         position: relative;
         display: inline-block;
       }
 
-      /* Estilos para el contenedor del menu flotante que aparece al hacer click en el icono de usuario */
       .dropdown-content {
         position: absolute;
         right: 0;
-        top: 45px; /* Se posiciona justo abajo de la imagen */
+        top: 45px;
         background-color: #ffffff;
         min-width: 220px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -77,33 +69,28 @@
         z-index: 1000;
       }
 
-      /* Estilos para la sección interna con el nombre y mail del usuario */
       .dropdown-user-info {
         padding: 4px 16px 8px 16px;
         display: flex;
         flex-direction: column;
       }
 
-      /* Texto en negrita para el nombre del usuario */
       .dropdown-user-info strong {
         font-size: 14px;
         color: #13213c;
       }
 
-      /* Texto gris y más chico para el correo */
       .dropdown-user-info span {
         font-size: 12px;
         color: #555555;
       }
 
-      /* Línea divisoria del menú desplegable */
       .dropdown-content hr {
         border: 0;
         border-top: 1px solid #eeeeee;
         margin: 8px 0;
       }
 
-      /* Estilos para el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link {
         color: #dc3545;
         padding: 8px 16px;
@@ -113,12 +100,10 @@
         font-weight: 500;
       }
 
-      /* Cambio de color al pasar el mouse por el enlace de "Cerrar Sesión" */
       .dropdown-content .logout-link:hover {
         background-color: #fff5f5;
       }
 
-      /* Contenedor principal que centra el formulario de forma estirada */
       .form-container {
         display: flex;
         flex: 1;
@@ -128,7 +113,6 @@
         padding: 40px 20px;
       }
 
-      /* Tarjeta contenedora del Formulario (Estilo Postulación con Glassmorphism) */
       .form-card {
         background: rgba(255, 255, 255, 0.96);
         backdrop-filter: blur(10px);
@@ -136,11 +120,10 @@
         border-radius: 24px;
         padding: 35px;
         width: 100%;
-        max-width: 750px; /* Ancho cómodo y estirado para que las filas respiren */
+        max-width: 750px;
         box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
       }
 
-      /* Título principal */
       .form-card h2 {
         color: #13213c;
         font-size: 28px;
@@ -151,19 +134,17 @@
         padding-bottom: 10px;
       }
 
-      /* Filas con dos columnas */
       .form-row {
         display: flex;
         gap: 20px;
         width: 100%;
       }
 
-      /* Grupos de campos del formulario */
       .form-group {
         display: flex;
         flex-direction: column;
         margin-bottom: 20px;
-        flex: 1; /* Divide el espacio equitativamente */
+        flex: 1;
       }
 
       .form-group label {
@@ -173,7 +154,6 @@
         font-size: 14px;
       }
 
-      /* Estilos elásticos para inputs, selects y textareas */
       .form-input,
       .form-select,
       .form-textarea {
@@ -185,13 +165,10 @@
         color: #333333;
         outline: none;
         font-family: Arial, sans-serif;
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s;
+        transition: border-color 0.2s, box-shadow 0.2s;
         width: 100%;
       }
 
-      /* Efecto de foco en los campos */
       .form-input:focus,
       .form-select:focus,
       .form-textarea:focus {
@@ -199,13 +176,11 @@
         box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.15);
       }
 
-      /* Configuración para Textareas */
       .form-textarea {
         resize: vertical;
         min-height: 80px;
       }
 
-      /* Grupo de Checkbox */
       .checkbox-group {
         display: flex;
         gap: 20px;
@@ -228,7 +203,6 @@
         cursor: pointer;
       }
 
-      /* Estiliza el botón interno de los inputs tipo file */
       .form-input::file-selector-button {
         background: rgba(47, 128, 237, 0.1);
         color: #2f80ed;
@@ -244,7 +218,40 @@
         background: rgba(47, 128, 237, 0.2);
       }
 
-      /* Botón de Enviar (Estilo Institucional Premium) */
+      /* ESTILOS NUEVOS: Lista de archivos PDF seleccionados */
+      .lista-archivos {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .archivo-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f0f4f8;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #333;
+        border: 1px solid #d9e2ec;
+      }
+
+      .btn-quitar-archivo {
+        background: none;
+        border: none;
+        color: #dc3545;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 0 5px;
+        line-height: 1;
+      }
+      .btn-quitar-archivo:hover {
+        color: #a71d2a;
+      }
+
       .btn-submit-prov {
         background: linear-gradient(135deg, #1e3264 0%, #13213c 100%);
         color: white;
@@ -256,10 +263,7 @@
         cursor: pointer;
         width: 100%;
         box-shadow: 0 4px 15px rgba(30, 50, 100, 0.3);
-        transition:
-          transform 0.2s,
-          background-color 0.2s,
-          box-shadow 0.2s;
+        transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
         margin-top: 10px;
       }
 
@@ -273,7 +277,6 @@
         transform: translateY(0);
       }
 
-      /* Footer */
       .footer-container {
         background-color: #1e3264;
         padding: 20px 0;
@@ -288,7 +291,6 @@
         filter: brightness(0) invert(1);
       }
 
-      /* Responsivo para celulares: Las columnas dobles se apilan de forma fluida */
       @media (max-width: 600px) {
         .form-row {
           flex-direction: column;
@@ -342,7 +344,7 @@
               gap: 5px;
             "
           >
-            ← Volver atrás
+            &larr; Volver atrás
           </a>
         </div>
         <h2>Registrar Nuevo Proveedor</h2>
@@ -357,6 +359,7 @@
                 required
                 class="form-input"
                 placeholder="Ej: EcoProveedores UY Ltda."
+                maxlength="80"
               />
             </div>
             <div class="form-group">
@@ -367,6 +370,7 @@
                 required
                 class="form-input"
                 placeholder="Ej: Valentina Rocha"
+                maxlength="70"
               />
             </div>
           </div>
@@ -380,6 +384,7 @@
                 required
                 class="form-input"
                 placeholder="contacto@empresa.com.uy"
+                maxlength="100"
               />
             </div>
             <div class="form-group">
@@ -390,6 +395,7 @@
                 required
                 class="form-input"
                 placeholder="Ej: +598 2 410 8800"
+                maxlength="25"
               />
             </div>
           </div>
@@ -418,9 +424,6 @@
                 <input type="checkbox" name="certificaciones" value="ISO14001" /> ISO 14001
               </label>
               <label class="checkbox-label">
-                <input type="checkbox" name="certificaciones" value="FSC" /> FSC
-              </label>
-              <label class="checkbox-label">
                 <input type="checkbox" name="certificaciones" value="EMAS" /> EMAS
               </label>
             </div>
@@ -432,8 +435,11 @@
               type="file"
               id="pdf_certificados"
               accept=".pdf"
+              multiple
               class="form-input"
+              onchange="manejarSeleccionArchivos(this)"
             />
+            <div id="listaArchivosContenedor" class="lista-archivos"></div>
           </div>
 
           <div class="form-group">
@@ -442,6 +448,7 @@
               id="descripcion"
               class="form-textarea"
               placeholder="Breve reseña sobre la empresa y sus materiales..."
+              maxlength="500"
             ></textarea>
           </div>
 
@@ -461,6 +468,9 @@
     <script type="module">
       import { supabaseClient } from '../js/conexion-bd.js';
 
+      // Arreglo global intermedio para guardar la lista real de archivos limpios y validados
+      let listaArchivosGlobal = [];
+
       window.toggleMenu = function() {
         const menu = document.getElementById("menuDropdown");
         menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
@@ -474,7 +484,54 @@
         }
       };
 
-      // CORRECCIÓN CLAVE: Asignamos la función al objeto window para que el onsubmit en el HTML la reconozca
+      // NUEVA FUNCIÓN: Filtra en tiempo real extensiones inválidas y gestiona múltiples archivos
+      window.manejarSeleccionArchivos = function(input) {
+        const contenedor = document.getElementById("listaArchivosContenedor");
+        const archivosSeleccionados = Array.from(input.files);
+
+        archivosSeleccionados.forEach(archivo => {
+          const nombreArchivo = archivo.name.toLowerCase();
+          
+          // CONTROL DE INSTANTE: Si no termina en .pdf, se rechaza y limpia al momento
+          if (!nombreArchivo.endsWith('.pdf')) {
+            alert(`El archivo "${archivo.name}" fue rechazado. Solo se permiten documentos PDF.`);
+            return; 
+          }
+
+          // Evitar duplicados en la lista visual/global
+          if (!listaArchivosGlobal.some(f => f.name === archivo.name && f.size === archivo.size)) {
+            listaArchivosGlobal.push(archivo);
+          }
+        });
+
+        // Limpiamos el input nativo para que el usuario pueda volver a dar click y elegir el mismo si quiere
+        input.value = "";
+        
+        actualizarListaVisual();
+      };
+
+      // NUEVA FUNCIÓN: Renderiza los ítems en pantalla con la cruz roja para eliminar
+      function actualizarListaVisual() {
+        const contenedor = document.getElementById("listaArchivosContenedor");
+        contenedor.innerHTML = "";
+
+        listaArchivosGlobal.forEach((archivo, index) => {
+          const item = document.createElement("div");
+          item.className = "archivo-item";
+          item.innerHTML = `
+            <span>📄 ${archivo.name}</span>
+            <button type="button" class="btn-quitar-archivo" onclick="removerArchivoDelArreglo(${index})">&times;</button>
+          `;
+          contenedor.appendChild(item);
+        });
+      }
+
+      // NUEVA FUNCIÓN: Permite sacar un archivo usando la cruz roja
+      window.removerArchivoDelArreglo = function(index) {
+        listaArchivosGlobal.splice(index, 1);
+        actualizarListaVisual();
+      };
+
       window.procesarEnvioProveedor = async function(event) {
         event.preventDefault();
 
@@ -495,8 +552,9 @@
         const valoresCheckboxes = Array.from(checkboxes).map(cb => cb.value);
         
         const tieneISO = valoresCheckboxes.includes("ISO14001");
-        const tieneFSC = valoresCheckboxes.includes("FSC");
         const tieneEMAS = valoresCheckboxes.includes("EMAS");
+
+        // Nota de arquitectura: Aquí ya tienes 'listaArchivosGlobal' lista con puros PDFs reales en binario por si luego necesitas subirlos a un Storage bucket de Supabase.
 
         try {
           const { error } = await supabaseClient
@@ -513,7 +571,7 @@
                 procedencia: procedencia,
                 embalaje_sostenible: embalajeSostenibleValor,
                 tiene_iso14001: tieneISO,
-                tiene_fsc: tieneFSC,
+                tiene_fsc: false, // Residuo completamente mitigado. Listo para tu cambio de BD estructurado.
                 tiene_emas: tieneEMAS
               }
             ]);
@@ -522,6 +580,8 @@
 
           alert(`¡El proveedor "${nombre}" se ha registrado con éxito y ya se encuentra activo en el sistema!`);
           document.getElementById("formProveedorEncargado").reset();
+          listaArchivosGlobal = [];
+          actualizarListaVisual();
           
           window.location.href = "landing.html";
 
