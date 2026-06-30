@@ -6,7 +6,21 @@
     <title>Simulador de Compras - UCU</title>
     <link rel="stylesheet" href="../css/global-styles.css" />
     <style>
-      /* Estilos para el logo del header */
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: url("../assets/fondo-ucu.jpeg") no-repeat center top fixed;
+        background-size: cover;
+        background-color: #e4dccf; /* Color base estable */
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
       .logo {
         display: block;
         height: 40px;
@@ -14,7 +28,6 @@
         filter: brightness(0) invert(1);
       }
 
-      /* Estilos del Header */
       header {
         background-color: #1e3264;
         padding: 15px 30px;
@@ -69,6 +82,7 @@
         padding: 4px 16px 8px 16px;
         display: flex;
         flex-direction: column;
+        text-align: left;
       }
 
       .dropdown-user-info strong {
@@ -100,7 +114,7 @@
         background-color: #fff5f5;
       }
 
-      /* Layout Elástico de Dos Columnas (Tabla + Carrito) */
+      /* Layout de Dos Columnas (Tabla + Carrito) */
       .shop-container {
         flex: 1;
         max-width: 1300px;
@@ -137,20 +151,33 @@
 
       .btn-back {
         text-decoration: none;
-        color: #1e3264;
         font-weight: 600;
-        font-size: 14px;
         display: inline-flex;
         align-items: center;
         gap: 5px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        background-color: #1e3264;
+        color: #ffffff;
+        border: 2px solid #1e3264;
+        transition: all 0.2s ease-in-out;
+        font-size: 14px;
+      }
+
+      .btn-back:hover {
+        background-color: #ffffff;
+        color: #1e3264;
+        border-color: #1e3264;
       }
 
       .page-title {
-        color: #13213c;
-        margin-top: 10px;
-        margin-bottom: 25px;
-        font-size: 28px;
+        color: #1e3264;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 26px;
         font-weight: 700;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 12px;
       }
 
       .filter-section {
@@ -158,7 +185,7 @@
         backdrop-filter: blur(10px);
         border: 1px solid rgba(19, 33, 60, 0.1);
         border-radius: 12px;
-        padding: 20px;
+        padding: 25px;
         margin-bottom: 25px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       }
@@ -177,13 +204,14 @@
       }
 
       .filter-group label {
-        font-size: 12px;
-        font-weight: 600;
+        font-size: 11px;
+        font-weight: 700;
         color: #13213c;
         text-transform: uppercase;
       }
 
-      .filter-input, .filter-select {
+      .filter-input,
+      .filter-select {
         padding: 10px;
         border: 1px solid #cbd5e1;
         border-radius: 6px;
@@ -250,33 +278,37 @@
         color: #334155;
       }
 
+      /* Controles de cantidad interactivos */
+      .btn-qty-control {
+        background-color: #f1f5f9;
+        color: #1e3264;
+        border: 1px solid #cbd5e1;
+        font-weight: bold;
+        font-size: 15px;
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.1s;
+      }
+      .btn-qty-control:hover {
+        background-color: #cbd5e1;
+      }
+
       .input-qty {
-        width: 55px;
-        padding: 6px;
+        width: 45px;
+        height: 30px;
         border: 1px solid #cbd5e1;
         border-radius: 4px;
         text-align: center;
-        font-size: 13px;
-        outline: none;
-      }
-      .input-qty:focus {
-        border-color: #2f80ed;
-      }
-
-      .btn-add-cart {
-        background-color: #1e3264;
-        color: white;
-        border: none;
-        padding: 6px 12px;
         font-size: 14px;
-        font-weight: 600;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-      }
-
-      .btn-add-cart:hover {
-        background-color: #2f80ed;
+        font-weight: bold;
+        outline: none;
+        background-color: #ffffff;
+        color: #333333;
       }
 
       /* Panel Lateral del Carrito */
@@ -324,6 +356,7 @@
         display: flex;
         flex-direction: column;
         gap: 2px;
+        text-align: left;
       }
 
       .cart-item-name {
@@ -396,6 +429,34 @@
         color: #1e3264;
         font-weight: 600;
       }
+
+      /* Estilos base para el badge del puntaje */
+      .badge-score {
+        padding: 3px 8px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: bold;
+        margin-left: 6px;
+        display: inline-block;
+      }
+
+      /* ESTILOS SÉMAFORO PARA PUNTAJES */
+      .score-high {
+        background-color: #dcfce7;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+      }
+      .score-medium {
+        background-color: #fef3c7;
+        color: #b45309;
+        border: 1px solid #fde68a;
+      }
+      .score-low {
+        background-color: #fee2e2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+      }
+
       .badge-cat {
         background-color: #f1f5f9;
         padding: 2px 6px;
@@ -422,12 +483,19 @@
       .badge-c {
         background-color: #e0f2fe;
         color: #0369a1;
-        padding: 2px 4px;
+        border: 1px solid #bae6fd;
+        padding: 3px 6px;
         border-radius: 4px;
         font-size: 11px;
         font-weight: 600;
         margin-right: 3px;
         display: inline-block;
+        text-decoration: none;
+      }
+      .badge-c.fsc-link:hover {
+        background-color: #bae6fd;
+        color: #025a87;
+        transform: translateY(-1px);
       }
 
       .footer-container {
@@ -446,7 +514,7 @@
     </style>
   </head>
 
-  <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
+  <body>
     <header>
       <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo" />
       <nav>
@@ -455,15 +523,26 @@
             src="../assets/icono generico de usuario.png"
             alt="Perfil"
             onclick="toggleMenu()"
-            style="width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: block;"
+            style="
+              width: 38px;
+              height: 38px;
+              border-radius: 50%;
+              cursor: pointer;
+              display: block;
+            "
           />
           <div id="menuDropdown" class="dropdown-content" style="display: none">
             <div class="dropdown-user-info">
-              <strong>Encargado de Compras</strong>
-              <span>compras@correo.ucu.edu.uy</span>
+              <strong id="perfilUsuario">Encargado de Compras</strong>
+              <span id="perfilEmail">compras@correo.ucu.edu.uy</span>
             </div>
             <hr />
-            <a href="../login.html" class="logout-link">Cerrar Sesión</a>
+            <a
+              href="../login.html"
+              onclick="sessionStorage.clear()"
+              class="logout-link"
+              >Cerrar Sesión</a
+            >
           </div>
         </div>
       </nav>
@@ -472,11 +551,16 @@
     <main class="shop-container">
       <div class="left-panel">
         <div class="btn-back-container">
-          <a href="#" onclick="window.history.back(); return false;" class="btn-back">← Volver atrás</a>
+          <!-- PREVENCIÓN DE BUCLE: Enlace directo al panel del encargado -->
+          <a href="landing.html" class="btn-back">← Volver al Panel</a>
         </div>
 
-        <h2 class="page-title" id="dinamic-title">Ordenar Productos Sostenibles</h2>
         <section class="filter-section">
+          <!-- TÍTULO INTEGRADO DENTRO DE LA TARJETA PARA EXCELENTE CONTRASTE -->
+          <h2 class="page-title" id="dinamic-title">
+            Comprar Productos Sostenibles
+          </h2>
+
           <div class="filter-grid">
             <div class="filter-group">
               <label for="searchProveedor">Filtrar por Proveedor:</label>
@@ -499,7 +583,10 @@
               </select>
             </div>
 
-            <div class="filter-group" style="flex-direction: row; gap: 20px; padding-bottom: 8px">
+            <div
+              class="filter-group"
+              style="flex-direction: row; gap: 20px; padding-bottom: 8px"
+            >
               <label class="checkbox-label">
                 <input type="checkbox" id="checkReciclable" /> Reciclable
               </label>
@@ -522,12 +609,16 @@
                   <th>Recic.</th>
                   <th>Reutil.</th>
                   <th>% Mat.</th>
-                  <th>Certificaciones</th>
-                  <th style="text-align: center; width: 130px">Cantidad</th>
+                  <th>Certificaciones del Producto</th>
+                  <th style="text-align: center; width: 140px">Cantidad</th>
                 </tr>
               </thead>
               <tbody id="tbody-catalogo">
-                <tr><td colspan="9" style="text-align:center; color: #1e3264;">Cargando catálogo en tiempo real...</td></tr>
+                <tr>
+                  <td colspan="9" style="text-align: center; color: #1e3264">
+                    Cargando catálogo en tiempo real...
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -538,7 +629,17 @@
         <div class="cart-card">
           <h3>
             <span>Carrito</span>
-            <span id="cart-count" style="font-size: 13px; background: #1e3264; color: white; padding: 2px 8px; border-radius: 10px;">0</span>
+            <span
+              id="cart-count"
+              style="
+                font-size: 13px;
+                background: #1e3264;
+                color: white;
+                padding: 2px 8px;
+                border-radius: 10px;
+              "
+              >0</span
+            >
           </h3>
 
           <div id="cart-list" class="cart-list"></div>
@@ -562,80 +663,120 @@
     </footer>
 
     <script type="module">
-      import { supabaseClient } from '../js/conexion-bd.js';
+      import { supabaseClient } from "../js/conexion-bd.js";
 
       // Variables de estado
       let carrito = [];
       let productosGlobales = [];
 
-      // --- MENÚ DESPLEGABLE CON ALCANCE GLOBAL ---
-      window.toggleMenu = function() {
+      // --- MENÚ DESPLEGABLE ---
+      window.toggleMenu = function () {
         const menu = document.getElementById("menuDropdown");
-        menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+        menu.style.display =
+          menu.style.display === "none" || menu.style.display === ""
+            ? "block"
+            : "none";
       };
 
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
         const avatar = document.querySelector("header nav img");
-        if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
+        if (
+          menu &&
+          menu.style.display === "block" &&
+          event.target !== avatar &&
+          !menu.contains(event.target)
+        ) {
           menu.style.display = "none";
         }
       };
 
       // --- CARGA DE DATOS ---
       document.addEventListener("DOMContentLoaded", async () => {
-        document.getElementById("searchProveedor").addEventListener("keyup", filtrarTabla);
-        document.getElementById("selectCategoria").addEventListener("change", filtrarTabla);
-        document.getElementById("checkReciclable").addEventListener("change", filtrarTabla);
-        document.getElementById("checkReutilizable").addEventListener("change", filtrarTabla);
-        document.getElementById("btn-confirm").addEventListener("click", confirmarPedido);
+        // Cargar información del usuario del sessionStorage
+        const usuarioLogueado = sessionStorage.getItem("usuarioUCU");
+        if (usuarioLogueado) {
+          const partes = usuarioLogueado.split(".");
+          const nombreCompleto = partes
+            .map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+            .join(" ");
+          const profileName = document.getElementById("perfilUsuario");
+          const profileEmail = document.getElementById("perfilEmail");
+          if (profileName) profileName.innerText = nombreCompleto;
+          if (profileEmail)
+            profileEmail.innerText = `${usuarioLogueado.toLowerCase()}@correo.ucu.edu.uy`;
+        }
+
+        document
+          .getElementById("searchProveedor")
+          .addEventListener("keyup", filtrarTabla);
+        document
+          .getElementById("selectCategoria")
+          .addEventListener("change", filtrarTabla);
+        document
+          .getElementById("checkReciclable")
+          .addEventListener("change", filtrarTabla);
+        document
+          .getElementById("checkReutilizable")
+          .addEventListener("change", filtrarTabla);
+        document
+          .getElementById("btn-confirm")
+          .addEventListener("click", confirmarPedido);
 
         const urlParams = new URLSearchParams(window.location.search);
-        const proveedorId = urlParams.get('id');
+        const proveedorId = urlParams.get("id");
 
         try {
+          // CORRECCIÓN: FSC y url_certificado pertenecen a la tabla productos.
+          // 'proveedores_ucu' solo provee nombre y su puntuación de sostenibilidad.
+          // Además, solo cargamos los productos que estén aprobados para la venta.
           let query = supabaseClient
-            .from('productos_ucu')
-            .select(`
-              id,
-              nombre,
-              precio,
-              categoria,
-              es_reciclable,
-              es_reusable,
-              mat_reciclados_pct,
-              proveedor_id,
-              proveedores_ucu (
-                nombre,
-                tiene_iso14001,
-                tiene_fsc,
-                tiene_emas
-              )
-            `);
+            .from("productos_ucu")
+            .select(
+              `
+ id,
+ nombre,
+ precio,
+ categoria,
+ es_reciclable,
+ es_reusable,
+ mat_reciclados_pct,
+ tiene_fsc,
+ url_certificado,
+ proveedor_id,
+ proveedores_ucu (
+ nombre,
+ puntaje_total
+ )
+ `,
+            )
+            .eq("estado", "aprobado");
 
           if (proveedorId) {
-            query = query.eq('proveedor_id', proveedorId);
+            query = query.eq("proveedor_id", proveedorId);
           }
 
           const { data, error } = await query;
           if (error) throw error;
 
           productosGlobales = data || [];
-          
+
           if (proveedorId && productosGlobales.length > 0) {
             const inputProv = document.getElementById("searchProveedor");
-            const nombreProvFiltrado = productosGlobales[0].proveedores_ucu?.nombre || "Proveedor Seleccionado";
-            
+            const nombreProvFiltrado =
+              productosGlobales[0].proveedores_ucu?.nombre ||
+              "Proveedor Seleccionado";
+
             inputProv.value = nombreProvFiltrado;
             inputProv.disabled = true;
-            document.getElementById("dinamic-title").innerText = `Catálogo: ${nombreProvFiltrado}`;
+            document.getElementById("dinamic-title").innerText =
+              `Catálogo: ${nombreProvFiltrado}`;
           }
 
           renderizarCatalogo(productosGlobales);
-
         } catch (err) {
           console.error("Error al descargar catálogo:", err);
-          document.getElementById("tbody-catalogo").innerHTML = 
+          document.getElementById("tbody-catalogo").innerHTML =
             `<tr><td colspan="9" style="text-align:center; color: red; font-weight: bold;">Error al conectar con Supabase: ${err.message}</td></tr>`;
         }
       });
@@ -650,81 +791,142 @@
         }
 
         listaProductos.forEach((prod, idx) => {
-          const recBadge = prod.es_reciclable ? '<span class="badge-y">SÍ</span>' : '<span class="badge-n">NO</span>';
-          const reuBadge = prod.es_reusable ? '<span class="badge-y">SÍ</span>' : '<span class="badge-n">NO</span>';
+          // Ajuste: Visualización de SI y NO estrictamente en mayúsculas (SI y NO)
+          const recBadge = prod.es_reciclable
+            ? '<span class="badge-y">SI</span>'
+            : '<span class="badge-n">NO</span>';
+          const reuBadge = prod.es_reusable
+            ? '<span class="badge-y">SI</span>'
+            : '<span class="badge-n">NO</span>';
 
           let certsHtml = "";
           const p = prod.proveedores_ucu;
-          if (p) {
-            if (p.tiene_iso14001) certsHtml += '<span class="badge-c">ISO 14001</span>';
-            if (p.tiene_fsc) certsHtml += '<span class="badge-c">FSC</span>';
-            if (p.tiene_emas) certsHtml += '<span class="badge-c">EMAS</span>';
+
+          // CORRECCIÓN: Filtrado para mostrar ÚNICAMENTE certificaciones de producto (FSC) y no las de la empresa (ISO/EMAS)
+          if (prod.tiene_fsc) {
+            const linkCertificado =
+              prod.url_certificado || "https://pdfobject.com/pdf/sample.pdf";
+            certsHtml += `<a href="${linkCertificado}" target="_blank" class="badge-c fsc-link" style="text-decoration: underline; cursor: pointer;">FSC (Ver PDF)</a>`;
           }
+
           if (!certsHtml) certsHtml = "-";
 
-          const nombreProveedor = p ? p.nombre : "Sin asignar";
+          // FORMATO SEMÁFORO PARA EL PUNTAJE DE SOSTENIBILIDAD
+          let scoreHtml = "";
+          if (p && p.puntaje_total !== null) {
+            const score = parseFloat(p.puntaje_total);
+            let scoreClass = "score-low";
+
+            if (score >= 75) {
+              scoreClass = "score-high"; // Verde
+            } else if (score >= 45) {
+              scoreClass = "score-medium"; // Amarillo/Naranja
+            }
+            scoreHtml = `<span class="badge-score ${scoreClass}">${score} pts</span>`;
+          }
+
+          const nombreProveedor = p
+            ? `${p.nombre} ${scoreHtml}`
+            : "Sin asignar";
+
+          // Sincronización: Verificar si el producto ya está en el carrito para mantener su cantidad al redibujar
+          const itemEnCarrito = carrito.find(
+            (item) => item.nombre === prod.nombre,
+          );
+          const cantidadInicial = itemEnCarrito ? itemEnCarrito.cantidad : 0;
 
           const fila = document.createElement("tr");
           fila.innerHTML = `
-            <td><strong>${prod.nombre}</strong></td>
-            <td class="badge-prov">${nombreProveedor}</td>
-            <td><strong>$${prod.precio}</strong></td>
-            <td><span class="badge-cat">${prod.categoria || '-'}</span></td>
-            <td>${recBadge}</td>
-            <td>${reuBadge}</td>
-            <td>${prod.mat_reciclados_pct || 0}%</td>
-            <td>${certsHtml}</td>
-            <td style="text-align: center; display: flex; gap: 6px; justify-content: center; align-items: center;">
-              <input type="number" id="qty-${idx}" class="input-qty" value="1" min="1">
-              <button id="btn-add-${idx}" class="btn-add-cart">＋</button>
-            </td>
-          `;
+ <td><strong>${prod.nombre}</strong></td>
+ <td class="badge-prov">${nombreProveedor}</td>
+ <td><strong>$${prod.precio}</strong></td>
+ <td><span class="badge-cat">${prod.categoria || "-"}</span></td>
+ <td>${recBadge}</td>
+ <td>${reuBadge}</td>
+ <td>${prod.mat_reciclados_pct || 0}%</td>
+ <td>${certsHtml}</td>
+ <td style="text-align: center; display: flex; gap: 6px; justify-content: center; align-items: center;">
+ <button id="btn-dec-${idx}" class="btn-qty-control">－</button>
+ <input type="number" id="qty-${idx}" class="input-qty" value="${cantidadInicial}" min="0" readonly>
+ <button id="btn-inc-${idx}" class="btn-qty-control">＋</button>
+ </td>
+ `;
           tbody.appendChild(fila);
 
-          document.getElementById(`btn-add-${idx}`).addEventListener("click", () => {
-            agregarAlCarrito(prod.nombre, prod.precio, `qty-${idx}`);
-          });
+          // Lógica interactiva: Los botones de incremento y decremento modifican el carrito en tiempo real
+          document
+            .getElementById(`btn-dec-${idx}`)
+            .addEventListener("click", () => {
+              const input = document.getElementById(`qty-${idx}`);
+              let currentVal = parseInt(input.value, 10) || 0;
+              if (currentVal > 0) {
+                const nuevoVal = currentVal - 1;
+                input.value = nuevoVal;
+                actualizarCarritoDirecto(prod.nombre, prod.precio, nuevoVal);
+              }
+            });
+
+          document
+            .getElementById(`btn-inc-${idx}`)
+            .addEventListener("click", () => {
+              const input = document.getElementById(`qty-${idx}`);
+              let currentVal = parseInt(input.value, 10) || 0;
+              const nuevoVal = currentVal + 1;
+              input.value = nuevoVal;
+              actualizarCarritoDirecto(prod.nombre, prod.precio, nuevoVal);
+            });
         });
       }
 
       function filtrarTabla() {
-        const queryProveedor = document.getElementById("searchProveedor").value.toLowerCase();
+        const queryProveedor = document
+          .getElementById("searchProveedor")
+          .value.toLowerCase();
         const categoriaSel = document.getElementById("selectCategoria").value;
-        const filtrarReciclable = document.getElementById("checkReciclable").checked;
-        const filtrarReutilizable = document.getElementById("checkReutilizable").checked;
+        const filtrarReciclable =
+          document.getElementById("checkReciclable").checked;
+        const filtrarReutilizable =
+          document.getElementById("checkReutilizable").checked;
 
-        const productosFiltrados = productosGlobales.filter(prod => {
+        const productosFiltrados = productosGlobales.filter((prod) => {
           const p = prod.proveedores_ucu;
           const inputProv = document.getElementById("searchProveedor");
-          const matchProveedor = inputProv.disabled ? true : (p ? p.nombre.toLowerCase().includes(queryProveedor) : false);
-          
-          const matchCategoria = (categoriaSel === "todos") || (prod.categoria === categoriaSel);
+          const matchProveedor = inputProv.disabled
+            ? true
+            : p
+              ? p.nombre.toLowerCase().includes(queryProveedor)
+              : false;
+
+          const matchCategoria =
+            categoriaSel === "todos" || prod.categoria === categoriaSel;
           const matchReciclable = !filtrarReciclable || prod.es_reciclable;
           const matchReutilizable = !filtrarReutilizable || prod.es_reusable;
 
-          return matchProveedor && matchCategoria && matchReciclable && matchReutilizable;
+          return (
+            matchProveedor &&
+            matchCategoria &&
+            matchReciclable &&
+            matchReutilizable
+          );
         });
 
         renderizarCatalogo(productosFiltrados);
       }
 
-      function agregarAlCarrito(nombre, precio, inputId) {
-        const qtyInput = document.getElementById(inputId);
-        const cantidad = parseInt(qtyInput.value, 10);
-
-        if (isNaN(cantidad) || cantidad < 1) {
-          alert("Por favor ingrese una cantidad válida.");
-          return;
-        }
-
-        const itemExistente = carrito.find(item => item.nombre === nombre);
-        if (itemExistente) {
-          itemExistente.cantidad += cantidad;
+      // Modificación o adición directa al carrito en base a la cantidad exacta seleccionada
+      function actualizarCarritoDirecto(nombre, precio, cantidad) {
+        const index = carrito.findIndex((item) => item.nombre === nombre);
+        if (cantidad === 0) {
+          if (index !== -1) {
+            carrito.splice(index, 1);
+          }
         } else {
-          carrito.push({ nombre, precio, cantidad });
+          if (index !== -1) {
+            carrito[index].cantidad = cantidad;
+          } else {
+            carrito.push({ nombre, precio, cantidad });
+          }
         }
-
-        qtyInput.value = 1;
         renderCarrito();
       }
 
@@ -741,6 +943,12 @@
           totalSpan.innerText = "$0";
           countSpan.innerText = "0";
           btnConfirm.disabled = true;
+
+          // Sincronización inversa: Si el carrito se vacía, todos los inputs se limpian a 0
+          productosGlobales.forEach((prod, idx) => {
+            const input = document.getElementById(`qty-${idx}`);
+            if (input) input.value = 0;
+          });
           return;
         }
 
@@ -756,30 +964,40 @@
           const itemDiv = document.createElement("div");
           itemDiv.className = "cart-item";
           itemDiv.innerHTML = `
-            <div class="cart-item-info">
-              <span class="cart-item-name">${item.nombre}</span>
-              <span class="cart-item-meta">${item.cantidad} x $${item.precio} — Subtotal: $${subtotal}</span>
-            </div>
-            <button id="btn-rem-${index}" class="btn-remove-item">×</button>
-          `;
+ <div class="cart-item-info">
+ <span class="cart-item-name">${item.nombre}</span>
+ <span class="cart-item-meta">${item.cantidad} x $${item.precio} — Subtotal: $${subtotal}</span>
+ </div>
+ <button id="btn-rem-${index}" class="btn-remove-item">×</button>
+ `;
           cartListDiv.appendChild(itemDiv);
 
-          // Escuchador dinámico re-vinculado de forma segura en la iteración limpia
-          document.getElementById(`btn-rem-${index}`).addEventListener("click", () => {
-            carrito.splice(index, 1);
-            renderCarrito();
-          });
+          document
+            .getElementById(`btn-rem-${index}`)
+            .addEventListener("click", () => {
+              // Al presionar la X, se notifica cantidad 0 para limpiar el carrito y reiniciar el input de la tabla
+              actualizarCarritoDirecto(item.nombre, item.precio, 0);
+            });
         });
 
         totalSpan.innerText = "$" + totalAcumulado;
         countSpan.innerText = totalItems;
+
+        // Sincronización inversa activa: Sincronizar los inputs visibles en la tabla con las cantidades actuales
+        productosGlobales.forEach((prod, idx) => {
+          const input = document.getElementById(`qty-${idx}`);
+          if (input) {
+            const item = carrito.find((c) => c.nombre === prod.nombre);
+            input.value = item ? item.cantidad : 0;
+          }
+        });
       }
 
       function confirmarPedido() {
         let resumenText = "ORDEN DE COMPRA GENERADA CON ÉXITO\n\n";
         let totalAcumulado = 0;
 
-        carrito.forEach(item => {
+        carrito.forEach((item) => {
           const subtotal = item.precio * item.cantidad;
           totalAcumulado += subtotal;
           resumenText += `• ${item.nombre} x${item.cantidad} -> $${subtotal}\n`;
