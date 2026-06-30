@@ -1,564 +1,1002 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Postulación de Proveedor - UCU</title>
-  <link rel="stylesheet" href="../css/global-styles.css" />
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Postulación de Proveedor - UCU</title>
+    <link rel="stylesheet" href="../css/global-styles.css" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-    body {
-      background-color: #f4f6f9;
-      margin: 0;
-      font-family: Arial, sans-serif;
+      body {
+        background-color: #f4f6f9;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .form-container {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+      }
+
+      .form-card {
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(19, 33, 60, 0.1);
+        border-radius: 24px;
+        padding: 35px;
+        width: 100%;
+        max-width: 750px;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.05);
+      }
+
+      .form-card h2 {
+        color: #1e3264;
+        font-size: 28px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-weight: 700;
+      }
+
+      .form-card .subtitle {
+        color: #64748b;
+        font-size: 14px;
+        margin-bottom: 25px;
+      }
+
+      .section-divider {
+        border: 0;
+        height: 1px;
+        background: #e2e8f0;
+        margin: 30px 0 25px 0;
+      }
+
+      .section-title {
+        color: #1e3264;
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        flex: 1;
+      }
+
+      .form-group label {
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        padding: 12px 16px;
+        border: 1px solid rgba(19, 33, 60, 0.2);
+        border-radius: 8px;
+        font-size: 14px;
+        background-color: #ffffff;
+        color: #333333;
+        outline: none;
+        font-family: Arial, sans-serif;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        width: 100%;
+      }
+
+      .form-input:focus,
+      .form-select:focus,
+      .form-textarea:focus {
+        border-color: #1e3264;
+        box-shadow: 0 0 0 3px rgba(30, 50, 100, 0.15);
+      }
+
+      .form-textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 5px;
+      }
+
+      .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500 !important;
+        cursor: pointer;
+        color: #475569;
+        font-size: 14px;
+      }
+
+      .checkbox-label input {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .form-input::file-selector-button {
+        background: rgba(30, 50, 100, 0.1);
+        color: #1e3264;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: 600;
+        margin-right: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .btn-submit-prov {
+        background: linear-gradient(135deg, #1e3264 0%, #13213c 100%);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        box-shadow: 0 4px 15px rgba(30, 50, 100, 0.3);
+        transition:
+          transform 0.2s,
+          background-color 0.2s;
+        margin-top: 10px;
+      }
+
+      .btn-submit-prov:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #243b75 0%, #1a2c52 100%);
+        box-shadow: 0 6px 20px rgba(30, 50, 100, 0.4);
+      }
+
+      .btn-submit-prov:active {
+        transform: translateY(0);
+      }
+
+      .footer-container {
+        background-color: #1e3264;
+        padding: 20px 0;
+        width: 100%;
+        margin-top: auto;
+      }
+
+      .logo-footer {
+        display: block;
+        margin: auto;
+        height: 30px;
+        filter: brightness(0) invert(1);
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      @media (max-width: 600px) {
+        .form-row {
+          flex-direction: column;
+          gap: 0;
+        }
+      }
+    </style>
+  </head>
+  <body
+    style="
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-    }
-
-    .form-container {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-    }
-
-    .form-card {
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(19, 33, 60, 0.1);
-      border-radius: 24px;
-      padding: 35px;
-      width: 100%;
-      max-width: 750px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.05);
-    }
-
-    .form-card h2 {
-      color: #1e3264;
-      font-size: 28px;
-      margin-top: 10px;
-      margin-bottom: 5px;
-      font-weight: 700;
-    }
-
-    .form-card .subtitle {
-      color: #64748b;
-      font-size: 14px;
-      margin-bottom: 25px;
-    }
-
-    .section-divider {
-      border: 0;
-      height: 1px;
-      background: #e2e8f0;
-      margin: 30px 0 25px 0;
-    }
-
-    .section-title {
-      color: #1e3264;
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .form-row {
-      display: flex;
-      gap: 20px;
-      width: 100%;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 20px;
-      flex: 1;
-    }
-
-    .form-group label {
-      font-weight: 600;
-      color: #334155;
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-
-    .form-input, 
-    .form-select, 
-    .form-textarea {
-      padding: 12px 16px;
-      border: 1px solid rgba(19, 33, 60, 0.2);
-      border-radius: 8px;
-      font-size: 14px;
-      background-color: #ffffff;
-      color: #333333;
-      outline: none;
-      font-family: Arial, sans-serif;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      width: 100%;
-    }
-
-    .form-input:focus, 
-    .form-select:focus, 
-    .form-textarea:focus {
-      border-color: #1e3264;
-      box-shadow: 0 0 0 3px rgba(30, 50, 100, 0.15);
-    }
-
-    .form-textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 5px;
-    }
-
-    .checkbox-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 500 !important;
-      cursor: pointer;
-      color: #475569;
-      font-size: 14px;
-    }
-
-    .checkbox-label input {
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-    }
-
-    .form-input::file-selector-button {
-      background: rgba(30, 50, 100, 0.1);
-      color: #1e3264;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-weight: 600;
-      margin-right: 10px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-submit-prov {
-      background: linear-gradient(135deg, #1e3264 0%, #13213c 100%);
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-      width: 100%;
-      box-shadow: 0 4px 15px rgba(30, 50, 100, 0.3);
-      transition: transform 0.2s, background-color 0.2s;
-      margin-top: 10px;
-    }
-
-    .btn-submit-prov:hover {
-      transform: translateY(-2px);
-      background: linear-gradient(135deg, #243b75 0%, #1a2c52 100%);
-      box-shadow: 0 6px 20px rgba(30, 50, 100, 0.4);
-    }
-
-    .btn-submit-prov:active {
-      transform: translateY(0);
-    }
-
-    .footer-container {
-      background-color: #1e3264;
-      padding: 20px 0;
-      width: 100%;
-      margin-top: auto;
-    }
-
-    .logo-footer {
-      display: block;
-      margin: auto;
-      height: 30px;
-      filter: brightness(0) invert(1);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    @media (max-width: 600px) {
-      .form-row {
-        flex-direction: column;
-        gap: 0;
-      }
-    }
-  </style>
-</head>
-<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f4f6f9;">
-
-  <main class="form-container">
-    <section class="form-card">
-      
-      <div style="margin-bottom: 20px;">
-        <a href="../index.html" style="text-decoration: none; color: #1e3264; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;">
-          ← Volver al Inicio
-        </a>
-      </div>
-
-      <h2>Formulario de Postulación</h2>
-      <p class="subtitle">Registre su empresa en la Red de Productos Sostenibles UCU junto con su catálogo de insumos institucional.</p>
-      
-      <form id="formPostulacion" onsubmit="enviarPostulacionReal(event)">
-        
-        <div class="section-title">Datos de la Empresa</div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="nombre">Nombre de la Empresa *</label>
-            <input type="text" id="nombre" required class="form-input" placeholder="Ej: Librería El Estudiante">
-          </div>
-          <div class="form-group">
-            <label for="contacto">Persona de Contacto *</label>
-            <input type="text" id="contacto" required class="form-input" placeholder="Ej: Carlos Pérez">
-          </div>
+      margin: 0;
+      background-color: #f4f6f9;
+    "
+  >
+    <main class="form-container">
+      <section class="form-card">
+        <div style="margin-bottom: 20px">
+          <a
+            href="../index.html"
+            style="
+              text-decoration: none;
+              color: #1e3264;
+              font-weight: 600;
+              display: inline-flex;
+              align-items: center;
+              gap: 5px;
+            "
+          >
+            ← Volver al Inicio
+          </a>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="email">Correo Electrónico *</label>
-            <input type="email" id="email" required class="form-input" placeholder="contacto@empresa.com.uy">
-          </div>
-          <div class="form-group">
-            <label for="telefono">Teléfono de Contacto *</label>
-            <input type="tel" id="telefono" required class="form-input" placeholder="Ej: +598 2 500 1111">
-          </div>
-        </div>
+        <span style="color: #dc3545; font-size: 13px">* Campos requeridos</span>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="local">Tipo de Empresa *</label>
-            <select id="local" required class="form-select" onchange="alternarCampoRut()">
-              <option value="" disabled selected>Seleccione el tipo...</option>
-              <option value="nacional">Nacional/Local (Uruguay)</option>
-              <option value="internacional">Internacional (Extranjero)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="sitio_web">Sitio Web (Opcional)</label>
-            <input type="url" id="sitio_web" class="form-input" placeholder="https://www.empresa.com.uy">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group" id="grupoRut">
-            <label for="rut">RUT de la Empresa *</label>
-            <input type="text" id="rut" required class="form-input" placeholder="Ej: 21XXXXXX001X">
-          </div>
-          <div class="form-group">
-            <label for="es_mayorista">¿Es un comercio Mayorista? *</label>
-            <select id="es_mayorista" required class="form-select">
-              <option value="" disabled selected>Seleccione...</option>
-              <option value="true">Sí, vende al por mayor</option>
-              <option value="false">No, venta minorista / particular</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="embalaje_sostenible">¿Utiliza Embalaje Sostenible? *</label>
-            <select id="embalaje_sostenible" required class="form-select">
-              <option value="true">Sí, cuenta con empaque biodegradable/reciclado</option>
-              <option value="false">No utiliza empaques sostenibles</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <fieldset class="form-group" style="border: none; padding: 0; margin: 0 0 20px 0;">
-            <legend style="font-weight: 600; color: #334155; margin-bottom: 8px; font-size: 14px;">Certificaciones Ambientales de la Empresa:</legend>
-            <div class="checkbox-group">
-              <label class="checkbox-label"><input type="checkbox" id="tiene_iso14001" value="ISO14001"> ISO 14001</label>
-              <label class="checkbox-label"><input type="checkbox" id="tiene_fsc" value="FSC"> FSC</label>
-              <label class="checkbox-label"><input type="checkbox" id="tiene_emas" value="EMAS"> EMAS</label>
-            </div>
-          </fieldset>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="pdf_certificados">Adjuntar Comprobantes de Certificación (PDF):</label>
-            <input type="file" id="pdf_certificados" accept=".pdf" class="form-input">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="descripcion">Descripción Comercial:</label>
-            <textarea id="descripcion" class="form-textarea" placeholder="Breve resumen de la trayectoria e insumos que provee la empresa..."></textarea>
-          </div>
-        </div>
-
-        <hr class="section-divider">
-        <div class="section-title">Productos</div>
-        <p style="color: #64748b; font-size: 13px; margin-top: -10px; margin-bottom: 20px;">
-          Proponga los productos iniciales que desea ofrecer a la UCU. 
-          Debe ingresar al menos un producto para enviar la postulación.
+        <h2>Formulario de Postulación</h2>
+        <p class="subtitle">
+          Registre su empresa en la Red de Productos Sostenibles UCU junto con
+          su catálogo de insumos institucional.
         </p>
 
-        <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+        <form id="formPostulacion" onsubmit="enviarPostulacionReal(event)">
+          <div class="section-title">Datos de la Empresa</div>
+
           <div class="form-row">
             <div class="form-group">
-              <label for="prodNombre">Nombre del Producto</label>
-              <input type="text" id="prodNombre" class="form-input" placeholder="Ej: Resma A4 80g Reciclada">
+              <label for="nombre">Nombre de la Empresa *</label>
+              <input
+                type="text"
+                id="nombre"
+                required
+                class="form-input"
+                placeholder="Ej: Librería El Estudiante"
+                maxlength="50"
+              />
             </div>
             <div class="form-group">
-              <label for="prodPrecio">Precio Sugerido (UYU)</label>
-              <input type="number" id="prodPrecio" class="form-input" placeholder="Monto en pesos" min="1" step="0.01">
+              <label for="contacto">Persona de Contacto *</label>
+              <input
+                type="text"
+                id="contacto"
+                required
+                class="form-input"
+                placeholder="Ej: Carlos Pérez"
+                maxlength="45"
+              />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="prodCategoria">Categoría del Insumo</label>
-              <select id="prodCategoria" class="form-select">
-                <option value="" disabled selected>Seleccione...</option>
-                <option value="papel">Papel</option>
-                <option value="escritura">Escritura</option>
-                <option value="embalaje">Embalaje</option>
-                <option value="archivo">Archivo / Organización</option>
+              <label for="email">Correo Electrónico *</label>
+              <input
+                type="email"
+                id="email"
+                required
+                class="form-input"
+                placeholder="contacto@empresa.com.uy"
+                maxlength="60"
+              />
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono de Contacto *</label>
+              <input
+                type="text"
+                id="telefono"
+                required
+                class="form-input"
+                placeholder="Ej: +598 2 500 1111"
+                maxlength="20"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="local">Tipo de Empresa *</label>
+              <select
+                id="local"
+                required
+                class="form-select"
+                onchange="alternarCampoRut()"
+              >
+                <option value="" disabled selected>
+                  Seleccione el tipo...
+                </option>
+                <option value="nacional">Nacional/Local (Uruguay)</option>
+                <option value="internacional">
+                  Internacional (Extranjero)
+                </option>
               </select>
             </div>
             <div class="form-group">
-              <label for="prodPct">% Material Reciclado</label>
-              <input type="number" id="prodPct" class="form-input" placeholder="0 a 100" min="0" max="100" value="0">
+              <label for="sitio_web">Sitio Web (Opcional)</label>
+              <input
+                type="url"
+                id="sitio_web"
+                class="form-input"
+                placeholder="https://www.empresa.com.uy"
+                maxlength="200"
+              />
             </div>
           </div>
 
           <div class="form-row">
-            <fieldset class="form-group" style="border: none; padding: 0; margin: 0 0 20px 0;">
-              <legend style="font-weight: 600; color: #334155; margin-bottom: 8px; font-size: 14px;">Atributos Ecológicos del Producto:</legend>
+            <div class="form-group" id="grupoRut">
+              <label for="rut">RUT de la Empresa *</label>
+              <input
+                type="text"
+                id="rut"
+                required
+                class="form-input"
+                placeholder="Ej: 21XXXXXX001X"
+                maxlength="30"
+              />
+            </div>
+            <div class="form-group">
+              <label for="es_mayorista">¿Es un comercio Mayorista? *</label>
+              <select id="es_mayorista" required class="form-select">
+                <option value="" disabled selected>Seleccione...</option>
+                <option value="true">Sí, vende al por mayor</option>
+                <option value="false">No, venta minorista / particular</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="embalaje_sostenible"
+                >¿Utiliza Embalaje Sostenible? *</label
+              >
+              <select id="embalaje_sostenible" required class="form-select">
+                <option value="" disabled selected>Seleccione...</option>
+                <option value="true">
+                  Sí, cuenta con empaque biodegradable/reciclado
+                </option>
+                <option value="false">No utiliza empaques sostenibles</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <fieldset
+              class="form-group"
+              style="border: none; padding: 0; margin: 0 0 20px 0"
+            >
+              <legend
+                style="
+                  font-weight: 600;
+                  color: #334155;
+                  margin-bottom: 8px;
+                  font-size: 14px;
+                "
+              >
+                Certificaciones Ambientales de la Empresa:
+              </legend>
               <div class="checkbox-group">
-                <label class="checkbox-label"><input type="checkbox" id="prodReciclable"> ¿Es Reciclable?</label>
-                <label class="checkbox-label"><input type="checkbox" id="prodReutilizable"> ¿Es Reusable?</label>
+                <label class="checkbox-label"
+                  ><input
+                    type="checkbox"
+                    id="tiene_iso14001"
+                    value="ISO14001"
+                  />
+                  ISO 14001</label
+                >
+                <label class="checkbox-label"
+                  ><input type="checkbox" id="tiene_emas" value="EMAS" />
+                  EMAS</label
+                >
               </div>
             </fieldset>
           </div>
 
-          <button type="button" onclick="agregarProductoLista()" style="background: #ffffff; color: #1e3264; border: 1px solid #1e3264; padding: 10px 20px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer; width: auto; margin-top: 5px;">
-            + Agregar Producto a la Lista
-          </button>
-        </div>
-
-        <div id="vistaPreviaProductos" style="margin-bottom: 25px; display: none;">
-          <div style="font-weight: 600; color: #1e3264; font-size: 14px; margin-bottom: 10px;">Productos cargados para enviar:</div>
-          <div id="listaProductosContenedor" style="display: flex; flex-direction: column; gap: 10px;">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pdf_certificados"
+                >Adjuntar Comprobantes de Certificación (PDF):</label
+              >
+              <input
+                type="file"
+                id="pdf_certificados"
+                accept=".pdf"
+                class="form-input"
+                onchange="subirPdfProveedor()"
+              />
+              <div
+                id="listaPdfsProveedor"
+                style="
+                  margin-top: 10px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 8px;
+                "
+              ></div>
+            </div>
           </div>
-        </div>
 
-        <button type="submit" id="btnSubmitForm" class="btn-submit-prov">Terminar Postulación y Enviar</button>
-      </form>
-    </section>
-  </main>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="descripcion">Descripción Comercial:</label>
+              <textarea
+                id="descripcion"
+                class="form-textarea"
+                placeholder="Breve resumen de la trayectoria e insumos que provee la empresa..."
+                maxlength="1000"
+              ></textarea>
+            </div>
+          </div>
 
-  <footer>
-    <div class="footer-container">
-      <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
-    </div>
-  </footer>
+          <hr class="section-divider" />
+          <div class="section-title">Productos</div>
+          <p
+            style="
+              color: #64748b;
+              font-size: 13px;
+              margin-top: -10px;
+              margin-bottom: 20px;
+            "
+          >
+            Proponga los productos iniciales que desea ofrecer a la UCU. Debe
+            ingresar al menos un producto para enviar la postulación general.
+          </p>
 
-  <script type="module">
-    import { supabaseClient } from '../js/conexion-bd.js';
+          <div
+            style="
+              background: #f8fafc;
+              border: 1px solid #e2e8f0;
+              padding: 20px;
+              border-radius: 12px;
+              margin-bottom: 25px;
+            "
+          >
+            <div class="form-row">
+              <div class="form-group">
+                <label for="prodNombre">Nombre del Producto *</label>
+                <input
+                  type="text"
+                  id="prodNombre"
+                  class="form-input"
+                  placeholder="Ej: Resma A4 80g Reciclada"
+                  maxlength="75"
+                />
+              </div>
+              <div class="form-group">
+                <label for="prodPrecio">Precio Sugerido (UYU) *</label>
+                <input
+                  type="number"
+                  id="prodPrecio"
+                  class="form-input"
+                  placeholder="Monto en pesos"
+                  min="0.01"
+                  step="0.01"
+                  max="99990.99"
+                />
+              </div>
+            </div>
 
-    let productosAgregados = [];
+            <div class="form-row">
+              <div class="form-group">
+                <label for="prodCategoria">Categoría del Insumo *</label>
+                <select id="prodCategoria" class="form-select">
+                  <option value="" disabled selected>Seleccione...</option>
+                  <option value="papel">Papel</option>
+                  <option value="escritura">Escritura</option>
+                  <option value="embalaje">Embalaje</option>
+                  <option value="archivo">Archivo / Organización</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="prodPct">% Material Reciclado *</label>
+                <input
+                  type="number"
+                  id="prodPct"
+                  class="form-input"
+                  placeholder="0 a 100"
+                  min="0"
+                  max="100"
+                />
+              </div>
+            </div>
 
-    // --- EXPOSICIÓN GLOBAL DE FUNCIONES ---
-    window.alternarCampoRut = function() {
-      const valorSeleccionado = document.getElementById("local").value;
-      const grupoRut = document.getElementById("grupoRut");
-      const inputRut = document.getElementById("rut");
+            <div class="form-row">
+              <fieldset
+                class="form-group"
+                style="border: none; padding: 0; margin: 0 0 10px 0"
+              >
+                <legend
+                  style="
+                    font-weight: 600;
+                    color: #334155;
+                    margin-bottom: 8px;
+                    font-size: 14px;
+                  "
+                >
+                  Propiedades Sostenibles del Producto:
+                </legend>
+                <div class="checkbox-group">
+                  <label class="checkbox-label"
+                    ><input type="checkbox" id="prodReciclable" /> ¿Es
+                    Reciclable?</label
+                  >
+                  <label class="checkbox-label"
+                    ><input type="checkbox" id="prodReutilizable" /> ¿Es
+                    Reutilizable?</label
+                  >
+                </div>
+              </fieldset>
+            </div>
 
-      if (valorSeleccionado === "nacional") {
-        grupoRut.classList.remove("hidden");
-        inputRut.required = true;
-      } else {
-        grupoRut.classList.add("hidden");
-        inputRut.required = false;
-        inputRut.value = "";
-      }
-    }
+            <div class="form-row">
+              <fieldset
+                class="form-group"
+                style="border: none; padding: 0; margin: 0 0 20px 0"
+              >
+                <legend
+                  style="
+                    font-weight: 600;
+                    color: #334155;
+                    margin-bottom: 8px;
+                    font-size: 14px;
+                  "
+                >
+                  Certificaciones Ambientales del producto:
+                </legend>
+                <div class="checkbox-group">
+                  <label class="checkbox-label"
+                    ><input type="checkbox" id="prodFsc" /> 
+                    FSC</label
+                  >
+                </div>
+              </fieldset>
+            </div>
 
-    window.agregarProductoLista = function() {
-      const nombre = document.getElementById("prodNombre").value.trim();
-      const precio = document.getElementById("prodPrecio").value;
-      const category = document.getElementById("prodCategoria").value;
-      const pct = document.getElementById("prodPct").value;
-      const reciclable = document.getElementById("prodReciclable").checked;
-      const reusable = document.getElementById("prodReutilizable").checked;
+            <div class="form-row">
+              <div class="form-group">
+                <label for="prod_certificado"
+                  >Adjuntar Comprobantes de Certificación (PDF) :</label
+                >
+                <input
+                  type="file"
+                  id="prod_certificado"
+                  accept=".pdf"
+                  class="form-input"
+                  onchange="subirPdfProducto()"
+                />
+                <div id="pdfProductoContenedor" style="margin-top: 10px"></div>
+              </div>
+            </div>
 
-      if (!nombre || !precio || !category) {
-        alert("Por favor complete Nombre, Precio y Categoría del producto antes de agregarlo.");
-        return;
-      }
+            <button
+              type="button"
+              onclick="agregarProductoLista()"
+              style="
+                background: #ffffff;
+                color: #1e3264;
+                border: 1px solid #1e3264;
+                padding: 10px 20px;
+                font-size: 14px;
+                font-weight: 600;
+                border-radius: 6px;
+                cursor: pointer;
+                width: auto;
+                margin-top: 5px;
+              "
+            >
+              + Agregar Producto a la Lista
+            </button>
+          </div>
 
-      const nuevoProducto = {
-        nombre: nombre,
-        precio: parseFloat(precio),
-        categoria: category,
-        mat_reciclados_pct: parseInt(pct) || 0,
-        es_reciclable: reciclable,
-        es_reusable: reusable
+          <div
+            id="vistaPreviaProductos"
+            style="margin-bottom: 25px; display: none"
+          >
+            <div
+              style="
+                font-weight: 600;
+                color: #1e3264;
+                font-size: 14px;
+                margin-bottom: 10px;
+              "
+            >
+              Productos cargados para enviar:
+            </div>
+            <div
+              id="listaProductosContenedor"
+              style="display: flex; flex-direction: column; gap: 10px"
+            ></div>
+          </div>
+
+          <button type="submit" id="btnSubmitForm" class="btn-submit-prov">
+            Terminar Postulación y Enviar
+          </button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-container">
+        <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
+      </div>
+    </footer>
+
+    <script type="module">
+      import { supabaseClient } from "../js/conexion-bd.js";
+
+      let productosAgregados = [];
+
+      // Colección física de archivos en memoria del navegador
+      let proveedorFiles = [];
+      let tempProductoFile = null;
+
+      // --- EXPOSICIÓN GLOBAL DE FUNCIONES ---
+      window.alternarCampoRut = function () {
+        const valorSeleccionado = document.getElementById("local").value;
+        const grupoRut = document.getElementById("grupoRut");
+        const inputRut = document.getElementById("rut");
+
+        if (valorSeleccionado === "nacional") {
+          grupoRut.classList.remove("hidden");
+          inputRut.required = true;
+        } else {
+          grupoRut.classList.add("hidden");
+          inputRut.required = false;
+          inputRut.value = "";
+        }
       };
 
-      productosAgregados.push(nuevoProducto);
+      // SELECCIÓN LOCAL: PDF DE LA EMPRESA (MÚLTIPLE)
+      window.subirPdfProveedor = function () {
+        const fileInput = document.getElementById("pdf_certificados");
+        const file = fileInput.files[0];
+        if (!file) return;
 
-      document.getElementById("prodNombre").value = "";
-      document.getElementById("prodPrecio").value = "";
-      document.getElementById("prodCategoria").value = "";
-      document.getElementById("prodPct").value = "0";
-      document.getElementById("prodReciclable").checked = false;
-      document.getElementById("prodReutilizable").checked = false;
+        if (file.type !== "application/pdf") {
+          alert("Por favor, suba únicamente archivos en formato PDF.");
+          fileInput.value = "";
+          return;
+        }
 
-      renderizarListaProductos();
-    }
+        const idUnico =
+          "file_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
 
-    window.eliminarProducto = function(index) {
-      productosAgregados.splice(index, 1);
-      renderizarListaProductos();
-    }
+        proveedorFiles.push({
+          file: file,
+          id: idUnico,
+        });
 
-    function renderizarListaProductos() {
-      const contenedorPadre = document.getElementById("vistaPreviaProductos");
-      const contenedorLista = document.getElementById("listaProductosContenedor");
-      
-      contenedorLista.innerHTML = "";
+        renderizarPdfsProveedor();
+        fileInput.value = "";
+      };
 
-      if (productosAgregados.length === 0) {
-        contenedorPadre.style.display = "none";
-        return;
+      window.eliminarPdfProveedor = function (id) {
+        proveedorFiles = proveedorFiles.filter((item) => item.id !== id);
+        renderizarPdfsProveedor();
+      };
+
+      function renderizarPdfsProveedor() {
+        const contenedorLista = document.getElementById("listaPdfsProveedor");
+        contenedorLista.innerHTML = "";
+
+        proveedorFiles.forEach((item) => {
+          const div = document.createElement("div");
+          div.style.cssText =
+            "background: #e0e7ff; border: 1px solid #c7d2fe; padding: 10px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #1e1b4b;";
+          div.innerHTML = `
+ <span>📄 ${item.file.name}</span>
+ <button type="button" onclick="eliminarPdfProveedor('${item.id}')" style="background: none; border: none; color: #dc3545; font-weight: bold; cursor: pointer; font-size: 14px;">✕</button>
+ `;
+          contenedorLista.appendChild(div);
+        });
       }
 
-      contenedorPadre.style.display = "block";
+      // SELECCIÓN LOCAL: PDF DEL PRODUCTO (ÚNICO POR PRODUCTO)
+      window.subirPdfProducto = function () {
+        const fileInput = document.getElementById("prod_certificado");
+        const file = fileInput.files[0];
+        if (!file) return;
 
-      productosAgregados.forEach((prod, index) => {
-        const item = document.createElement("div");
-        item.style.cssText = "background: #ffffff; border: 1px solid #cbd5e1; padding: 12px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 14px;";
-        
-        item.innerHTML = `
-          <div>
-            <strong>${prod.nombre}</strong> — $${prod.precio} UYU <span style="color: #64748b;">(${prod.categoria})</span>
-            <br>
-            <small style="color: #64748b;">
-              Reciclado: ${prod.mat_reciclados_pct}% | Reciclable: ${prod.es_reciclable ? 'SÍ':'NO'} | Reutilizable: ${prod.es_reusable ? 'SÍ':'NO'}
-            </small>
-          </div>
-          <button type="button" onclick="eliminarProducto(${index})" style="background: none; border: none; color: #dc3545; font-weight: 600; cursor: pointer; font-size: 13px;">
-            Quitar
-          </button>
-        `;
-        contenedorLista.appendChild(item);
-      });
-    }
+        if (file.type !== "application/pdf") {
+          alert("Por favor, suba únicamente archivos en formato PDF.");
+          fileInput.value = "";
+          return;
+        }
 
-    window.enviarPostulacionReal = async function(event) {
-      event.preventDefault();
+        tempProductoFile = file;
+        renderizarPdfProductoTemp();
+        fileInput.value = "";
+      };
 
-      if (productosAgregados.length === 0) {
-        alert("Debe agregar al menos un producto a la lista antes de enviar la postulación general.");
-        return;
+      window.eliminarPdfProductoTemp = function () {
+        tempProductoFile = null;
+        renderizarPdfProductoTemp();
+      };
+
+      function renderizarPdfProductoTemp() {
+        const contenedor = document.getElementById("pdfProductoContenedor");
+        contenedor.innerHTML = "";
+
+        if (!tempProductoFile) return;
+
+        const div = document.createElement("div");
+        div.style.cssText =
+          "background: #ecfdf5; border: 1px solid #a7f3d0; padding: 10px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #064e3b; max-width: 100%;";
+        div.innerHTML = `
+ <span>📄 ${tempProductoFile.name}</span>
+ <button type="button" onclick="eliminarPdfProductoTemp()" style="background: none; border: none; color: #dc3545; font-weight: bold; cursor: pointer; font-size: 14px;">✕</button>
+ `;
+        contenedor.appendChild(div);
       }
 
-      const btnSubmit = document.getElementById("btnSubmitForm");
-      btnSubmit.disabled = true;
-      btnSubmit.textContent = "Procesando postulación...";
+      // AGREGAR PRODUCTO AL CATÁLOGO TEMPORAL
+      window.agregarProductoLista = function () {
+        const nombre = document.getElementById("prodNombre").value.trim();
+        const precioRaw = document.getElementById("prodPrecio").value;
+        const category = document.getElementById("prodCategoria").value;
+        const pctRaw = document.getElementById("prodPct").value;
+        const reciclable = document.getElementById("prodReciclable").checked;
+        const reusable = document.getElementById("prodReutilizable").checked;
+        const fsc = document.getElementById("prodFsc").checked;
 
-      const nombreEmpresa = document.getElementById("nombre").value.trim();
-      const contacto = document.getElementById("contacto").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const telefono = document.getElementById("telefono").value.trim();
-      const valorProcedencia = document.getElementById("local").value;
-      const rut = valorProcedencia === "nacional" ? document.getElementById("rut").value.trim() : null;
-      const sitioWeb = document.getElementById("sitio_web").value.trim() || null;
-      const descripcion = document.getElementById("descripcion").value.trim() || null;
+        if (!nombre || !precioRaw || !category) {
+          alert(
+            "Por favor complete Nombre, Precio y Categoría del producto antes de agregarlo.",
+          );
+          return;
+        }
 
-      const esMayorista = document.getElementById("es_mayorista").value === "true";
-      const embalajeSostenible = document.getElementById("embalaje_sostenible").value === "true";
+        const precio = parseFloat(precioRaw);
+        const pct = parseInt(pctRaw) || 0;
 
-      const tieneIso14001 = document.getElementById("tiene_iso14001").checked;
-      const tieneFsc = document.getElementById("tiene_fsc").checked;
-      const tieneEmas = document.getElementById("tiene_emas").checked;
+        if (precio <= 0 || precio >= 99999) {
+          alert("Error de Rango: El precio del producto no es válido.");
+          return;
+        }
 
-      try {
-        // CORRECCIÓN: 'contacto_persona' alineado estrictamente al esquema SQL
-        const { data: nuevoProveedor, error: errorProv } = await supabaseClient
-          .from('proveedores_ucu')
-          .insert([
-            {
-              tipo: "postulacion",
-              estado: "pendiente",
-              nombre: nombreEmpresa,
-              contacto_persona: contacto, 
-              procedencia: valorProcedencia, 
-              descripcion: descripcion,
-              rut: rut,
-              es_mayorista: esMayorista,
-              sitio_web: sitioWeb,
-              email: email,
-              telefono: telefono,
-              tiene_iso14001: tieneIso14001,
-              tiene_fsc: tieneFsc,
-              tiene_emas: tieneEmas,
-              embalaje_sostenible: embalajeSostenible,
-              urls_certificaciones: []
+        if (pct < 0 || pct > 100) {
+          alert(
+            "Error de Rango: El porcentaje de material reciclado debe estar entre 0 y 100.",
+          );
+          return;
+        }
+
+        const nuevoProducto = {
+          nombre: nombre,
+          precio: precio,
+          categoria: category,
+          mat_reciclados_pct: pct,
+          es_reciclable: reciclable,
+          es_reusable: reusable,
+          tiene_fsc: fsc,
+          file: tempProductoFile,
+        };
+
+        productosAgregados.push(nuevoProducto);
+
+        document.getElementById("prodNombre").value = "";
+        document.getElementById("prodPrecio").value = "";
+        document.getElementById("prodCategoria").value = "";
+        document.getElementById("prodPct").value = "0";
+        document.getElementById("prodReciclable").checked = false;
+        document.getElementById("prodReutilizable").checked = false;
+        document.getElementById("prodFsc").checked = false;
+
+        tempProductoFile = null;
+        renderizarPdfProductoTemp();
+
+        renderizarListaProductos();
+      };
+
+      window.eliminarProducto = function (index) {
+        productosAgregados.splice(index, 1);
+        renderizarListaProductos();
+      };
+
+      function renderizarListaProductos() {
+        const contenedorPadre = document.getElementById("vistaPreviaProductos");
+        const contenedorLista = document.getElementById(
+          "listaProductosContenedor",
+        );
+
+        contenedorLista.innerHTML = "";
+
+        if (productosAgregados.length === 0) {
+          contenedorPadre.style.display = "none";
+          return;
+        }
+
+        contenedorPadre.style.display = "block";
+
+        productosAgregados.forEach((prod, index) => {
+          const item = document.createElement("div");
+          item.style.cssText =
+            "background: #ffffff; border: 1px solid #cbd5e1; padding: 12px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 14px;";
+
+          item.innerHTML = `
+ <div>
+ <strong>${prod.nombre}</strong> — $${prod.precio} UYU <span style="color: #64748b;">(${prod.categoria})</span>
+ <br>
+ <small style="color: #64748b;">
+ Reciclado: ${prod.mat_reciclados_pct}% | Reciclable: ${prod.es_reciclable ? "SÍ" : "NO"} | Reutilizable: ${prod.es_reusable ? "SÍ" : "NO"} | FSC: ${prod.tiene_fsc ? "SÍ" : "NO"}
+ ${prod.file ? ` | <span style="color: #059669;">📄 ${prod.file.name}</span>` : ""}
+ </small>
+ </div>
+ <button type="button" onclick="eliminarProducto(${index})" style="background: none; border: none; color: #dc3545; font-weight: 600; cursor: pointer; font-size: 13px;">
+ Quitar
+ </button>
+ `;
+          contenedorLista.appendChild(item);
+        });
+      }
+
+      // ENVÍO DEFINITIVO A SUPABASE (SUBIDA DE ARCHIVOS AQUÍ ÚNICAMENTE)
+      window.enviarPostulacionReal = async function (event) {
+        event.preventDefault();
+
+        if (productosAgregados.length === 0) {
+          alert(
+            "Debe agregar al menos un producto a la lista antes de enviar la postulación general.",
+          );
+          return;
+        }
+
+        const btnSubmit = document.getElementById("btnSubmitForm");
+        btnSubmit.disabled = true;
+
+        const nombreEmpresa = document.getElementById("nombre").value.trim();
+        const contacto = document.getElementById("contacto").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const telefono = document.getElementById("telefono").value.trim();
+        const valorProcedencia = document.getElementById("local").value;
+        const rut =
+          valorProcedencia === "nacional"
+            ? document.getElementById("rut").value.trim()
+            : null;
+        const sitioWeb =
+          document.getElementById("sitio_web").value.trim() || null;
+        const descripcion =
+          document.getElementById("descripcion").value.trim() || null;
+
+        const esMayorista =
+          document.getElementById("es_mayorista").value === "true";
+        const embalajeSostenible =
+          document.getElementById("embalaje_sostenible").value === "true";
+
+        const tieneIso14001 = document.getElementById("tiene_iso14001").checked;
+        const tieneEmas = document.getElementById("tiene_emas").checked;
+
+        try {
+          // =========================================================================
+          // PASO 1: SUBIR COMPROBANTES DE LA EMPRESA AL BUCKET 'Certificaciones PROV'
+          // =========================================================================
+          const arrayUrlsCertificaciones = [];
+
+          if (proveedorFiles.length > 0) {
+            btnSubmit.textContent = "Subiendo archivos de la empresa...";
+            for (const item of proveedorFiles) {
+              const nombreUnico = `${Date.now()}_emp_${item.file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
+
+              const { error: uploadError } = await supabaseClient.storage
+                .from("Certificaciones PROV")
+                .upload(nombreUnico, item.file);
+
+              if (uploadError) {
+                throw new Error(
+                  "Error en bucket de proveedores: " + uploadError.message,
+                );
+              }
+
+              const { data: urlData } = supabaseClient.storage
+                .from("Certificaciones PROV")
+                .getPublicUrl(nombreUnico);
+
+              arrayUrlsCertificaciones.push(urlData.publicUrl);
             }
-          ])
-          .select()
-          .single();
+          }
 
-        if (errorProv) throw errorProv;
+          // =========================================================================
+          // PASO 2: SUBIR COMPROBANTES DE PRODUCTOS AL BUCKET 'Certificaciones PROD'
+          // =========================================================================
+          btnSubmit.textContent = "Subiendo archivos de los productos...";
 
-        const nuevoProveedorId = nuevoProveedor.id;
+          for (const p of productosAgregados) {
+            if (p.file) {
+              const nombreUnico = `${Date.now()}_prod_${p.file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
 
-        // AJUSTE: Mapeo inyectando explícitamente estado 'pendiente' a los productos propuestos
-        const productosAInsertar = productosAgregados.map(p => ({
-          proveedor_id: nuevoProveedorId,
-          nombre: p.nombre,
-          categoria: p.categoria,
-          precio: p.precio,
-          mat_reciclados_pct: p.mat_reciclados_pct,
-          es_reciclable: p.es_reciclable,
-          es_reusable: p.es_reusable,
-          estado: 'pendiente' 
-        }));
+              const { error: uploadError } = await supabaseClient.storage
+                .from("Certificaciones PROD")
+                .upload(nombreUnico, p.file);
 
-        const { error: errorProds } = await supabaseClient
-          .from('productos_ucu')
-          .insert(productosAInsertar);
+              if (uploadError) {
+                throw new Error(
+                  `Error en bucket de productos para ${p.nombre}: ` +
+                    uploadError.message,
+                );
+              }
 
-        if (errorProds) throw errorProds;
+              const { data: urlData } = supabaseClient.storage
+                .from("Certificaciones PROD")
+                .getPublicUrl(nombreUnico);
 
-        alert(`¡Postulación enviada exitosamente!\n\nEmpresa: ${nombreEmpresa}\nSu postulación y catálogo inicial de (${productosAgregados.length}) productos quedaron registrados bajo el estado 'PENDIENTE'.`);
+              p.url_certificado = urlData.publicUrl;
+            }
+          }
 
-        productosAgregados = [];
-        document.getElementById("formPostulacion").reset();
-        window.location.href = "../index.html";
+          btnSubmit.textContent = "Guardando información comercial...";
 
-      } catch (err) {
-        console.error("Error transaccional detectado:", err);
-        alert("Hubo un problema al procesar los datos en Supabase: " + err.message);
-        btnSubmit.disabled = false;
-        btnSubmit.textContent = "Terminar Postulación y Enviar";
-      }
-    }
-  </script>
-</body>
+          // =========================================================================
+          // PASO 3: INSERTAR PROVEEDOR
+          // =========================================================================
+          const { data: nuevoProveedor, error: errorProv } =
+            await supabaseClient
+              .from("proveedores_ucu")
+              .insert([
+                {
+                  tipo: "postulacion",
+                  estado: "pendiente",
+                  nombre: nombreEmpresa,
+                  contacto_persona: contacto,
+                  procedencia: valorProcedencia,
+                  descripcion: descripcion,
+                  rut: rut,
+                  es_mayorista: esMayorista,
+                  sitio_web: sitioWeb,
+                  email: email,
+                  telefono: telefono,
+                  tiene_iso14001: tieneIso14001,
+                  tiene_emas: tieneEmas,
+                  embalaje_sostenible: embalajeSostenible,
+                  urls_certificaciones: arrayUrlsCertificaciones,
+                },
+              ])
+              .select()
+              .single();
+
+          if (errorProv) throw errorProv;
+
+          const nuevoProveedorId = nuevoProveedor.id;
+
+          // =========================================================================
+          // PASO 4: INSERTAR LOS PRODUCTOS ASOCIADOS
+          // =========================================================================
+          const productosAInsertar = productosAgregados.map((p) => ({
+            proveedor_id: nuevoProveedorId,
+            nombre: p.nombre,
+            categoria: p.categoria,
+            precio: p.precio,
+            mat_reciclados_pct: p.mat_reciclados_pct,
+            es_reciclable: p.es_reciclable,
+            es_reusable: p.es_reusable,
+            tiene_fsc: p.tiene_fsc,
+            url_certificado: p.url_certificado || null,
+            estado: "pendiente",
+          }));
+
+          const { error: errorProds } = await supabaseClient
+            .from("productos_ucu")
+            .insert(productosAInsertar);
+
+          if (errorProds) throw errorProds;
+
+          alert(
+            `¡Postulación enviada exitosamente!\n\nEmpresa: ${nombreEmpresa}\nSu postulación y catálogo inicial de (${productosAgregados.length}) productos quedaron registrados bajo el estado 'PENDIENTE'.`,
+          );
+
+          productosAgregados = [];
+          proveedorFiles = [];
+          tempProductoFile = null;
+          document.getElementById("formPostulacion").reset();
+          window.location.href = "../index.html";
+        } catch (err) {
+          console.error("Error transaccional detectado:", err);
+          alert("Hubo un problema al procesar la postulación: " + err.message);
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = "Terminar Postulación y Enviar";
+        }
+      };
+    </script>
+  </body>
 </html>
