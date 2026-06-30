@@ -1,11 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ranking de Proveedores - UCU</title>
-    <link rel="stylesheet" href="../css/global-styles.css"/>
+    <link rel="stylesheet" href="../css/global-styles.css" />
     <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: url("../assets/fondo-ucu.jpeg") no-repeat center top fixed;
+        background-size: cover;
+        background-color: #e4dccf; /* Color base estable de fondo */
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
       /* Estilos para el logo del Header */
       .logo {
         display: block;
@@ -13,7 +28,7 @@
         width: auto;
         filter: brightness(0) invert(1);
       }
-      
+
       /* Estilos del Header */
       header {
         background-color: #1e3264;
@@ -47,12 +62,12 @@
       header nav ul li a:hover {
         color: #2f80ed;
       }
-      
+
       /* Estilos para el contenedor del menu flotante que aparece al hacer click en el icono de usuario */
       .dropdown-content {
         position: absolute;
         right: 0;
-        top: 45px; 
+        top: 45px;
         background-color: #ffffff;
         min-width: 220px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -65,6 +80,7 @@
         padding: 4px 16px 8px 16px;
         display: flex;
         flex-direction: column;
+        text-align: left;
       }
       /* Texto en negrita para el nombre del usuario */
       .dropdown-user-info strong {
@@ -96,7 +112,7 @@
         background-color: #fff5f5;
       }
 
-      /* Estilos del contenedor del ranking  */
+      /* Estilos del contenedor del ranking */
       .ranking-container {
         flex: 1;
         max-width: 900px;
@@ -105,9 +121,15 @@
         width: 100%;
       }
 
-      /* Contenedor para el botón de volver y el titulo "Ranking de Proveedores" */
+      /* MALLA LISA: Contenedor para el botón de volver y el título */
       .ranking-header {
+        background-color: #ffffff;
+        border-radius: 8px;
+        border-left: 6px solid #1e3264;
+        padding: 25px;
         margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        text-align: left;
       }
 
       /* Estilo para el botón de "Volver atrás" */
@@ -129,15 +151,16 @@
       /* Estilos para el título principal del ranking */
       .ranking-container h2 {
         font-size: 26px;
-        color: #13213c;
-        margin: 0 0 8px 0;
+        color: #1e3264;
+        margin: 0 0 10px 0;
         font-weight: 700;
       }
       /* Estilos para el subtítulo debajo del título principal */
       .ranking-container p {
         color: #555555;
-        font-size: 15px;
+        font-size: 14.5px;
         margin: 0;
+        line-height: 1.5;
       }
 
       /* Estilos para el contenedor de la tabla */
@@ -146,7 +169,7 @@
         border: 1px solid rgba(19, 33, 60, 0.1);
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-        overflow: hidden; 
+        overflow: hidden;
         margin-top: 20px;
       }
       /* Estilo para la tabla del ranking */
@@ -162,6 +185,8 @@
         color: white;
         padding: 15px;
         font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
       }
       /* Celdas con un borde inferior gris*/
       td {
@@ -189,10 +214,17 @@
         font-size: 13px;
         display: inline-block;
       }
-      /* El color de fondo de las insignias dependiendo el puntaje */
-      .bg-verde { background-color: #219653; }
-      .bg-amarillo { background-color: #f2c94c; color: #333333; }
-      .bg-rojo { background-color: #eb5757; }
+      /* El color de fondo de las insignias dependiendo el puntaje (Sistema semáforo homologado) */
+      .bg-verde {
+        background-color: #219653;
+      }
+      .bg-amarillo {
+        background-color: #f2c94c;
+        color: #333333;
+      }
+      .bg-rojo {
+        background-color: #eb5757;
+      }
 
       /* Estilos para los enlaces de Acciones */
       .btn-detail {
@@ -223,7 +255,7 @@
     </style>
   </head>
 
-  <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
+  <body>
     <header>
       <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo" />
       <nav>
@@ -243,11 +275,16 @@
 
           <div id="menuDropdown" class="dropdown-content" style="display: none">
             <div class="dropdown-user-info">
-              <strong>Encargado de Compras</strong>
-              <span>compras@correo.ucu.edu.uy</span>
+              <strong id="perfilUsuario">Encargado de Compras</strong>
+              <span id="perfilEmail">compras@correo.ucu.edu.uy</span>
             </div>
             <hr />
-            <a href="../login.html" class="logout-link">Cerrar Sesión</a>
+            <a
+              href="../login.html"
+              onclick="sessionStorage.clear()"
+              class="logout-link"
+              >Cerrar Sesión</a
+            >
           </div>
         </div>
       </nav>
@@ -255,13 +292,14 @@
 
     <main class="ranking-container">
       <div class="ranking-header">
-        <a href="#" onclick="window.history.back(); return false;" class="btn-back-list">
-          ← Volver atrás
-        </a>
+        <!-- PREVENCIÓN DE BUCLE: Redirección directa al panel de control -->
+        <a href="landing.html" class="btn-back-list"> ← Volver al Panel </a>
         <h2>Ranking de Sostenibilidad</h2>
-        <p>Proveedores ordenados por su puntaje de cumplimiento ambiental e institucional.</p>
+        <p>
+          Proveedores ordenados por su puntaje.
+        </p>
       </div>
-      
+
       <div class="table-responsive">
         <table>
           <thead>
@@ -276,7 +314,10 @@
           </thead>
           <tbody id="tabla-body">
             <tr>
-              <td colspan="6" style="text-align: center; color: #666; padding: 30px;">
+              <td
+                colspan="6"
+                style="text-align: center; color: #666; padding: 30px"
+              >
                 Cargando el ranking de proveedores...
               </td>
             </tr>
@@ -287,32 +328,35 @@
 
     <footer>
       <div class="footer-container">
-        <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer"/>
+        <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
       </div>
     </footer>
 
     <script type="module">
-      import { supabaseClient } from '../js/conexion-bd.js';
+      import { supabaseClient } from "../js/conexion-bd.js";
 
       const tbody = document.getElementById("tabla-body");
 
       // --- FUNCIONES DEL MENÚ DESPLEGABLE ---
-      // Para que onclick="toggleMenu()" funcione desde el HTML usando módulos,
-      // debemos asignarla explícitamente al objeto global window.
-      window.toggleMenu = function() {
+      window.toggleMenu = function () {
         const menu = document.getElementById("menuDropdown");
         if (menu.style.display === "none" || menu.style.display === "") {
           menu.style.display = "block";
         } else {
           menu.style.display = "none";
         }
-      }
-      
+      };
+
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
         const avatar = document.querySelector("header nav img");
 
-        if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
+        if (
+          menu &&
+          menu.style.display === "block" &&
+          event.target !== avatar &&
+          !menu.contains(event.target)
+        ) {
           menu.style.display = "none";
         }
       };
@@ -321,66 +365,84 @@
       async function cargarRanking() {
         try {
           const { data: proveedores, error } = await supabaseClient
-            .from('proveedores_ucu')
-            .select('id, id_codigo, nombre, puntaje_total, procedencia')
-            .eq('tipo', 'proveedor')
-            .order('puntaje_total', { ascending: false });
+            .from("proveedores_ucu")
+            .select("id, id_codigo, nombre, puntaje_total, procedencia")
+            .eq("tipo", "proveedor")
+            .order("puntaje_total", { ascending: false });
 
           if (error) throw error;
 
           if (!proveedores || proveedores.length === 0) {
             tbody.innerHTML = `
-              <tr>
-                <td colspan="6" style="text-align: center; color: #555555; padding: 30px;">
-                  No hay proveedores registrados u homologados actualmente.
-                </td>
-              </tr>
-            `;
+ <tr>
+ <td colspan="6" style="text-align: center; color: #555555; padding: 30px;">
+ No hay proveedores registrados u homologados actualmente.
+ </td>
+ </tr>
+ `;
             return;
           }
 
           tbody.innerHTML = "";
 
-          proveedores.forEach(p => {
+          proveedores.forEach((p) => {
             const fila = document.createElement("tr");
-            const puntajeReal = p.puntaje_total !== null ? parseFloat(p.puntaje_total) : 0;
-            
-            let colorClase = "bg-rojo"; 
+            const puntajeReal =
+              p.puntaje_total !== null ? parseFloat(p.puntaje_total) : 0;
+
+            // SÉMAFORO DE PUNTOS: Homologado a 45 pts para ser consistente con compras.html
+            let colorClase = "bg-rojo";
             if (puntajeReal >= 75) {
-              colorClase = "bg-verde"; 
-            } else if (puntajeReal >= 50) {
-              colorClase = "bg-amarillo"; 
+              colorClase = "bg-verde";
+            } else if (puntajeReal >= 45) {
+              colorClase = "bg-amarillo";
             }
 
-            const procedenciaFormateada = p.procedencia 
-              ? p.procedencia.charAt(0).toUpperCase() + p.procedencia.slice(1) 
+            const procedenciaFormateada = p.procedencia
+              ? p.procedencia.charAt(0).toUpperCase() +
+                p.procedencia.slice(1).toLowerCase()
               : "Nacional";
 
             fila.innerHTML = `
-              <td style="color: #666; font-size: 13px;"><code>${p.id_codigo}</code></td>
-              <td><strong>${p.nombre}</strong></td>
-              <td><span class="badge-score ${colorClase}">${puntajeReal.toFixed(1)} pts</span></td>
-              <td>${procedenciaFormateada}</td>
-              <td><a href="detalle-proveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
-              <td><a href="compras.html?id=${p.id}" class="btn-detail">Ver productos →</a></td>
-            `;
+ <td style="color: #666; font-size: 13px;"><code>${p.id_codigo}</code></td>
+ <td><strong>${p.nombre}</strong></td>
+ <td><span class="badge-score ${colorClase}">${puntajeReal.toFixed(1)} pts</span></td>
+ <td>${procedenciaFormateada}</td>
+ <td><a href="detalle-proveedor.html?id=${p.id}" class="btn-detail">Ver detalles →</a></td>
+ <td><a href="compras.html?id=${p.id}" class="btn-detail">Ver productos →</a></td>
+ `;
             tbody.appendChild(fila);
           });
-
         } catch (err) {
           console.error("Error al obtener proveedores de Supabase:", err);
           tbody.innerHTML = `
-            <tr>
-              <td colspan="6" style="text-align: center; color: #eb5757; padding: 30px; font-weight: 600;">
-                Ocurrió un error al conectar con el servidor de la base de datos 'proveedores_ucu'.
-              </td>
-            </tr>
-          `;
+ <tr>
+ <td colspan="6" style="text-align: center; color: #eb5757; padding: 30px; font-weight: 600;">
+ Ocurrió un error al conectar con el servidor de la base de datos 'proveedores_ucu'.
+ </td>
+ </tr>
+ `;
         }
       }
 
       // Ejecutar la carga cuando el árbol DOM esté listo
-      document.addEventListener("DOMContentLoaded", cargarRanking);
+      document.addEventListener("DOMContentLoaded", () => {
+        cargarRanking();
+
+        // Cargar información del usuario del sessionStorage
+        const usuarioLogueado = sessionStorage.getItem("usuarioUCU");
+        if (usuarioLogueado) {
+          const partes = usuarioLogueado.split(".");
+          const nombreCompleto = partes
+            .map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+            .join(" ");
+          const profileName = document.getElementById("perfilUsuario");
+          const profileEmail = document.getElementById("perfilEmail");
+          if (profileName) profileName.innerText = nombreCompleto;
+          if (profileEmail)
+            profileEmail.innerText = `${usuarioLogueado.toLowerCase()}@correo.ucu.edu.uy`;
+        }
+      });
     </script>
   </body>
 </html>
