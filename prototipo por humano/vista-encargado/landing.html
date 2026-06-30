@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Landing Page</title>
+    <title>Panel de Control - Gestión de Compras UCU</title>
     <link rel="stylesheet" href="../css/global-styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
@@ -101,51 +101,51 @@
         margin: 40px auto;
         padding: 0 20px;
       }
-      /* Estilos para el contenedor del título de bienvenida */
-      .welcome-block {
-        margin-bottom: 25px;
-      }
-      /* Estilos del título de bienvenida */
-      .welcome-block h2 {
-        font-size: 26px;
-        color: #d48544;
-        margin-bottom: 8px;
-      }
-      /* Estilo del texto descriptivo de bienvenida */
-      .welcome-block p {
-        color: #4b4a48;
-        font-size: 15px;
-      }
-      
-      /* NUEVO SECTOR: Banner destacado para el documento de criterios */
-      .criterios-banner {
-        background-color: #eef4fa;
-        border-left: 5px solid #007bff;
-        padding: 20px;
-        border-radius: 4px;
+
+      /* ESTILOS PARA EL CONTENEDOR UNIFICADO DE BIENVENIDA Y CRITERIOS */
+      .welcome-container {
+        background-color: #ffffff;
+        border-radius: 8px;
+        border-left: 6px solid #1e3264; /* Borde izquierdo azul institucional */
+        padding: 25px;
         margin-bottom: 35px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 20px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        text-align: left;
       }
-      .criterios-info h4 {
-        margin: 0 0 5px 0;
+      .welcome-text h2 {
+        font-size: 24px;
         color: #1e3264;
-        font-size: 16px;
+        margin-top: 0;
+        margin-bottom: 12px;
         font-weight: 700;
       }
-      .criterios-info p {
+      .welcome-text p {
         margin: 0;
-        color: #555;
-        font-size: 14px;
+      }
+      /* Texto de bienvenida en bloque, en negrita y ligeramente más grande */
+      .welcome-user-greeting {
+        display: block;
+        font-size: 18px;
+        font-weight: bold;
+        color: #1e3264;
+        margin-bottom: 8px; /* Espaciado con la descripción de abajo */
+      }
+      /* Descripción en bloque en la siguiente línea */
+      .welcome-description {
+        display: block;
+        font-size: 14.5px;
+        color: #4b4a48;
+        line-height: 1.6;
       }
       .btn-criterios {
-        background-color: #007bff;
+        background-color: #1e3264; /* Azul institucional para el botón */
         color: white;
         text-decoration: none;
-        padding: 10px 20px;
+        padding: 12px 22px;
         border-radius: 4px;
         font-weight: 600;
         font-size: 14px;
@@ -154,16 +154,16 @@
         display: inline-block;
       }
       .btn-criterios:hover {
-        background-color: #0056b3;
+        background-color: #14254c;
       }
 
-      /* Grilla contenedora de las tarjetas de navegación */
+      /* Grilla contenedora de las tarjetas de navegación original */
       .dashboard-grid {
         display: flex;
         gap: 25px;
         flex-wrap: wrap;
       }
-      /* Estilos de las tarjetas del menú */
+      /* Estilos de las tarjetas del menú original */
       .menu-card {
         background-color: #ffffff;
         padding: 25px;
@@ -175,20 +175,20 @@
         flex-direction: column;
         justify-content: space-between;
       }
-      /* Estilos para los títulos de las tarjetas */
+      /* Estilos para los títulos de las tarjetas original */
       .menu-card h3 {
         font-size: 19px;
         color: #007bff;
         margin-bottom: 12px;
       }
-      /* Estilos para los textos explicativos dentro de las tarjetas */
+      /* Estilos para los textos explicativos dentro de las tarjetas original */
       .menu-card p {
         color: #555555;
         font-size: 14px;
         line-height: 1.6;
         margin-bottom: 25px;
       }
-      /* Estilos para los botones de acción de las tarjetas */
+      /* Estilos para los botones de acción de las tarjetas original */
       .btn-dashboard {
         display: block;
         text-align: center;
@@ -201,7 +201,7 @@
         font-size: 14px;
         transition: background-color 0.2s;
       }
-      /* Cambio de color al pasar el mouse por los botones */
+      /* Cambio de color al pasar el mouse por los botones original */
       .btn-dashboard:hover {
         background-color: #0056b3;
       }
@@ -217,6 +217,19 @@
         margin: auto;
         height: 30px;
         filter: brightness(0) invert(1); /* Hace que el logo se vea blanco */
+      }
+
+      /* Estilo adaptativo simple para la sección unificada */
+      @media (max-width: 600px) {
+        .welcome-container {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+        }
+        .btn-criterios {
+          width: 100%;
+          text-align: center;
+        }
       }
     </style>
   </head>
@@ -240,35 +253,46 @@
           />
           <div id="menuDropdown" class="dropdown-content" style="display: none">
             <div class="dropdown-user-info">
-              <strong>Encargado de Compras</strong>
-              <span>compras@correo.ucu.edu.uy</span>
+              <strong id="perfilUsuario">Encargado de Compras</strong>
+              <span id="perfilEmail">compras@correo.ucu.edu.uy</span>
             </div>
             <hr />
-            <a href="../login.html" class="logout-link">Cerrar Sesión</a>
+            <a
+              href="../login.html"
+              onclick="sessionStorage.clear()"
+              class="logout-link"
+              >Cerrar Sesión</a
+            >
           </div>
         </div>
       </nav>
     </header>
 
     <main class="landing-container">
-      <section class="welcome-block">
-        <h2>Panel de Gestión de Proveedores</h2>
-        <p>
-          Esta es la herramienta de pruebas para el sistema de compras
-          sostenibles de la UCU.
-        </p>
-      </section>
-
-      <section class="criterios-banner">
-        <div class="criterios-info">
-          <h4>Lista de Criterios Oficiales</h4>
-          <p>Visualiza y descarga las tablas de ponderación y los coeficientes de evaluación asignados a los proveedores.</p>
+      <!-- SECCIÓN UNIFICADA DE BIENVENIDA Y ACCESO AL DOCUMENTO -->
+      <section class="welcome-container">
+        <div class="welcome-text">
+          <h2>Panel de Gestión de Proveedores</h2>
+          <p>
+            <span class="welcome-user-greeting"
+              >Bienvenido/a, <span id="nombreUsuario">Mika</span>.</span
+            >
+            <span class="welcome-description"
+              >Esta es la herramienta de pruebas para la red de compras
+              sostenibles de la UCU. Accede al documento de criterios para
+              comprender y poder evaluar proveedores y productos
+              correctamente.</span
+            >
+          </p>
         </div>
         <div>
-          <a href="#" id="linkCriterios" target="_blank" class="btn-criterios">Ver Documento</a>
+          <a href="#" id="linkCriterios" target="_blank" class="btn-criterios"
+            >Ver Documento</a
+          >
         </div>
       </section>
 
+      <!-- GRID DE TARJETAS ORIGINALES SIN ALTERAR EL ORDEN NI EL TEXTO -->
       <section class="dashboard-grid">
         <div class="menu-card">
           <div class="card-content">
@@ -279,7 +303,9 @@
               vigentes para aplicarle un puntaje de sostenibilidad.
             </p>
           </div>
-          <a href="agregar-proveedor.html" class="btn-dashboard">Abrir Formulario</a>
+          <a href="agregar-proveedor.html" class="btn-dashboard"
+            >Abrir Formulario</a
+          >
         </div>
 
         <div class="menu-card">
@@ -303,7 +329,9 @@
               sus certificaciones antes de aprobar la postulacion.
             </p>
           </div>
-          <a href="revision-postulaciones-totales.html" class="btn-dashboard">Revisar Postulaciones</a>
+          <a href="revision-postulaciones-totales.html" class="btn-dashboard"
+            >Revisar Postulaciones</a
+          >
         </div>
 
         <div class="menu-card">
@@ -314,7 +342,9 @@
               catalogo. Revisa su informacion y valida sus caracteristicas
             </p>
           </div>
-          <a href="revision-productos-totales.html" class="btn-dashboard">Revisar nuevos productos</a>
+          <a href="revision-productos-totales.html" class="btn-dashboard"
+            >Revisar nuevos productos</a
+          >
         </div>
 
         <div class="menu-card">
@@ -322,11 +352,13 @@
             <h3>Agregar Productos</h3>
             <p>
               Agrega nuevos productos para agregar al catalogo de compras
-              sostenibles de UCU. Proporciona la informacion necesaria y adjunta
+              Sostenibles de UCU. Proporciona la informacion necesaria y adjunta
               los documentos requeridos.
             </p>
           </div>
-          <a href="agregar-producto-encargado.html" class="btn-dashboard">Agregar Productos</a>
+          <a href="agregar-producto-encargado.html" class="btn-dashboard"
+            >Agregar Productos</a
+          >
         </div>
 
         <div class="menu-card">
@@ -350,25 +382,51 @@
     <script>
       // 1. CONFIGURACIÓN DE SUPABASE
       const SUPABASE_URL = "https://kiklddnidlxiusrcbvxf.supabase.co";
-      const SUPABASE_ANON_KEY = "sb_publishable_e4RnXv8pq2LQ3aCiqQcsKg_meWrIIWP";
+      const SUPABASE_ANON_KEY =
+        "sb_publishable_e4RnXv8pq2LQ3aCiqQcsKg_meWrIIWP";
       const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
       // Función para obtener la URL pública del archivo de criterios en el Storage
       function cargarUrlCriterios() {
-        // 'Criterios' es el nombre del bucket que debés crear en Supabase Storage
-        // 'criterios.pdf' es el nombre con el que subas el archivo allí
         const { data } = _supabase.storage
-          .from('Criterios')
-          .getPublicUrl('Criterios.pdf');
+          .from("Criterios")
+          .getPublicUrl("Criterios.pdf");
 
         if (data && data.publicUrl) {
-          document.getElementById('linkCriterios').href = data.publicUrl;
+          document.getElementById("linkCriterios").href = data.publicUrl;
         }
       }
 
-      // Ejecutar la función al cargar la página
-      window.onload = function() {
+      // Ejecutar al cargar la página
+      window.onload = function () {
         cargarUrlCriterios();
+
+        // Inyectar dinámicamente el nombre de usuario desde la sesión si existe
+        const usuarioLogueado = sessionStorage.getItem("usuarioUCU");
+        if (usuarioLogueado) {
+          // Procesamiento del formato nombre.apellido
+          const partes = usuarioLogueado.split(".");
+
+          // 1. Primer nombre capitalizado
+          const primerNombre = partes[0];
+          const primerNombreCapitalizado =
+            primerNombre.charAt(0).toUpperCase() +
+            primerNombre.slice(1).toLowerCase();
+          document.getElementById("nombreUsuario").innerText =
+            primerNombreCapitalizado;
+
+          // 2. Nombre completo formateado (reemplazando punto por espacio y capitalizando ambos)
+          const nombreCompletoCapitalizado = partes
+            .map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+            .join(" ");
+
+          // También actualizamos la información de perfil en el dropdown para consistencia
+          const profileName = document.getElementById("perfilUsuario");
+          const profileEmail = document.getElementById("perfilEmail");
+          if (profileName) profileName.innerText = nombreCompletoCapitalizado;
+          if (profileEmail)
+            profileEmail.innerText = `${usuarioLogueado.toLowerCase()}@correo.ucu.edu.uy`;
+        }
       };
 
       // Función para mostrar/ocultar el menú desplegable al hacer clic en la imagen de perfil
@@ -380,7 +438,7 @@
           menu.style.display = "none";
         }
       }
-      
+
       // Función para ocultar el menú desplegable si se hace clic fuera de él
       window.onclick = function (event) {
         const menu = document.getElementById("menuDropdown");
