@@ -1,482 +1,678 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auditoría de Producto Individual - UCU</title>
-  <link rel="stylesheet" href="../css/global-styles.css">
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revisión de Producto - UCU</title>
+  <link rel="stylesheet" href="../css/global-styles.css" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
-    /* Header y Nav global consistente */
-    header {
-      background-color: #1e3264;
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-    }
+   * {
+     box-sizing: border-box;
+   }
+   body {
+     background-color: #f4f6f9;
+     margin: 0;
+     font-family: Arial, sans-serif;
+     display: flex;
+     flex-direction: column;
+     min-height: 100vh;
+   }
+   header {
+     background-color: #1e3264;
+     padding: 15px 30px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     color: white;
+   }
 
-    .logo {
-      display: block;
-      height: 40px;
-      width: auto;
-      filter: brightness(0) invert(1);
-    }
+   .logo {
+     display: block;
+     height: 40px;
+     width: auto;
+     filter: brightness(0) invert(1);
+   }
 
-    header nav {
-      display: flex;
-      align-items: center;
-      gap: 25px;
-    }
+   header nav {
+     display: flex;
+     align-items: center;
+     gap: 25px;
+   }
 
-    header nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      gap: 20px;
-    }
+   .user-profile-container {
+     position: relative;
+     display: inline-block;
+   }
 
-    header nav ul li a {
-      text-decoration: none;
-      color: #ffffff;
-      font-weight: 500;
-    }
+   .dropdown-content {
+     position: absolute;
+     right: 0;
+     top: 45px;
+     background-color: #ffffff;
+     min-width: 220px;
+     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+     border-radius: 8px;
+     padding: 12px 0;
+     z-index: 1000;
+   }
 
-    header nav ul li a:hover {
-      color: #2f80ed;
-    }
+   .dropdown-user-info {
+     padding: 4px 16px 8px 16px;
+     display: flex;
+     flex-direction: column;
+   }
 
-    .user-profile-container {
-      position: relative;
-      display: inline-block;
-    }
+   .dropdown-user-info strong {
+     font-size: 14px;
+     color: #13213c;
+   }
 
-    .dropdown-content {
-      position: absolute;
-      right: 0;
-      top: 45px;
-      background-color: #ffffff;
-      min-width: 220px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      border-radius: 8px;
-      padding: 12px 0;
-      z-index: 1000;
-    }
+   .dropdown-user-info span {
+     font-size: 12px;
+     color: #555555;
+   }
 
-    .dropdown-user-info {
-      padding: 4px 16px 8px 16px;
-      display: flex;
-      flex-direction: column;
-    }
+   .dropdown-content hr {
+     border: 0;
+     border-top: 1px solid #eeeeee;
+     margin: 8px 0;
+   }
 
-    .dropdown-user-info strong {
-      font-size: 14px;
-      color: #13213c;
-    }
+   .dropdown-content .logout-link {
+     color: #dc3545;
+     padding: 8px 16px;
+     text-decoration: none;
+     display: block;
+     font-size: 14px;
+     font-weight: 500;
+   }
 
-    .dropdown-user-info span {
-      font-size: 12px;
-      color: #555555;
-    }
+   .dropdown-content .logout-link:hover {
+     background-color: #fff5f5;
+   }
 
-    .dropdown-content hr {
-      border: 0;
-      border-top: 1px solid #eeeeee;
-      margin: 8px 0;
-    }
+   .review-container {
+     flex: 1;
+     max-width: 1350px;
+     width: 100%;
+     margin: 40px auto;
+     padding: 0 30px;
+   }
 
-    .dropdown-content .logout-link {
-      color: #dc3545;
-      padding: 8px 16px;
-      text-decoration: none;
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-    }
+   /* Maquetación elástica en dos paneles */
+   .review-layout {
+     display: flex;
+     gap: 40px;
+     align-items: flex-start;
+   }
 
-    .dropdown-content .logout-link:hover {
-      background-color: #fff5f5;
-    }
+   @media (max-width: 1000px) {
+     .review-layout {
+       flex-direction: column;
+     }
+   }
 
-    /* Contenedor Principal */
-    .review-container {
-      flex: 1;
-      max-width: 800px;
-      width: 100%;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
+   .left-panel {
+     flex: 3.5;
+     width: 100%;
+   }
 
-    .back-link-container {
-      margin-bottom: 20px;
-    }
+   .right-panel {
+     flex: 1.2;
+     width: 100%;
+     position: sticky;
+     top: 20px;
+   }
 
-    .btn-back {
-      text-decoration: none;
-      color: #1e3264;
-      font-weight: 600;
-      font-size: 15px;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: color 0.2s;
-    }
+   /* Caja de cabecera blanca institucional */
+   .postulation-list-header {
+     background-color: #ffffff;
+     border-radius: 12px;
+     border-left: 6px solid #1e3264;
+     padding: 25px;
+     margin-bottom: 25px;
+     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+     text-align: left;
+   }
 
-    .btn-back:hover {
-      color: #2f80ed;
-    }
+   .btn-back-list {
+     display: inline-flex;
+     align-items: center;
+     color: #1e3264;
+     text-decoration: none;
+     font-weight: 600;
+     font-size: 14px;
+     transition: color 0.2s;
+     gap: 5px;
+   }
+   .btn-back-list:hover {
+     color: #2f80ed;
+   }
 
-    /* Tarjeta Detallada Única */
-    .detailed-product-card {
-      background: white;
-      border-radius: 16px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-      padding: 35px;
-    }
+   .audit-master-card {
+     background: white;
+     border-radius: 16px;
+     border: 1px solid #e2e8f0;
+     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+     padding: 40px;
+   }
 
-    .main-header {
-      border-bottom: 2px solid #f1f5f9;
-      padding-bottom: 20px;
-      margin-bottom: 25px;
-    }
+   .sticky-card {
+     background: white;
+     border-radius: 12px;
+     padding: 20px;
+     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+     border: 1px solid #e2e8f0;
+   }
 
-    .product-title {
-      font-size: 26px;
-      color: #1e3264;
-      margin: 0 0 6px 0;
-    }
+   .sticky-card h3 {
+     margin-top: 0;
+     color: #13213c;
+     border-bottom: 2px solid #1e3264;
+     padding-bottom: 8px;
+     font-size: 14px;
+     text-transform: uppercase;
+     letter-spacing: 0.5px;
+   }
 
-    .provider-sub {
-      font-size: 14px;
-      color: #64748b;
-    }
+   .section-main-title {
+     font-size: 28px;
+     color: #1e3264;
+     margin: 0 0 8px 0;
+     font-weight: 700;
+   }
 
-    .info-section-title {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: #1e3264;
-      margin: 25px 0 12px 0;
-      font-weight: bold;
-    }
+   .meta-subtitle {
+     font-size: 14px;
+     color: #64748b;
+     margin-bottom: 30px;
+   }
 
-    .specs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      font-size: 15px;
-    }
+   .block-title {
+     font-size: 15px;
+     text-transform: uppercase;
+     letter-spacing: 0.8px;
+     color: #1e3264;
+     margin: 35px 0 15px 0;
+     font-weight: bold;
+     border-bottom: 2px solid #f1f5f9;
+     padding-bottom: 6px;
+   }
 
-    .spec-item {
-      background: #f8fafc;
-      padding: 12px 16px;
-      border-radius: 8px;
-      border-left: 4px solid #1e3264;
-    }
+   .corporate-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+     gap: 20px;
+   }
 
-    .spec-item strong {
-      display: block;
-      font-size: 12px;
-      color: #64748b;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-    }
+   .info-tile {
+     background: #f8fafb;
+     padding: 14px 18px;
+     border-radius: 8px;
+     border-left: 4px solid #1e3264;
+   }
 
-    .badge {
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: bold;
-      display: inline-block;
-      margin-right: 5px;
-    }
-    .badge-ok { background-color: #dcfce7; color: #166534; }
-    .badge-no { background-color: #fee2e2; color: #991b1b; }
-    .badge-cert { background-color: #e0f2fe; color: #0369a1; }
+   .info-tile strong {
+     display: block;
+     font-size: 12px;
+     color: #64748b;
+     margin-bottom: 5px;
+     text-transform: uppercase;
+   }
 
-    .bar-macro-container {
-      background-color: #e2e8f0;
-      height: 12px;
-      border-radius: 6px;
-      overflow: hidden;
-      margin-top: 6px;
-      width: 100%;
-    }
-    .bar-fill {
-      background-color: #16a34a;
-      height: 100%;
-      transition: width 0.5s ease-in-out;
-    }
+   .info-tile span {
+     font-size: 15px;
+     color: #1e3264;
+     font-weight: 500;
+   }
 
-    .action-panel {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-top: 35px;
-      border-top: 1px solid #e2e8f0;
-      padding-top: 25px;
-    }
+   .badge {
+     padding: 5px 10px;
+     border-radius: 6px;
+     font-size: 12px;
+     font-weight: bold;
+     display: inline-block;
+   }
+   .badge-si {
+     background-color: #dcfce7;
+     color: #166534;
+   }
+   .badge-no {
+     background-color: #fee2e2;
+     color: #991b1b;
+   }
 
-    .btn-decision {
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-      transition: transform 0.1s, background-color 0.2s;
-    }
+   .table-bar-container {
+     background-color: #e2e8f0;
+     height: 8px;
+     border-radius: 4px;
+     overflow: hidden;
+     width: 100%;
+     margin-top: 6px;
+   }
+   .table-bar-fill {
+     background-color: #16a34a;
+     height: 100%;
+     transition: width 0.5s ease-in-out;
+   }
 
-    .btn-decision:active {
-      transform: scale(0.99);
-    }
+   .decision-zone {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 20px;
+     margin-top: 35px;
+     padding-top: 25px;
+     border-top: 2px dashed #e2e8f0;
+   }
 
-    .btn-approve { background-color: #2e7d32; color: white; }
-    .btn-approve:hover { background-color: #1b5e20; }
-    
-    .btn-reject { background-color: #ea580c; color: white; }
-    .btn-reject:hover { background-color: #c2410c; }
+   .btn-decision {
+     padding: 16px;
+     border: none;
+     border-radius: 8px;
+     font-size: 15px;
+     font-weight: 700;
+     cursor: pointer;
+     text-align: center;
+     transition: transform 0.1s, background-color 0.2s;
+   }
 
-    .footer-container {
-      background-color: #1e3264;
-      padding: 20px 0;
-      width: 100%;
-      margin-top: auto;
-    }
+   .btn-decision:active {
+     transform: scale(0.98);
+   }
 
-    .logo-footer {
-      display: block;
-      margin: auto;
-      height: 30px;
-      filter: brightness(0) invert(1);
-    }
+   .btn-approve {
+     background-color: #2e7d32;
+     color: white;
+   }
+   .btn-approve:hover {
+     background-color: #1b5e20;
+   }
+
+   .btn-reject {
+     background-color: #ea580c;
+     color: white;
+   }
+   .btn-reject:hover {
+     background-color: #c2410c;
+   }
+
+   .footer-container {
+     background-color: #1e3264;
+     padding: 20px 0;
+     width: 100%;
+     margin-top: auto;
+   }
+
+   .logo-footer {
+     display: block;
+     margin: auto;
+     height: 30px;
+     filter: brightness(0) invert(1);
+   }
   </style>
-</head>
-<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
-
+ </head>
+ <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
   <header>
-    <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo">
-    <nav>
-      <div class="user-profile-container">
-        <img src="../assets/icono generico de usuario.png" alt="Perfil" onclick="toggleMenu()" style="width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: block;">
-        <div id="menuDropdown" class="dropdown-content" style="display: none;">
-          <div class="dropdown-user-info">
-            <strong>Encargado de Compras</strong>
-            <span>compras@correo.ucu.edu.uy</span>
-          </div>
-          <hr>
-          <a href="../login.html" class="logout-link">Cerrar Sesión</a>
-        </div>
+   <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo" />
+   <nav>
+    <div class="user-profile-container">
+     <img
+      src="../assets/icono generico de usuario.png"
+      alt="Perfil"
+      onclick="toggleMenu()"
+      style="width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: block;"
+     />
+     <div id="menuDropdown" class="dropdown-content" style="display: none">
+      <div class="dropdown-user-info">
+       <strong id="perfilUsuario">Encargado de Compras</strong>
+       <span id="perfilEmail">compras@correo.ucu.edu.uy</span>
       </div>
-    </nav>
+      <hr />
+      <a href="../login.html" onclick="sessionStorage.clear()" class="logout-link">Cerrar Sesión</a>
+     </div>
+    </div>
+   </nav>
   </header>
 
-  <main class="review-container" id="main-content">
-    <div class="back-link-container">
-      <a href="revision-productos-totales.html" class="btn-back">
-        ← Volver al Listado de Productos
+  <main class="review-container">
+   <!-- Cabecera institucional -->
+   <div class="postulation-list-header">
+    <a href="revision-productos-totales.html" class="btn-back-list">
+     ← Volver Atrás
+    </a>
+    <h2 class="page-title" style="margin-top: 10px">
+     Revision de Producto Sugerido
+    </h2>
+   </div>
+
+   <div class="review-layout">
+    <div class="left-panel">
+     <div class="audit-master-card" id="detalle-card">
+      <h2 class="section-main-title" id="p-nombre">Cargando...</h2>
+      <div class="meta-subtitle">
+       Código de Producto: <strong id="p-codigo">-</strong>
+      </div>
+
+      <!-- 1. SUGERIDO POR -->
+      <div class="block-title">Sugerido por</div>
+      <div class="corporate-grid">
+       <div class="info-tile">
+        <strong>Empresa</strong>
+        <span id="p-prov-nombre">-</span>
+       </div>
+       <div class="info-tile">
+        <strong>Código de Proveedor</strong>
+        <span id="p-prov-codigo">-</span>
+       </div>
+      </div>
+
+      <!-- 2. ATRIBUTOS DEL PRODUCTO -->
+      <div class="block-title">Atributos del Producto</div>
+      <div class="corporate-grid" style="margin-bottom: 20px;">
+       <div class="info-tile">
+        <strong>Categoría</strong>
+        <span id="p-categoria-insumo">-</span>
+       </div>
+       <div class="info-tile">
+        <strong>¿Es reciclable?</strong>
+        <div id="badge-recyclable-container">-</div>
+       </div>
+       <div class="info-tile">
+        <strong>¿Es reusable?</strong>
+        <div id="badge-reusable-container">-</div>
+       </div>
+      </div>
+
+      <!-- DECLARACIÓN DE MATERIALES RECICLADOS -->
+      <div style="background: #f8fafb; padding: 20px; border-radius: 8px;">
+       <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 8px;">
+        <span>Porcentaje de Materia Prima Reciclada</span>
+        <span id="p-porcentaje-txt">0%</span>
+       </div>
+       <div class="table-bar-container">
+        <div class="table-bar-fill" id="p-porcentaje-bar" style="width: 0%;"></div>
+       </div>
+      </div>
+
+      <!-- 3. CERTIFICACIONES UNIFICADAS -->
+      <div class="block-title">Certificaciones</div>
+      <div class="corporate-grid">
+       <div class="info-tile">
+        <strong>FSC (Producto)</strong>
+        <div id="badge-fsc-container">-</div>
+       </div>
+       <div class="info-tile">
+        <strong>ISO 14001 (Proveedor)</strong>
+        <div id="badge-iso-container">-</div>
+       </div>
+       <div class="info-tile">
+        <strong>EMAS (Proveedor)</strong>
+        <div id="badge-emas-container">-</div>
+       </div>
+      </div>
+
+      <!-- 4. PRECIO (AL FINAL) -->
+      <div class="block-title">Precio</div>
+      <div class="corporate-grid">
+       <div class="info-tile" style="border-left-color: #2e7d32;">
+        <strong>Precio Propuesto</strong>
+        <span id="p-precio" style="font-weight: 700; color: #1e3264; font-size: 18px;">$-</span>
+       </div>
+      </div>
+
+      <!-- PANEL DE DECISIONES -->
+      <div class="decision-zone" id="mainDecisionZone">
+       <button class="btn-decision btn-reject" onclick="finalizarAuditoria('rechazado')">
+        Rechazar Producto
+       </button>
+       <button class="btn-decision btn-approve" onclick="finalizarAuditoria('aprobado')">
+        Aprobar Producto
+       </button>
+      </div>
+     </div>
+    </div>
+
+    <!-- PANEL LATERAL DERECHO CON ACCESO DINÁMICO A CRITERIOS -->
+    <aside class="right-panel">
+     <div class="sticky-card">
+      <h3>Políticas del Portal</h3>
+      <p style="font-size: 13px; color: #64748b; margin: 0 0 12px 0; line-height: 1.4;">
+       Consulte el documento de criterios oficiales de compras sostenibles para realizar una evaluación adecuada de este producto.
+      </p>
+      <a href="#" id="link-criterios" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; color: #1e3264; text-decoration: none; font-weight: bold; font-size: 14px;">
+       Documento de Criterios 🔗
       </a>
-    </div>
-
-    <div class="detailed-product-card" id="detalle-card">
-      <div class="main-header">
-        <h2 class="product-title" id="p-nombre">Cargando Producto...</h2>
-        <div class="provider-sub">Postulado por: <strong id="p-proveedor">Cargando...</strong></div>
-      </div>
-
-      <div class="info-section-title">Valores Comerciales</div>
-      <div class="specs-grid">
-        <div class="spec-item"><strong>Precio Propuesto</strong><span id="p-precio">$-</span></div>
-        <div class="spec-item"><strong>Categoría de Insumo</strong><span id="p-categoria">-</span></div>
-      </div>
-
-      <div class="info-section-title">Análisis de Atributos de Sostenibilidad</div>
-      <div class="specs-grid">
-        <div class="spec-item"><strong>¿Apto para Reciclaje?</strong><span id="p-reciclable">-</span></div>
-        <div class="spec-item"><strong>¿Estructura Reutilizable?</strong><span id="p-reutilizable">-</span></div>
-      </div>
-
-      <div class="info-section-title">Declaración de Materiales y Certificados</div>
-      <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
-        <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; color: #334155;">
-          <span>Porcentaje de Materia Prima Reciclada</span>
-          <span id="p-porcentaje-txt">0%</span>
-        </div>
-        <div class="bar-macro-container">
-          <div class="bar-fill" id="p-porcentaje-bar" style="width: 0%;"></div>
-        </div>
-      </div>
-
-      <div class="specs-grid">
-        <div class="spec-item">
-          <strong>Certificaciones Heredadas del Proveedor</strong>
-          <div id="p-certificaciones-container">
-            <span class="badge badge-no">Ninguna Declarada</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="action-panel">
-        <button class="btn-decision btn-reject" onclick="finalizarAuditoria('rechazado')">Rechazar Producto</button>
-        <button class="btn-decision btn-approve" onclick="finalizarAuditoria('aprobado')">Aprobar Producto</button>
-      </div>
-    </div>
+     </div>
+    </aside>
+   </div>
   </main>
 
   <footer>
-    <div class="footer-container">
-      <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer">
-    </div>
+   <div class="footer-container">
+    <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
+   </div>
   </footer>
 
   <script type="module">
-    import { supabaseClient } from '../js/conexion-bd.js';
+   import { supabaseClient } from "../js/conexion-bd.js";
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const idProducto = urlParams.get('id');
+   const urlParams = new URLSearchParams(window.location.search);
+   const idProducto = urlParams.get("id");
 
-    // --- INTERFACES GLOBALES ---
-    window.toggleMenu = function() {
-      const menu = document.getElementById("menuDropdown");
-      menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
-    };
+   const PDF_RESPALDO = "https://pdfobject.com/pdf/sample.pdf";
 
-    window.onclick = function (event) {
-      const menu = document.getElementById("menuDropdown");
-      const avatar = document.querySelector(".user-profile-container img");
-      if (menu && menu.style.display === "block" && event.target !== avatar && !menu.contains(event.target)) {
-        menu.style.display = "none";
-      }
-    };
+   // --- INTERFACES GLOBALES PARA MENÚ DE SESIÓN ---
+   window.toggleMenu = function () {
+     const menu = document.getElementById("menuDropdown");
+     menu.style.display =
+       menu.style.display === "none" || menu.style.display === ""
+         ? "block"
+         : "none";
+   };
 
-    // --- CARGAR PRODUCTO ÚNICO ---
-    async function cargarProductoUnico() {
-      if (!idProducto) {
-        mostrarError("No se especificó ningún ID de producto.");
-        return;
-      }
+   window.onclick = function (event) {
+     const menu = document.getElementById("menuDropdown");
+     const avatar = document.querySelector(".user-profile-container img");
+     if (
+       menu &&
+       menu.style.display === "block" &&
+       event.target !== avatar &&
+       !menu.contains(event.target)
+     ) {
+       menu.style.display = "none";
+     }
+   };
 
-      try {
-        // Obtenemos el producto y adjuntamos las certificaciones e info del proveedor asignado
-        const { data: prod, error } = await supabaseClient
-          .from('productos_ucu')
-          .select(`
-            id,
-            nombre,
-            precio,
-            categoria,
-            mat_reciclados_pct,
-            es_reciclable,
-            es_reusable,
-            proveedores_ucu (
-              nombre,
-              tiene_iso14001,
-              tiene_fsc,
-              tiene_emas
-            )
-          `)
-          .eq('id', idProducto)
-          .single();
+   // --- CONFIGURACIÓN DE BADGES COMPACTOS ---
+   function configurarBadgeLink(containerId, valorBoolean, nombreCert, url) {
+     const container = document.getElementById(containerId);
+     if (!container) return;
+     const prefijo = valorBoolean ? "✓ " : "✗ ";
+     const clase = valorBoolean ? "badge-si" : "badge-no";
+     container.innerHTML = `<a href="${url}" target="_blank" class="badge ${clase}" style="text-decoration: none;">${prefijo}${nombreCert} 🔗</a>`;
+   }
 
-        if (error || !prod) throw new Error("El producto solicitado no fue encontrado.");
+   function configurarBadgePlano(containerId, valorBoolean) {
+     const container = document.getElementById(containerId);
+     if (!container) return;
+     // Mayúsculas estrictas: SI / NO
+     const texto = valorBoolean ? "SI" : "NO";
+     const clase = valorBoolean ? "badge-si" : "badge-no";
+     container.innerHTML = `<span class="badge ${clase}">${texto}</span>`;
+   }
 
-        // Mapear Textos e Interfaz General
-        document.getElementById("p-nombre").innerText = prod.nombre;
-        document.getElementById("p-proveedor").innerText = prod.proveedores_ucu?.nombre || "Proveedor Desconocido";
-        document.getElementById("p-precio").innerText = `$${prod.precio} UYU`;
-        document.getElementById("p-categoria").innerText = prod.categoria || "General";
-        
-        // Badges booleanos del ciclo de vida reales
-        document.getElementById("p-reciclable").innerHTML = prod.es_reciclable
-          ? '<span class="badge badge-ok">SÍ APTO</span>' 
-          : '<span class="badge badge-no">NO APTO</span>';
-          
-        document.getElementById("p-reutilizable").innerHTML = prod.es_reusable
-          ? '<span class="badge badge-ok">SÍ APTO</span>' 
-          : '<span class="badge badge-no">NO APTO</span>';
+   // --- CARGA DINÁMICA DE CRITERIOS DESDE EL BUCKET ---
+   async function cargarCriteriosDinamicos() {
+     try {
+       const { data } = supabaseClient.storage
+         .from("Criterios")
+         .getPublicUrl("Criterios.pdf");
 
-        // Renderizado de la barra de porcentaje
-        const pct = prod.mat_reciclados_pct ?? 0;
-        document.getElementById("p-porcentaje-txt").innerText = `${pct}%`;
-        document.getElementById("p-porcentaje-bar").style.width = `${pct}%`;
+       const linkCriterios = document.getElementById("link-criterios");
+       if (linkCriterios && data) {
+         linkCriterios.href = data.publicUrl;
+       }
+     } catch (err) {
+       console.error("Error al obtener la URL de Criterios:", err);
+     }
+   }
 
-        // Renderizar certificaciones corporativas heredadas
-        const certContainer = document.getElementById("p-certificaciones-container");
-        certContainer.innerHTML = "";
-        
-        let tieneCerts = false;
-        const p = prod.proveedores_ucu;
-        if (p) {
-          if (p.tiene_iso14001) { certContainer.innerHTML += '<span class="badge badge-cert">ISO 14001</span>'; tieneCerts = true; }
-          if (p.tiene_fsc) { certContainer.innerHTML += '<span class="badge badge-cert">FSC</span>'; tieneCerts = true; }
-          if (p.tiene_emas) { certContainer.innerHTML += '<span class="badge badge-cert">EMAS</span>'; tieneCerts = true; }
-        }
+   // --- CARGAR PRODUCTO ÚNICO ---
+   async function cargarProductoUnico() {
+     if (!idProducto) {
+       mostrarError("No se especificó un identificador de producto válido.");
+       return;
+     }
 
-        if (!tieneCerts) {
-          certContainer.innerHTML = '<span class="badge badge-no">Ninguna Declarada</span>';
-        }
+     try {
+       // Consulta limpia corrigiendo la columna de FSC al nivel del producto
+       const { data: prod, error } = await supabaseClient
+         .from("productos_ucu")
+         .select(`
+           id,
+           codigo_producto,
+           nombre,
+           categoria,
+           precio,
+           mat_reciclados_pct,
+           es_reciclable,
+           es_reusable,
+           tiene_fsc,
+           url_certificado,
+           proveedores_ucu (
+             nombre,
+             id_codigo,
+             tiene_iso14001,
+             tiene_emas,
+             urls_certificaciones
+           )
+         `)
+         .eq("id", idProducto)
+         .single();
 
-      } catch (err) {
-        console.error(err);
-        mostrarError(err.message);
-      }
-    }
+       if (error || !prod) {
+         throw new Error("El producto sugerido no fue encontrado en la base de datos.");
+       }
 
-    // --- ACCIÓN DE AUDITORÍA REAL EN BASE DE DATOS ---
-    window.finalizarAuditoria = function(nuevoEstado) {
-      if (!idProducto) return;
+       // Inyección de textos generales
+       document.getElementById("p-nombre").innerText = prod.nombre;
+       document.getElementById("p-codigo").innerText = prod.codigo_producto || "N/A";
+       document.getElementById("p-categoria-insumo").innerText = prod.categoria || "General";
+       
+       const precioFormateado = parseFloat(prod.precio || 0).toLocaleString("es-UY", {
+         minimumFractionDigits: 2,
+         maximumFractionDigits: 2
+       });
+       document.getElementById("p-precio").innerText = `$ ${precioFormateado} UYU`;
 
-      const mensajeConfirmacion = nuevoEstado === 'aprobado' 
-        ? "¿Desea aprobar este producto e incorporarlo al catálogo activo?" 
-        : "¿Está seguro de que desea rechazar este producto?";
+       // Configuración de badges del ciclo de vida del producto
+       configurarBadgePlano("badge-recyclable-container", prod.es_reciclable);
+       configurarBadgePlano("badge-reusable-container", prod.es_reusable);
 
-      if (!confirm(mensajeConfirmacion)) return;
+       // Configuración de FSC a nivel de producto con fallback dinámico
+       const urlFSC = prod.url_certificado && prod.url_certificado.trim() !== ""
+         ? prod.url_certificado
+         : PDF_RESPALDO;
+       configurarBadgeLink("badge-fsc-container", prod.tiene_fsc, "FSC", urlFSC);
 
-      // Deshabilitar botones para evitar dobles clics transaccionales
-      const botones = document.querySelectorAll(".btn-decision");
-      botones.forEach(btn => btn.disabled = true);
+       // Renderizado de la barra de material reciclado
+       const pct = prod.mat_reciclados_pct ?? 0;
+       document.getElementById("p-porcentaje-txt").innerText = `${pct}%`;
+       document.getElementById("p-porcentaje-bar").style.width = `${pct}%`;
 
-      // Guardamos directamente en la columna 'estado' modificada de productos_ucu
-      supabaseClient
-        .from('productos_ucu')
-        .update({ estado: nuevoEstado })
-        .eq('id', idProducto)
-        .then(({ error }) => {
-          if (error) {
-            alert(`Error al actualizar estado en Supabase: ${error.message}`);
-            botones.forEach(btn => btn.disabled = false);
-          } else {
-            alert(`Operación procesada correctamente: El producto fue ${nuevoEstado.toUpperCase()}.`);
-            window.location.href = "revision-productos-totales.html";
-          }
-        })
-        .catch(err => {
-          console.error(err);
-          alert("Excepción detectada al procesar la auditoría.");
-          botones.forEach(btn => btn.disabled = false);
-        });
-    };
+       // Renderizado de datos de la Empresa y sus certificaciones corporativas (ISO / EMAS)
+       const p = prod.proveedores_ucu;
+       if (p) {
+         document.getElementById("p-prov-nombre").innerText = p.nombre;
+         document.getElementById("p-prov-codigo").innerText = p.id_codigo || "N/A";
 
-    function mostrarError(mensaje) {
-      const card = document.getElementById("detalle-card");
-      card.innerHTML = `
-        <div style="text-align: center; padding: 20px; color: #dc3545;">
-          <h3 style="margin-top:0;">⚠️ Error de Carga</h3>
-          <p>${mensaje}</p>
-          <a href="revision-productos-totales.html" class="btn-back" style="margin-top: 15px; justify-content: center;">
-            Volver a la Bandeja General
-          </a>
-        </div>
-      `;
-    }
+         const urls = p.urls_certificaciones || [];
+         const urlISO = urls[0] || PDF_RESPALDO;
+         const indexEMAS = p.tiene_iso14001 ? 1 : 0;
+         const urlEMAS = urls[indexEMAS] || urls[0] || PDF_RESPALDO;
 
-    document.addEventListener("DOMContentLoaded", cargarProductoUnico);
+         configurarBadgeLink("badge-iso-container", p.tiene_iso14001, "ISO 14001", urlISO);
+         configurarBadgeLink("badge-emas-container", p.tiene_emas, "Registro EMAS", urlEMAS);
+       } else {
+         document.getElementById("p-prov-nombre").innerText = "Sin Empresa Registrada";
+         document.getElementById("p-prov-codigo").innerText = "N/A";
+         configurarBadgePlano("badge-iso-container", false);
+         configurarBadgePlano("badge-emas-container", false);
+       }
+
+     } catch (err) {
+       console.error("Error al cargar detalles:", err);
+       mostrarError(err.message);
+     }
+   }
+
+   // --- FINALIZACIÓN DE AUDITORÍA (APROBAR / RECHAZAR) ---
+   window.finalizarAuditoria = async function (nuevoEstado) {
+     if (!idProducto) return;
+
+     const mensajeConfirmacion = nuevoEstado === "aprobado"
+       ? "¿Desea aprobar este producto e incorporarlo al catálogo activo de la UCU?"
+       : "¿Está seguro de que desea rechazar este producto?";
+
+     if (!confirm(mensajeConfirmacion)) return;
+
+     // Bloqueo de botones para evitar dobles solicitudes
+     const botones = document.querySelectorAll(".btn-decision");
+     botones.forEach(btn => btn.disabled = true);
+
+     try {
+       const { error } = await supabaseClient
+         .from("productos_ucu")
+         .update({ estado: nuevoEstado })
+         .eq("id", idProducto);
+
+       if (error) throw error;
+
+       alert(`La auditoría fue finalizada. Producto calificado como: ${nuevoEstado.toUpperCase()}.`);
+       window.location.href = "revision-productos-totales.html";
+
+     } catch (err) {
+       console.error(err);
+       alert("Error al guardar la decisión: " + err.message);
+       botones.forEach(btn => btn.disabled = false);
+     }
+   };
+
+   function mostrarError(mensaje) {
+     const card = document.getElementById("detalle-card");
+     if (card) {
+       card.innerHTML = `
+         <div style="text-align: center; padding: 30px; color: #dc3545;">
+           <h3 style="margin-top:0;">⚠️ Error de Carga</h3>
+           <p>${mensaje}</p>
+           <a href="revision-productos-totales.html" class="btn-back-list" style="margin-top: 15px; justify-content: center;">
+             Volver a la Bandeja de Productos
+           </a>
+         </div>
+       `;
+     }
+   }
+
+   // Inicializar procesos tras cargar la ventana
+   document.addEventListener("DOMContentLoaded", () => {
+     cargarProductoUnico();
+     cargarCriteriosDinamicos();
+   });
+
+   // --- PROCESAMIENTO DINÁMICO DE SESIÓN DEL ENCARGADO ---
+   const usuarioLogueado = sessionStorage.getItem("usuarioUCU");
+   if (usuarioLogueado) {
+     const partes = usuarioLogueado.split(".");
+     const nombreCompleto = partes
+       .map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+       .join(" ");
+     const profileName = document.getElementById("perfilUsuario");
+     const profileEmail = document.getElementById("perfilEmail");
+     if (profileName) profileName.innerText = nombreCompleto;
+     if (profileEmail) {
+       profileEmail.innerText = `${usuarioLogueado.toLowerCase()}@correo.ucu.edu.uy`;
+     }
+   }
   </script>
-</body>
+ </body>
 </html>

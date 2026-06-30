@@ -1,304 +1,334 @@
 <!doctype html>
 <html lang="es">
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Revisión de Productos - UCU</title>
-  <link rel="stylesheet" href="../css/global-styles.css" />
-  <style>
-   /* Estilos del Header */
-   .logo {
-     display: block;
-     height: 40px;
-     width: auto;
-     filter: brightness(0) invert(1);
-   }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Revisión de Productos - UCU</title>
+    <link rel="stylesheet" href="../css/global-styles.css" />
+    <style>
+      /* Estilos del Header */
+      .logo {
+        display: block;
+        height: 40px;
+        width: auto;
+        filter: brightness(0) invert(1);
+      }
 
-   header {
-     background-color: #1e3264;
-     padding: 15px 30px;
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     color: white;
-   }
+      header {
+        background-color: #1e3264;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+      }
 
-   header nav {
-     display: flex;
-     align-items: center;
-     gap: 25px;
-   }
+      header nav {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+      }
 
-   .user-profile-container {
-     position: relative;
-     display: inline-block;
-   }
+      .user-profile-container {
+        position: relative;
+        display: inline-block;
+      }
 
-   .dropdown-content {
-     position: absolute;
-     right: 0;
-     top: 45px;
-     background-color: #ffffff;
-     min-width: 220px;
-     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-     border-radius: 8px;
-     padding: 12px 0;
-     z-index: 1000;
-   }
+      .dropdown-content {
+        position: absolute;
+        right: 0;
+        top: 45px;
+        background-color: #ffffff;
+        min-width: 220px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        padding: 12px 0;
+        z-index: 1000;
+      }
 
-   .dropdown-user-info {
-     padding: 4px 16px 8px 16px;
-     display: flex;
-     flex-direction: column;
-   }
+      .dropdown-user-info {
+        padding: 4px 16px 8px 16px;
+        display: flex;
+        flex-direction: column;
+      }
 
-   .dropdown-user-info strong {
-     font-size: 14px;
-     color: #13213c;
-   }
+      .dropdown-user-info strong {
+        font-size: 14px;
+        color: #13213c;
+      }
 
-   .dropdown-user-info span {
-     font-size: 12px;
-     color: #555555;
-   }
+      .dropdown-user-info span {
+        font-size: 12px;
+        color: #555555;
+      }
 
-   .dropdown-content hr {
-     border: 0;
-     border-top: 1px solid #eeeeee;
-     margin: 8px 0;
-   }
+      .dropdown-content hr {
+        border: 0;
+        border-top: 1px solid #eeeeee;
+        margin: 8px 0;
+      }
 
-   .dropdown-content .logout-link {
-     color: #dc3545;
-     padding: 8px 16px;
-     text-decoration: none;
-     display: block;
-     font-size: 14px;
-     font-weight: 500;
-   }
+      .dropdown-content .logout-link {
+        color: #dc3545;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+      }
 
-   .dropdown-content .logout-link:hover {
-     background-color: #fff5f5;
-   }
+      .dropdown-content .logout-link:hover {
+        background-color: #fff5f5;
+      }
 
-   /* Contenedor principal elástico */
-   .review-container {
-     flex: 1;
-     max-width: 1100px;
-     width: 100%;
-     margin: 40px auto;
-     padding: 0 20px;
-   }
+      /* Contenedor principal elástico */
+      .review-container {
+        flex: 1;
+        max-width: 1100px;
+        width: 100%;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
 
-   /* Cabecera blanca institucional */
-   .product-list-header {
-     background-color: #ffffff;
-     border-radius: 12px;
-     border-left: 6px solid #1e3264;
-     padding: 25px;
-     margin-bottom: 25px;
-     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-     text-align: left;
-   }
+      /* Cabecera blanca institucional */
+      .product-list-header {
+        background-color: #ffffff;
+        border-radius: 12px;
+        border-left: 6px solid #1e3264;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        text-align: left;
+      }
 
-   .btn-back-list {
-     display: inline-flex;
-     align-items: center;
-     color: #1e3264;
-     text-decoration: none;
-     font-weight: 600;
-     font-size: 14px;
-     transition: color 0.2s;
-     gap: 5px;
-   }
+      .btn-back-list {
+        display: inline-flex;
+        align-items: center;
+        color: #1e3264;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: color 0.2s;
+        gap: 5px;
+      }
 
-   .btn-back-list:hover {
-     color: #2f80ed;
-   }
+      .btn-back-list:hover {
+        color: #2f80ed;
+      }
 
-   .page-title {
-     color: #13213c;
-     font-size: 26px;
-     font-weight: 700;
-     margin: 5px 0 0 0;
-   }
+      .page-title {
+        color: #13213c;
+        font-size: 26px;
+        font-weight: 700;
+        margin: 5px 0 0 0;
+      }
 
-   /* GRILLA ADAPTATIVA DE 3 COLUMNAS (3x-infinito) */
-   .products-grid-layout {
-     display: grid;
-     grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-     gap: 20px;
-     margin-bottom: 40px;
-   }
+      /* GRILLA ADAPTATIVA DE 3 COLUMNAS (3x-infinito) */
+      .products-grid-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+      }
 
-   /* Tarjeta de producto simplificada con información mínima */
-   .product-card-minimal {
-     background: #ffffff;
-     border: 1px solid rgba(19, 33, 60, 0.1);
-     border-radius: 14px;
-     padding: 20px;
-     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-     display: flex;
-     flex-direction: column;
-     justify-content: space-between;
-     transition: transform 0.2s, box-shadow 0.2s;
-     height: 220px; /* Tamaño estandarizado para simetría visual */
-     box-sizing: border-box;
-   }
+      /* Tarjeta de producto simplificada con información mínima */
+      .product-card-minimal {
+        background: #ffffff;
+        border: 1px solid rgba(19, 33, 60, 0.1);
+        border-radius: 14px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        height: 220px; /* Tamaño estandarizado para simetría visual */
+        box-sizing: border-box;
+      }
 
-   .product-card-minimal:hover {
-     transform: translateY(-3px);
-     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
-   }
+      .product-card-minimal:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+      }
 
-   .product-info-top h3 {
-     margin: 0 0 8px 0;
-     color: #13213c;
-     font-size: 18px;
-     font-weight: 700;
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
-   }
+      .product-info-top h3 {
+        margin: 0 0 8px 0;
+        color: #13213c;
+        font-size: 18px;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
-   .product-meta-row {
-     font-size: 13.5px;
-     color: #4a5568;
-     margin-bottom: 6px;
-     line-height: 1.4;
-   }
+      .product-meta-row {
+        font-size: 13.5px;
+        color: #4a5568;
+        margin-bottom: 6px;
+        line-height: 1.4;
+      }
 
-   .product-meta-row strong {
-     color: #13213c;
-   }
+      .product-meta-row strong {
+        color: #13213c;
+      }
 
-   .price-tag {
-     font-size: 18px;
-     font-weight: 700;
-     color: #1e3264;
-     margin-top: auto;
-     padding-top: 10px;
-   }
+      .price-tag {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1e3264;
+        margin-top: auto;
+        padding-top: 10px;
+      }
 
-   /* Botón de acción simple */
-   .btn-review-minimal {
-     width: 100%;
-     padding: 10px;
-     background-color: #1e3264;
-     color: white;
-     font-size: 13px;
-     font-weight: 600;
-     border: none;
-     border-radius: 6px;
-     cursor: pointer;
-     transition: background-color 0.2s;
-     text-align: center;
-     margin-top: 15px;
-     box-sizing: border-box;
-   }
+      /* Botón de acción simple */
+      .btn-review-minimal {
+        width: 100%;
+        padding: 10px;
+        background-color: #1e3264;
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        text-align: center;
+        margin-top: 15px;
+        box-sizing: border-box;
+      }
 
-   .btn-review-minimal:hover {
-     background-color: #13213c;
-   }
+      .btn-review-minimal:hover {
+        background-color: #13213c;
+      }
 
-   /* Footer */
-   .footer-container {
-     background-color: #1e3264;
-     padding: 20px 0;
-     width: 100%;
-     margin-top: auto;
-   }
+      /* Footer */
+      .footer-container {
+        background-color: #1e3264;
+        padding: 20px 0;
+        width: 100%;
+        margin-top: auto;
+      }
 
-   .logo-footer {
-     display: block;
-     margin: auto;
-     height: 30px;
-     filter: brightness(0) invert(1);
-   }
-  </style>
- </head>
+      .logo-footer {
+        display: block;
+        margin: auto;
+        height: 30px;
+        filter: brightness(0) invert(1);
+      }
+    </style>
+  </head>
 
- <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; background-color: #f8f9fa;">
-  <header>
-   <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo" />
-   <nav>
-    <div class="user-profile-container">
-     <img
-      src="../assets/icono generico de usuario.png"
-      alt="Perfil"
-      onclick="toggleMenu()"
-      style="width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: block;"
-     />
-     <div id="menuDropdown" class="dropdown-content" style="display: none">
-      <div class="dropdown-user-info">
-       <strong id="perfilUsuario">Encargado de Compras</strong>
-       <span id="perfilEmail">compras@correo.ucu.edu.uy</span>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f8f9fa;
+    "
+  >
+    <header>
+      <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo" />
+      <nav>
+        <div class="user-profile-container">
+          <img
+            src="../assets/icono generico de usuario.png"
+            alt="Perfil"
+            onclick="toggleMenu()"
+            style="
+              width: 38px;
+              height: 38px;
+              border-radius: 50%;
+              cursor: pointer;
+              display: block;
+            "
+          />
+          <div id="menuDropdown" class="dropdown-content" style="display: none">
+            <div class="dropdown-user-info">
+              <strong id="perfilUsuario">Encargado de Compras</strong>
+              <span id="perfilEmail">compras@correo.ucu.edu.uy</span>
+            </div>
+            <hr />
+            <a
+              href="../login.html"
+              onclick="sessionStorage.clear()"
+              class="logout-link"
+              >Cerrar Sesión</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="review-container">
+      <!-- CABECERA INSTITUCIONAL SIN FILTROS -->
+      <div class="product-list-header">
+        <a href="landing.html" class="btn-back-list"> ← Volver Atrás </a>
+        <h2 class="page-title">Productos Sugeridos Pendientes de Revisión</h2>
       </div>
-      <hr />
-      <a href="../login.html" onclick="sessionStorage.clear()" class="logout-link">Cerrar Sesión</a>
-     </div>
-    </div>
-   </nav>
-  </header>
 
-  <main class="review-container">
-   <!-- CABECERA INSTITUCIONAL SIN FILTROS -->
-   <div class="product-list-header">
-    <a href="landing.html" class="btn-back-list"> ← Volver Atrás </a>
-    <h2 class="page-title">Productos Sugeridos Pendientes de Revisión</h2>
-   </div>
+      <!-- GRILLA DE PRODUCTOS -->
+      <div id="contenedor-productos" class="products-grid-layout">
+        <p
+          style="
+            grid-column: 1 / -1;
+            color: #1e3264;
+            font-style: italic;
+            padding: 20px 0;
+            text-align: center;
+          "
+        >
+          Consultando base de datos en tiempo real...
+        </p>
+      </div>
+    </main>
 
-   <!-- GRILLA DE PRODUCTOS -->
-   <div id="contenedor-productos" class="products-grid-layout">
-    <p style="grid-column: 1 / -1; color: #1e3264; font-style: italic; padding: 20px 0; text-align: center;">
-     Consultando base de datos en tiempo real...
-    </p>
-   </div>
-  </main>
+    <footer>
+      <div class="footer-container">
+        <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
+      </div>
+    </footer>
 
-  <footer>
-   <div class="footer-container">
-    <img src="../assets/logo ucu.png" alt="Logo UCU" class="logo-footer" />
-   </div>
-  </footer>
+    <script type="module">
+      import { supabaseClient } from "../js/conexion-bd.js";
 
-  <script type="module">
-   import { supabaseClient } from "../js/conexion-bd.js";
+      // --- INTERFACES GLOBALES PARA LOS EVENTOS INLINE ---
+      window.toggleMenu = function () {
+        const menu = document.getElementById("menuDropdown");
+        menu.style.display =
+          menu.style.display === "none" || menu.style.display === ""
+            ? "block"
+            : "none";
+      };
 
-   // --- INTERFACES GLOBALES PARA LOS EVENTOS INLINE ---
-   window.toggleMenu = function () {
-     const menu = document.getElementById("menuDropdown");
-     menu.style.display =
-       menu.style.display === "none" || menu.style.display === ""
-         ? "block"
-         : "none";
-   };
+      window.onclick = function (event) {
+        const menu = document.getElementById("menuDropdown");
+        const avatar = document.querySelector(".user-profile-container img");
+        if (
+          menu &&
+          menu.style.display === "block" &&
+          event.target !== avatar &&
+          !menu.contains(event.target)
+        ) {
+          menu.style.display = "none";
+        }
+      };
 
-   window.onclick = function (event) {
-     const menu = document.getElementById("menuDropdown");
-     const avatar = document.querySelector(".user-profile-container img");
-     if (
-       menu &&
-       menu.style.display === "block" &&
-       event.target !== avatar &&
-       !menu.contains(event.target)
-     ) {
-       menu.style.display = "none";
-     }
-   };
+      window.verDetalleProducto = function (idProducto) {
+        window.location.href = "revision-producto-unico.html?id=" + idProducto;
+      };
 
-   window.verDetalleProducto = function (idProducto) {
-     window.location.href = "revision-producto-unico.html?id=" + idProducto;
-   };
+      // --- CARGA DINÁMICA DE PRODUCTOS DESDE SUPABASE ---
+      async function inicializarProductos() {
+        const contenedor = document.getElementById("contenedor-productos");
 
-   // --- CARGA DINÁMICA DE PRODUCTOS DESDE SUPABASE ---
-   async function inicializarProductos() {
-     const contenedor = document.getElementById("contenedor-productos");
-
-     try {
-       const { data: productos, error } = await supabaseClient
-         .from("productos_ucu")
-         .select(`
+        try {
+          const { data: productos, error } = await supabaseClient
+            .from("productos_ucu")
+            .select(
+              `
            id,
            nombre,
            categoria,
@@ -306,24 +336,27 @@
            proveedores_ucu (
              nombre
            )
-         `)
-         .eq("estado", "pendiente");
+         `,
+            )
+            .eq("estado", "pendiente");
 
-       if (error) throw error;
+          if (error) throw error;
 
-       if (!productos || productos.length === 0) {
-         contenedor.innerHTML = `<p style="grid-column: 1 / -1; color: #64748b; font-style: italic; padding: 20px 0; text-align: center;">No hay productos sugeridos pendientes de revisión en este momento.</p>`;
-         return;
-       }
+          if (!productos || productos.length === 0) {
+            contenedor.innerHTML = `<p style="grid-column: 1 / -1; color: #64748b; font-style: italic; padding: 20px 0; text-align: center;">No hay productos sugeridos pendientes de revisión en este momento.</p>`;
+            return;
+          }
 
-       contenedor.innerHTML = ""; // Limpiar mensaje de carga
+          contenedor.innerHTML = ""; // Limpiar mensaje de carga
 
-       productos.forEach(prod => {
-         const nombreProveedor = prod.proveedores_ucu ? prod.proveedores_ucu.nombre : "Sin Proveedor";
+          productos.forEach((prod) => {
+            const nombreProveedor = prod.proveedores_ucu
+              ? prod.proveedores_ucu.nombre
+              : "Sin Proveedor";
 
-         const tarjeta = document.createElement("div");
-         tarjeta.className = "product-card-minimal";
-         tarjeta.innerHTML = `
+            const tarjeta = document.createElement("div");
+            tarjeta.className = "product-card-minimal";
+            tarjeta.innerHTML = `
            <div class="product-info-top">
              <h3 title="${prod.nombre}">${prod.nombre}</h3>
              <div class="product-meta-row">
@@ -343,32 +376,31 @@
              </button>
            </div>
          `;
-         contenedor.appendChild(tarjeta);
-       });
+            contenedor.appendChild(tarjeta);
+          });
+        } catch (err) {
+          console.error("Error cargando productos:", err);
+          contenedor.innerHTML = `<p style="grid-column: 1 / -1; color: #eb5757; font-weight: bold; padding: 20px 0; text-align: center;">Error al conectar con la base de datos: ${err.message}</p>`;
+        }
+      }
 
-     } catch (err) {
-       console.error("Error cargando productos:", err);
-       contenedor.innerHTML = `<p style="grid-column: 1 / -1; color: #eb5757; font-weight: bold; padding: 20px 0; text-align: center;">Error al conectar con la base de datos: ${err.message}</p>`;
-     }
-   }
+      // Ejecutar inicialización al cargar la página
+      inicializarProductos();
 
-   // Ejecutar inicialización al cargar la página
-   inicializarProductos();
-
-   // --- MANEJO DEL USUARIO EN SESIÓN (CamelCase dinámico) ---
-   const usuarioLogueado = sessionStorage.getItem("usuarioUCU");
-   if (usuarioLogueado) {
-     const partes = usuarioLogueado.split(".");
-     const nombreCompleto = partes
-       .map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
-       .join(" ");
-     const profileName = document.getElementById("perfilUsuario");
-     const profileEmail = document.getElementById("perfilEmail");
-     if (profileName) profileName.innerText = nombreCompleto;
-     if (profileEmail) {
-       profileEmail.innerText = `${usuarioLogueado.toLowerCase()}@correo.ucu.edu.uy`;
-     }
-   }
-  </script>
- </body>
+      // --- MANEJO DEL USUARIO EN SESIÓN (CamelCase dinámico) ---
+      const usuarioLogueado = sessionStorage.getItem("usuarioUCU");
+      if (usuarioLogueado) {
+        const partes = usuarioLogueado.split(".");
+        const nombreCompleto = partes
+          .map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+          .join(" ");
+        const profileName = document.getElementById("perfilUsuario");
+        const profileEmail = document.getElementById("perfilEmail");
+        if (profileName) profileName.innerText = nombreCompleto;
+        if (profileEmail) {
+          profileEmail.innerText = `${usuarioLogueado.toLowerCase()}@correo.ucu.edu.uy`;
+        }
+      }
+    </script>
+  </body>
 </html>
